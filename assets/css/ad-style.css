@@ -10052,4 +10052,54 @@ section {
   display: none;
 }
 
+/* section-title-wrapper: 1/2 width instead of 1/4 */
+.work-details-area .section-title-wrapper {
+  grid-template-columns: 1fr 1fr;
+}
+@media only screen and (max-width: 991px) {
+  .work-details-area .section-title-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+.work-area-work-page .section-title-wrapper {
+  grid-template-columns: 1fr 1fr;
+}
+@media only screen and (max-width: 991px) {
+  .work-area-work-page .section-title-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Case study structure (Overview, Challenge, Approach, etc.) */
+.work-details-area .section-info.case-study-structure {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.work-details-area .section-info.case-study-structure .case-study-block {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+.work-details-area .section-info.case-study-structure .case-study-block:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.work-details-area .section-info.case-study-structure .case-study-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 0.75rem;
+}
+.work-details-area .section-info.case-study-structure .case-study-block .text {
+  margin-top: 0;
+}
+.work-details-area .section-info.case-study-structure .case-study-block .text + .text {
+  margin-top: 1rem;
+}
+.work-details-area .section-info.case-study-structure .case-study-block .feature-list {
+  margin-top: 1rem;
+}
+
 /*# sourceMappingURL=ad-style.css.map */
