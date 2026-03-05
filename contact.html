@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Petra Hwang | Studiotra</title>
+  <meta name="description" content="Start a project. Get in touch for brand design, product design, web development, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav-logo">Studiotra</a>
+    <ul class="nav-links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="section contact-hero">
+      <div class="container">
+        <p class="availability-pill reveal">
+          <span class="pill-dot">●</span> Currently available for new projects
+        </p>
+        <h1 class="reveal">Let's work together.</h1>
+        <p class="section-desc reveal">Start a project. I typically respond within 1–2 business days.</p>
+      </div>
+    </section>
+
+    <section class="section contact-form-section">
+      <div class="container contact-grid">
+        <form class="contact-form reveal" action="#" method="post">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="project-type">Project type</label>
+          <select id="project-type" name="project-type">
+            <option value="">Select...</option>
+            <option value="branding">Branding</option>
+            <option value="product">Product Design</option>
+            <option value="web">Web</option>
+            <option value="other">Other</option>
+          </select>
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+          <button type="submit" class="btn btn--accent">Send</button>
+        </form>
+        <div class="contact-info reveal">
+          <p class="label">Direct contact</p>
+          <p><a href="mailto:petra.h@studiotra.com">petra.h@studiotra.com</a></p>
+          <p><a href="tel:+14374358730">437.435.8730</a></p>
+          <p><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></p>
+          <p class="contact-location">Based in Toronto, CA. Available for remote worldwide.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <a href="index.html" class="footer-logo">Studiotra</a>
+      <nav class="footer-nav">
+        <a href="work.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="footer-contact">
+        <a href="mailto:petra.h@studiotra.com">petra.h@studiotra.com</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="footer-copy">© 2025 Petra Hwang / Studiotra</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
