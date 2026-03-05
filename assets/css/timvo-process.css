@@ -1,567 +1,1015 @@
-/* Timvo Design Process — Studiotra branding (dark theme) */
-
-/* Process bar (back link + progress) */
-.timvo-process-bar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1.5rem;
-  padding: 1.2rem 2rem;
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: 0;
-  background: var(--bg);
-  z-index: 50;
+/* Timvo Process Page — Studiotra fonts & colors, wire/flow/ui areas intact */
+.timvo-process-page {
+  --font-d: var(--font_sequelsansromanbody);
+  --font-b: var(--font_sequelsansromanbody);
+  --font-m: ui-monospace, "SF Mono", "Cascadia Mono", monospace;
+  /* Studiotra theme mapping */
+  --ink: var(--primary);
+  --ink-soft: rgba(255, 255, 255, 0.75);
+  --ink-muted: rgba(255, 255, 255, 0.5);
+  --ink-faint: rgba(255, 255, 255, 0.2);
+  --paper: #0d0c0b;
+  --paper-warm: #131210;
+  --paper-mid: #080807;
+  --paper-dark: #211e1a;
+  --ember: var(--theme);
+  --ember-deep: #e1f200;
+  --ember-light: rgba(211, 216, 0, 0.4);
+  --ember-pale: rgba(211, 216, 0, 0.12);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.15);
 }
 
-.timvo-process .back-link {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+/* Work-area colours — UNTOUCHED (wireframe, flow, UI mockup) */
+.timvo-process-page {
+  --wire-bg: #f0ecf7;
+  --wire-line: #a89ec9;
+  --wire-fill: #ddd8f0;
+  --flow-bg: #edf4f0;
+  --flow-line: #7aab8f;
+  --flow-fill: #c8e4d4;
+  --ui-bg: #1a1f2e;
+  --ui-side: #141824;
+  --ui-card: #242938;
+  --ui-accent: #c0633a;
+}
+
+.timvo-process-page {
+  font-family: var(--font-b);
+  color: var(--ink);
+}
+
+/* ─── HERO ─── */
+.timvo-process-page .hero {
+  padding: 7rem 2.5rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.timvo-process-page .hero-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 400;
+  margin-bottom: 1.2rem;
+}
+.timvo-process-page .hero-title {
+  font-family: var(--font-d);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 1.8rem;
+}
+.timvo-process-page .hero-title em {
+  font-style: italic;
+  color: var(--ember);
+}
+.timvo-process-page .hero-subtitle {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  max-width: 56ch;
+  line-height: 1.9;
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+/* Step-nav: sticky + horizontal scroll */
+.timvo-process-page .step-nav-sticky-wrap {
+  position: sticky;
+  top: 72px;
+  z-index: 20;
+  padding: 0.6rem 2.5rem;
+  border-bottom: 1px solid var(--line);
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.timvo-process-page .step-nav-sticky-wrap::-webkit-scrollbar {
+  display: none;
+}
+.timvo-process-page .step-nav {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--line-strong);
+  width: fit-content;
+  flex-shrink: 0;
+}
+.timvo-process-page .step-nav-item {
+  padding: 0.55rem 1.2rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-muted);
   text-decoration: none;
-  transition: color 0.2s;
+  border-right: 1px solid var(--line-strong);
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-weight: 400;
+}
+.timvo-process-page .step-nav-item:last-child {
+  border-right: none;
+}
+.timvo-process-page .step-nav-item:hover,
+.timvo-process-page .step-nav-item.active {
+  background: var(--ink);
+  color: var(--paper);
+}
+.dark .timvo-process-page .step-nav-item:hover,
+.dark .timvo-process-page .step-nav-item.active {
+  background: var(--primary);
+  color: var(--black);
 }
 
-.timvo-process .back-link:hover {
-  color: var(--accent);
+/* ─── SECTION ─── */
+.timvo-process-page .section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5.5rem 2.5rem;
+}
+.timvo-process-page .section-wrap {
+  background: var(--paper-warm);
+  padding: 5.5rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.timvo-process-page .section-wrap .section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.timvo-process-page .section-dark {
+  background: #080807;
+  padding: 5.5rem 0;
+  border-top: 1px solid var(--line);
+}
+.timvo-process-page .section-dark .section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+.timvo-process-page #wireframes {
+  padding-top: 5.5rem;
+  padding-bottom: 5.5rem;
+}
+.timvo-process-page main > .section-wrap:last-of-type {
+  padding-bottom: 0;
+}
+.timvo-process-page main {
+  margin-bottom: 0;
+}
+body.timvo-process-page .footer-studiotra {
+  margin-top: 0;
+}
+.timvo-process-page .step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+.timvo-process-page .step-num {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-m);
+  flex-shrink: 0;
+}
+.timvo-process-page .step-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+.timvo-process-page .section-title {
+  font-family: var(--font-d);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+}
+.timvo-process-page .section-title em {
+  font-style: italic;
+  color: var(--ember);
+}
+.timvo-process-page .section-title-light {
+  color: var(--ink);
+}
+.timvo-process-page .section-title-light em {
+  color: var(--ember);
+}
+.timvo-process-page .body-text {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  max-width: 62ch;
+  font-weight: 400;
+}
+.timvo-process-page .body-text-light {
+  color: var(--ink-soft);
 }
 
-.timvo-process .progress-bar {
-  width: 120px;
-  height: 2px;
-  background: var(--line);
-  position: relative;
-  overflow: hidden;
+/* ─── ANNOTATION ─── */
+.timvo-process-page .anno {
+  font-family: var(--font-m);
+  line-height: 1rem;
+  font-size: 0.65rem;
+  color: color: #333;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.timvo-process-page .anno::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--line-strong);
 }
 
-.timvo-process .progress-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background: var(--accent);
-  width: 0%;
-  transition: width 0.1s;
-}
-
-/* Reveal animation */
-.timvo-process .reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.timvo-process .reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.timvo-process .div {
+/* ─── DIVIDER ─── */
+.timvo-process-page hr.div {
   border: none;
   border-top: 1px solid var(--line);
   max-width: 1100px;
   margin: 0 auto;
 }
 
-.timvo-process {
-  --ink: #fcf7f3;
-  --ink-soft: rgba(252, 247, 243, 0.7);
-  --ink-muted: rgba(252, 247, 243, 0.5);
-  --ink-faint: rgba(252, 247, 243, 0.2);
-  --accent: #d3d800;
-  --accent-deep: #b8c000;
-  --accent-light: rgba(211, 216, 0, 0.3);
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.15);
-}
-
-.timvo-process {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font_sequelsansromanbody);
-}
-
-.timvo-process .hero {
-  padding: 4rem 2rem 3rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.timvo-process .hero-eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.timvo-process .hero-title {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--ink);
-  margin-bottom: 1.2rem;
-}
-
-.timvo-process .hero-title em {
-  font-style: italic;
-  color: var(--accent);
-}
-
-.timvo-process .hero-subtitle {
-  font-size: 1rem;
-  color: var(--ink-soft);
-  max-width: 58ch;
-  line-height: 1.85;
-  margin-bottom: 2.5rem;
-}
-
-.timvo-process .step-nav {
-  display: flex;
-  gap: 0;
-  border: 1px solid var(--line);
-  width: fit-content;
-  overflow-x: auto;
-}
-
-.timvo-process .step-nav-item {
-  padding: 0.5rem 1rem;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  text-decoration: none;
-  border-right: 1px solid var(--line);
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.timvo-process .step-nav-item:last-child {
-  border-right: none;
-}
-
-.timvo-process .step-nav-item:hover,
-.timvo-process .step-nav-item.active {
-  background: var(--accent);
-  color: var(--bg);
-  border-color: var(--accent);
-}
-
-.timvo-process .section {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 3.5rem 2rem;
-}
-
-.timvo-process .section-wrap {
-  background: rgba(255, 255, 255, 0.02);
-  padding: 3.5rem 2rem;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.timvo-process .section-dark {
-  background: rgba(0, 0, 0, 0.2);
-  padding: 3.5rem 2rem;
-}
-
-.timvo-process .step-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
-}
-
-.timvo-process .step-num {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  font-size: 0.7rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.timvo-process .step-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-}
-
-.timvo-process .section-title {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  font-weight: 400;
-  line-height: 1.2;
-  color: var(--ink);
-  margin-bottom: 1rem;
-}
-
-.timvo-process .section-title em {
-  font-style: italic;
-  color: var(--accent);
-}
-
-.timvo-process .section-title-light {
-  color: var(--ink);
-}
-
-.timvo-process .body-text {
-  font-size: 0.95rem;
-  color: var(--ink-soft);
-  line-height: 1.8;
-  max-width: 62ch;
-}
-
-.timvo-process .body-text-light {
-  color: var(--ink-soft);
-}
-
-.timvo-process .discovery-grid {
+/* ─── DISCOVERY CARDS ─── */
+.timvo-process-page .discovery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--line);
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
-
-.timvo-process .disc-card {
-  background: var(--bg);
-  padding: 1.8rem 1.5rem;
-  border: 1px solid var(--line);
+.timvo-process-page .disc-card {
+  background: var(--paper-mid);
+  padding: 2rem 1.8rem;
 }
-
-.timvo-process .disc-card-icon {
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
+.timvo-process-page .disc-card-icon {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
   display: block;
 }
-
-.timvo-process .disc-card-title {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-}
-
-.timvo-process .disc-card-body {
+.timvo-process-page .disc-card-title {
   font-size: 0.82rem;
-  color: var(--ink-muted);
-  line-height: 1.7;
-}
-
-.timvo-process .persona-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.8fr;
-  gap: 3rem;
-  align-items: start;
-  margin-top: 2.5rem;
-}
-
-.timvo-process .persona-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--line);
-  padding: 2rem;
-}
-
-.timvo-process .persona-avatar {
-  width: 50px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.timvo-process .persona-name {
-  font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--ink);
-  margin-bottom: 0.2rem;
-}
-
-.timvo-process .persona-role {
-  font-size: 0.72rem;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.timvo-process .persona-trait {
-  display: flex;
-  gap: 0.6rem;
   margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
 }
-
-.timvo-process .pt-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  flex-shrink: 0;
-  width: 55px;
-}
-
-.timvo-process .pt-value {
-  font-size: 0.82rem;
-  color: var(--ink-soft);
-  line-height: 1.6;
-}
-
-.timvo-process .insight-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.timvo-process .insight-item {
-  border-left: 2px solid var(--accent-light);
-  padding-left: 1rem;
-}
-
-.timvo-process .insight-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 0.3rem;
-}
-
-.timvo-process .insight-text {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  line-height: 1.7;
-}
-
-.timvo-process .wireframe-wrap,
-.timvo-process .flow-wrap {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--line);
-  padding: 2rem;
-  margin-top: 1.5rem;
-}
-
-.timvo-process .wireframe-label,
-.timvo-process .flow-label {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  background: var(--accent);
-  color: var(--bg);
-  font-size: 0.6rem;
-  padding: 0.2rem 0.6rem;
-  letter-spacing: 0.08em;
-}
-
-.timvo-process .ia-diagram {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--line);
-  padding: 2.5rem;
-  margin-top: 1.5rem;
-}
-
-.timvo-process .ia-root {
-  background: var(--accent);
-  color: var(--bg);
-  padding: 0.5rem 1.5rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.timvo-process .ia-node {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--line);
-  padding: 0.4rem 0.8rem;
-  font-size: 0.65rem;
-  color: var(--ink-muted);
-}
-
-.timvo-process .ia-node.accent {
-  background: rgba(211, 216, 0, 0.15);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.timvo-process .ux-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--line);
-  margin-top: 2rem;
-}
-
-.timvo-process .ux-card {
-  background: var(--bg);
-  padding: 2rem;
-  border: 1px solid var(--line);
-}
-
-.timvo-process .ux-card-num {
-  font-size: 0.62rem;
-  color: var(--accent);
-  letter-spacing: 0.12em;
-  margin-bottom: 0.5rem;
-}
-
-.timvo-process .ux-card-title {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-}
-
-.timvo-process .ux-card-body {
-  font-size: 0.82rem;
+.timvo-process-page .disc-card-body {
+  font-size: 0.8rem;
   color: var(--ink-muted);
   line-height: 1.75;
 }
 
-.timvo-process .ux-ba {
-  padding: 0.6rem;
-  border: 1px dashed var(--line);
+/* ─── PERSONA CARD ─── */
+.timvo-process-page .persona-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 4rem;
+  align-items: start;
+  margin-top: 3rem;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+.timvo-process-page .persona-card {
+  background: var(--paper-mid);
+  border: 1px solid var(--line-strong);
+  padding: 2.4rem;
+}
+.timvo-process-page .persona-avatar {
+  width: 56px;
+  height: 56px;
+  background: var(--paper-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.4rem;
+}
+.timvo-process-page .persona-name {
+  font-family: var(--font-d);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+.timvo-process-page .persona-role {
+  font-size: 0.68rem;
+  color: var(--ember);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 1.4rem;
+}
+.timvo-process-page .persona-trait {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  margin-bottom: 0.7rem;
+}
+.timvo-process-page .pt-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+  padding-top: 0.15rem;
+  width: 60px;
+}
+.timvo-process-page .pt-value {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.timvo-process-page .insight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.timvo-process-page .insight-item {
+  border-left: 1px solid var(--line-strong);
+  padding-left: 1.2rem;
+}
+.timvo-process-page .insight-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+.timvo-process-page .insight-text {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.75;
 }
 
-.timvo-process .ux-ba.after {
-  border-color: var(--accent-light);
-  background: rgba(211, 216, 0, 0.05);
+/* ─── WIREFRAME WRAPPER (exact) ─── */
+.timvo-process-page .wireframe-wrap {
+  background: var(--wire-bg);
+  border: 1px solid var(--wire-line);
+  padding: 2.5rem;
+  margin-top: 2rem;
+  position: relative;
 }
+.timvo-process-page .wireframe-label {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  background: var(--wire-line);
+  color: #fff;
+  font-family: var(--font-m);
+  font-size: 0.65rem;
+  padding: 0.25rem 0.7rem;
+  letter-spacing: 0.08em;
+}
+.timvo-process-page .wireframe-grid { display: grid; gap: 2.5rem; margin-top: 1rem; }
+.timvo-process-page .wireframe-grid-2 { grid-template-columns: 1fr 1fr; }
+.timvo-process-page .wireframe-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+.timvo-process-page .wf-screen { background: #fff; border: 2px solid var(--wire-line); font-family: var(--font-m); font-size: 0.62rem; color: var(--wire-line); position: relative; overflow: hidden; }
+.timvo-process-page .wf-screen-title { font-size: 0.62rem; color: var(--ink-soft); margin-bottom: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; font-family: var(--font-m); }
+.timvo-process-page .wf-titlebar { background: var(--wire-fill); border-bottom: 1px solid var(--wire-line); padding: 0.4rem 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
+.timvo-process-page .wf-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--wire-line); }
+.timvo-process-page .wf-urlbar { flex: 1; height: 10px; background: var(--wire-line); opacity: 0.3; border-radius: 2px; margin-left: 0.4rem; }
+.timvo-process-page .wf-body { display: grid; padding: 0; height: calc(100% - 22px); }
+.timvo-process-page .wf-sidebar { background: var(--wire-fill); border-right: 1px solid var(--wire-line); padding: 0.6rem 0.5rem; display: flex; flex-direction: column; gap: 0.3rem; min-width: 60px; }
+.timvo-process-page .wf-sidebar-item { height: 8px; background: var(--wire-line); opacity: 0.3; border-radius: 1px; width: 80%; }
+.timvo-process-page .wf-sidebar-item.active { opacity: 0.6; background: var(--wire-line); }
+.timvo-process-page .wf-main { padding: 0.7rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; overflow: hidden; }
+.timvo-process-page .wf-block { background: var(--wire-fill); border: 1px dashed var(--wire-line); padding: 0.4rem 0.5rem; border-radius: 1px; }
+.timvo-process-page .wf-block.header { height: 20px; }
+.timvo-process-page .wf-block.card { height: 36px; }
+.timvo-process-page .wf-block.tall { height: 48px; }
+.timvo-process-page .wf-block.chart { height: 60px; display: flex; align-items: flex-end; gap: 2px; padding: 0.4rem; }
+.timvo-process-page .wf-bar { background: var(--wire-line); opacity: 0.4; flex: 1; border-radius: 1px 1px 0 0; }
+.timvo-process-page .wf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+.timvo-process-page .wf-text-line { height: 5px; background: var(--wire-line); opacity: 0.2; border-radius: 1px; margin: 0.2rem 0; }
+.timvo-process-page .wf-text-line.short { width: 60%; }
+.timvo-process-page .wf-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35rem; }
+.timvo-process-page .wf-stat { background: var(--wire-fill); border: 1px dashed var(--wire-line); padding: 0.4rem 0.3rem; }
+.timvo-process-page .wf-stat-num { height: 12px; background: var(--wire-line); opacity: 0.35; border-radius: 1px; width: 70%; margin-bottom: 0.25rem; }
+.timvo-process-page .wf-stat-lbl { height: 5px; background: var(--wire-line); opacity: 0.18; border-radius: 1px; width: 90%; }
+.timvo-process-page .wf-row { display: flex; gap: 0.4rem; align-items: center; }
+.timvo-process-page .wf-row .wf-block { flex: 1; }
+.timvo-process-page .wf-btn { height: 16px; background: var(--wire-line); opacity: 0.2; border-radius: 1px; min-width: 40px; }
+.timvo-process-page .wf-table-row { display: flex; gap: 0.3rem; padding: 0.25rem 0; border-bottom: 1px dashed var(--wire-line); opacity: 0.5; }
+.timvo-process-page .wf-table-cell { height: 6px; background: var(--wire-line); border-radius: 1px; flex: 1; }
+.timvo-process-page .wf-table-cell.w2 { flex: 2; }
+.timvo-process-page .wf-badge { height: 10px; width: 28px; background: var(--wire-line); opacity: 0.25; border-radius: 8px; }
 
-.timvo-process .iteration-timeline {
+/* ─── USER FLOW (exact) ─── */
+.timvo-process-page .flow-wrap { background: var(--flow-bg); border: 1px solid var(--flow-line); padding: 2.5rem; margin-top: 2rem; position: relative; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+.timvo-process-page .flow-wrap::-webkit-scrollbar { display: none; }
+.timvo-process-page .flow-label { position: absolute; top: -1px; left: 0; background: var(--flow-line); color: #fff; font-family: var(--font-m); font-size: 0.65rem; padding: 0.25rem 0.7rem; letter-spacing: 0.08em; }
+.timvo-process-page .flow-row { display: flex; align-items: center; gap: 0; margin-top: 1rem; min-width: max-content; }
+.timvo-process-page .flow-node { background: #fff; border: 2px solid var(--flow-line); padding: 0.55rem 1rem; font-family: var(--font-m); font-size: 0.68rem; color: var(--ink-soft); letter-spacing: 0.04em; white-space: nowrap; text-align: center; min-width: 110px; position: relative; }
+.timvo-process-page .flow-node.start { background: var(--ember); border-color: var(--ember); color: var(--paper); border-radius: 20px; }
+.dark .timvo-process-page .flow-node.start { color: var(--black); }
+.timvo-process-page .flow-node.end { background: var(--flow-fill); border-color: var(--flow-line); color: var(--flow-line); border-radius: 20px; }
+.timvo-process-page .flow-node.decision { background: var(--ember-pale); border-color: var(--ember-light); color: var(--ember-deep); transform: skewX(-4deg); }
+.timvo-process-page .flow-node.action { background: var(--flow-fill); }
+.timvo-process-page .flow-arrow { width: 32px; height: 2px; background: var(--flow-line); position: relative; flex-shrink: 0; }
+.timvo-process-page .flow-arrow::after { content: "▶"; position: absolute; right: -6px; top: 50%; transform: translateY(-50%); color: var(--flow-line); font-size: 0.5rem; }
+.timvo-process-page .flow-down { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 0 auto; }
+.timvo-process-page .flow-arrow-v { width: 2px; height: 20px; background: var(--flow-line); position: relative; }
+.timvo-process-page .flow-arrow-v::after { content: "▼"; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); color: var(--flow-line); font-size: 0.5rem; }
+.timvo-process-page .flow-note { font-family: var(--font-m); font-size: 0.6rem; color: var(--flow-line); text-align: center; margin-top: 0.3rem; max-width: 110px; }
+
+/* ─── UI MOCKUP (exact - keep ui-accent/ember orange) ─── */
+.timvo-process-page .ui-wrap { --ember: #c0633a; --ember-deep: #e8875e; --ember-light: #7a3d22; --ember-pale: #1f1009; border-radius: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.06); margin-top: 2rem; box-shadow: 0 40px 80px rgba(0,0,0,.5); }
+.timvo-process-page .ui-titlebar { background: #0f1319; padding: 0.7rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.timvo-process-page .ui-dot { width: 10px; height: 10px; border-radius: 50%; }
+.timvo-process-page .ui-dot.r { background: #ff5f57; }
+.timvo-process-page .ui-dot.y { background: #ffbd2e; }
+.timvo-process-page .ui-dot.g { background: #28c840; }
+.timvo-process-page .ui-url { flex: 1; background: #1a1f2e; border-radius: 3px; padding: 0.2rem 0.7rem; font-family: var(--font-m); font-size: 0.65rem; color: rgba(255,255,255,.3); margin: 0 0.7rem; }
+.timvo-process-page .ui-app { display: grid; grid-template-columns: 200px 1fr; min-height: 420px; background: var(--ui-bg); }
+.timvo-process-page .ui-sidebar { background: var(--ui-side); padding: 1.2rem 0; display: flex; flex-direction: column; gap: 0.2rem; border-right: 1px solid rgba(255,255,255,.05); }
+.timvo-process-page .ui-logo-area { padding: 0.4rem 1.2rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,.05); margin-bottom: 0.6rem; }
+.timvo-process-page .ui-logo-text { font-family: var(--font-d); font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,.9); letter-spacing: 0.04em; }
+.timvo-process-page .ui-logo-sub { font-family: var(--font-m); font-size: 0.55rem; color: rgba(255,255,255,.25); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.1rem; }
+.timvo-process-page .ui-nav-item { padding: 0.45rem 1.2rem; display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-b); font-size: 0.72rem; color: rgba(255,255,255,.35); cursor: pointer; transition: all 0.15s; font-weight: 400; position: relative; }
+.timvo-process-page .ui-nav-item:hover, .timvo-process-page .ui-nav-item.active { background: rgba(255,255,255,.04); color: rgba(255,255,255,.85); }
+.timvo-process-page .ui-nav-item.active::before { content: ""; position: absolute; left: 0; width: 2px; height: 20px; background: var(--ui-accent); }
+.timvo-process-page .ui-nav-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.15); flex-shrink: 0; }
+.timvo-process-page .ui-nav-dot.ember { background: var(--ui-accent); opacity: 0.8; }
+.timvo-process-page .ui-section-label { padding: 0.3rem 1.2rem; font-family: var(--font-m); font-size: 0.55rem; color: rgba(255,255,255,.18); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 0.6rem; }
+.timvo-process-page .ui-content { padding: 1.8rem; overflow: hidden; display: flex; flex-direction: column; gap: 1.2rem; }
+.timvo-process-page .ui-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.2rem; }
+.timvo-process-page .ui-page-title { font-family: var(--font-d); font-size: 1.4rem; font-weight: 300; color: rgba(255,255,255,.9); }
+.timvo-process-page .ui-page-sub { font-family: var(--font-b); font-size: 0.68rem; color: rgba(255,255,255,.3); margin-top: 0.1rem; }
+.timvo-process-page .ui-badge { background: rgba(192,99,58,.15); border: 1px solid rgba(192,99,58,.3); color: var(--ui-accent); font-family: var(--font-m); font-size: 0.6rem; padding: 0.2rem 0.6rem; border-radius: 2px; }
+.timvo-process-page .ui-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
+.timvo-process-page .ui-stat-card { background: var(--ui-card); padding: 1rem 1.1rem; }
+.timvo-process-page .ui-stat-val { font-family: var(--font-d); font-size: 1.6rem; font-weight: 300; color: rgba(255,255,255,.9); line-height: 1; }
+.timvo-process-page .ui-stat-lbl { font-family: var(--font-m); font-size: 0.58rem; color: rgba(255,255,255,.28); margin-top: 0.3rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.timvo-process-page .ui-stat-delta { font-size: 0.6rem; color: #7aab8f; margin-top: 0.2rem; }
+.timvo-process-page .ui-row { display: grid; grid-template-columns: 1.5fr 1fr; gap: 0.8rem; }
+.timvo-process-page .ui-card { background: var(--ui-card); padding: 1.2rem; }
+.timvo-process-page .ui-card-title { font-family: var(--font-m); font-size: 0.6rem; color: rgba(255,255,255,.3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.9rem; }
+.timvo-process-page .ui-client-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+.timvo-process-page .ui-client-row:last-child { border-bottom: none; }
+.timvo-process-page .ui-avatar { width: 22px; height: 22px; border-radius: 50%; background: rgba(192,99,58,.2); display: flex; align-items: center; justify-content: center; font-family: var(--font-m); font-size: 0.5rem; color: var(--ui-accent); flex-shrink: 0; }
+.timvo-process-page .ui-client-name { font-family: var(--font-b); font-size: 0.72rem; color: rgba(255,255,255,.7); flex: 1; font-weight: 400; }
+.timvo-process-page .ui-client-amt { font-family: var(--font-d); font-size: 0.9rem; color: rgba(255,255,255,.7); }
+.timvo-process-page .ui-rate-bar { display: flex; align-items: center; gap: 0.6rem; margin: 0.4rem 0; }
+.timvo-process-page .ui-rate-label { font-family: var(--font-m); font-size: 0.6rem; color: rgba(255,255,255,.3); width: 80px; flex-shrink: 0; }
+.timvo-process-page .ui-rate-track { flex: 1; height: 4px; background: rgba(255,255,255,.06); border-radius: 2px; position: relative; }
+.timvo-process-page .ui-rate-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--ui-accent); border-radius: 2px; opacity: 0.7; }
+.timvo-process-page .ui-rate-val { font-family: var(--font-m); font-size: 0.6rem; color: rgba(255,255,255,.4); width: 40px; text-align: right; flex-shrink: 0; }
+.timvo-process-page .ui-timer-bar { background: rgba(192,99,58,.08); border: 1px solid rgba(192,99,58,.15); padding: 0.7rem 1rem; display: flex; align-items: center; gap: 0.8rem; }
+.timvo-process-page .ui-timer-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ui-accent); animation: timvo-pulse 1.5s ease infinite; }
+@keyframes timvo-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.timvo-process-page .ui-timer-text { font-family: var(--font-m); font-size: 0.72rem; color: var(--ui-accent); }
+.timvo-process-page .ui-timer-proj { font-family: var(--font-b); font-size: 0.72rem; color: rgba(255,255,255,.5); margin-left: auto; font-weight: 400; }
+.timvo-process-page .ui-timer-time { font-family: var(--font-m); font-size: 0.85rem; color: rgba(255,255,255,.8); }
+.timvo-process-page .ui-heatmap { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; padding: 0.4rem; }
+.timvo-process-page .ui-hm-cell { height: 14px; border-radius: 1px; background: rgba(255,255,255,.04); }
+.timvo-process-page .ui-hm-cell.l1 { background: rgba(192,99,58,.12); }
+.timvo-process-page .ui-hm-cell.l2 { background: rgba(192,99,58,.28); }
+.timvo-process-page .ui-hm-cell.l3 { background: rgba(192,99,58,.5); }
+.timvo-process-page .ui-hm-cell.l4 { background: rgba(192,99,58,.75); }
+.timvo-process-page .ui-inv-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+.timvo-process-page .ui-inv-num { font-family: var(--font-m); font-size: 0.62rem; color: rgba(255,255,255,.3); }
+.timvo-process-page .ui-inv-client { font-family: var(--font-b); font-size: 0.72rem; color: rgba(255,255,255,.65); flex: 1; font-weight: 400; }
+.timvo-process-page .ui-inv-amt { font-family: var(--font-d); font-size: 0.95rem; color: rgba(255,255,255,.7); }
+.timvo-process-page .ui-inv-status { font-family: var(--font-m); font-size: 0.55rem; padding: 0.15rem 0.45rem; border-radius: 2px; letter-spacing: 0.06em; }
+.timvo-process-page .ui-inv-status.paid { background: rgba(122,171,143,.12); color: #7aab8f; border: 1px solid rgba(122,171,143,.2); }
+.timvo-process-page .ui-inv-status.sent { background: rgba(192,99,58,.1); color: var(--ui-accent); border: 1px solid rgba(192,99,58,.2); }
+.timvo-process-page .ui-inv-status.draft { background: rgba(255,255,255,.04); color: rgba(255,255,255,.25); border: 1px solid rgba(255,255,255,.06); }
+
+/* ─── IA DIAGRAM ─── */
+.timvo-process-page .ia-diagram {
+  background: #fff;
+  border: 1px solid var(--wire-line);
+  padding: 3rem 2rem;
   margin-top: 2rem;
 }
-
-.timvo-process .iter-item {
+.timvo-process-page .ia-tree {
   display: flex;
-  gap: 1.5rem;
-  padding-bottom: 2rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.timvo-process-page .ia-root {
+  background: var(--ember);
+  color: var(--paper);
+}
+.dark .timvo-process-page .ia-root {
+  color: var(--black);
+}
+.timvo-process-page .ia-root {
+  padding: 0.6rem 2rem;
+  font-family: var(--font-m);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.timvo-process-page .ia-line-v {
+  width: 2px;
+  height: 2rem;
+  background: var(--wire-line);
+  margin: 0 auto;
+}
+.timvo-process-page .ia-branches {
+  display: flex;
+  gap: 0;
+  position: relative;
+  width: 100%;
+}
+.timvo-process-page .ia-branches::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 2px;
+  background: var(--wire-line);
+}
+.timvo-process-page .ia-branch {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.timvo-process-page .ia-branch-line {
+  width: 2px;
+  height: 1.5rem;
+  background: var(--wire-line);
+}
+.timvo-process-page .ia-node {
+  background: var(--wire-fill);
+  border: 1px solid var(--wire-line);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-m);
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+  text-align: center;
+  white-space: nowrap;
+}
+.timvo-process-page .ia-node.accent {
+  background: var(--ember-pale);
+  border-color: var(--ember-light);
+  color: var(--ember-deep);
+}
+.timvo-process-page .ia-children {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-top: 0;
+}
+.timvo-process-page .ia-child-line {
+  width: 2px;
+  height: 1rem;
+  background: var(--wire-line);
+}
+.timvo-process-page .ia-child {
+  background: #fff;
+  border: 1px solid var(--wire-line);
+  padding: 0.3rem 0.8rem;
+  font-family: var(--font-m);
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  text-align: center;
+  white-space: nowrap;
+  margin: 0.15rem 0;
 }
 
-.timvo-process .iter-dot {
-  width: 10px;
-  height: 10px;
-  border: 2px solid var(--accent);
-  background: var(--bg);
+/* ─── UX DECISIONS ─── */
+.timvo-process-page .ux-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  margin-top: 3rem;
+}
+.timvo-process-page .ux-card {
+  background: var(--paper-mid);
+  padding: 2.2rem 2rem;
+}
+.timvo-process-page .ux-card-num {
+  font-family: var(--font-m);
+  font-size: 0.62rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.6rem;
+}
+.timvo-process-page .ux-card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.01em;
+}
+.timvo-process-page .ux-card-body {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  line-height: 1.8;
+}
+.timvo-process-page .ux-before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.timvo-process-page .ux-ba {
+  padding: 0.7rem;
+  border: 1px solid var(--line-strong);
+}
+.timvo-process-page .ux-ba-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 0.4rem;
+  font-family: var(--font-m);
+}
+.timvo-process-page .ux-ba-text {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.timvo-process-page .ux-ba.after {
+  border-color: var(--ember-light);
+  background: var(--ember-pale);
+}
+.timvo-process-page .ux-ba.after .ux-ba-label {
+  color: var(--ember);
+}
+.timvo-process-page .ux-ba.after .ux-ba-text {
+  color: var(--ember-deep);
+}
+
+/* ─── DESIGN SYSTEM ─── */
+.timvo-process-page .ds-section {
+  margin-top: 3rem;
+}
+.timvo-process-page .ds-title {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-family: var(--font-m);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.timvo-process-page .palette-row {
+  display: flex;
+  gap: 0;
+  height: 56px;
+  border: 1px solid var(--line-strong);
+}
+.timvo-process-page .swatch {
+  flex: 1;
+  position: relative;
+}
+.timvo-process-page .swatch-label {
+  position: absolute;
+  bottom: 4px;
+  left: 6px;
+  font-family: var(--font-m);
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  mix-blend-mode: difference;
+  color: #fff;
+  opacity: 0.7;
+}
+.timvo-process-page .type-specimens {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+.timvo-process-page .type-spec {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+.timvo-process-page .type-meta {
+  font-family: var(--font-m);
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  width: 120px;
+  flex-shrink: 0;
+  line-height: 1.6;
+}
+.timvo-process-page .component-row {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1rem;
+}
+.timvo-process-page .comp-btn-a {
+  background: var(--ember);
+  color: var(--paper);
+  padding: 0.6rem 1.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-b);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+.dark .timvo-process-page .comp-btn-a {
+  color: var(--black);
+}
+.timvo-process-page .comp-btn-b {
+  background: transparent;
+  color: var(--ink);
+  padding: 0.6rem 1.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-b);
+  font-weight: 400;
+  border: 1px solid var(--line-strong);
+}
+.timvo-process-page .comp-input {
+  border: 1px solid var(--line-strong);
+  background: var(--paper-mid);
+  padding: 0.55rem 1rem;
+  font-size: 0.8rem;
+  font-family: var(--font-b);
+  color: var(--ink);
+  outline: none;
+  width: 160px;
+}
+.timvo-process-page .comp-tag {
+  padding: 0.25rem 0.7rem;
+  background: var(--paper-dark);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-family: var(--font-m);
+}
+.timvo-process-page .comp-badge-g {
+  padding: 0.2rem 0.55rem;
+  background: rgba(122, 171, 143, 0.08);
+  border: 1px solid rgba(122, 171, 143, 0.2);
+  color: #7aab8f;
+  font-family: var(--font-m);
+  font-size: 0.6rem;
+}
+.timvo-process-page .comp-badge-e {
+  padding: 0.2rem 0.55rem;
+  background: var(--ember-pale);
+  border: 1px solid var(--ember-light);
+  color: var(--ember);
+  font-family: var(--font-m);
+  font-size: 0.6rem;
+}
+
+/* ─── ITERATION LOG ─── */
+.timvo-process-page .iteration-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 2.5rem;
+  position: relative;
+}
+.timvo-process-page .iteration-timeline::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line-strong);
+}
+.timvo-process-page .iter-item {
+  display: flex;
+  gap: 2rem;
+  padding-bottom: 2.5rem;
+  position: relative;
+}
+.timvo-process-page .iter-dot {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--ember);
+  background: var(--paper-warm);
   border-radius: 50%;
   flex-shrink: 0;
   margin-top: 0.3rem;
+  position: relative;
+  left: 21px;
+  z-index: 1;
 }
-
-.timvo-process .iter-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
+.timvo-process-page .iter-content {
+  padding-left: 1rem;
+}
+.timvo-process-page .iter-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.2rem;
-}
-
-.timvo-process .iter-title {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--ink);
+  color: var(--ink-muted);
+  font-family: var(--font-m);
   margin-bottom: 0.3rem;
 }
-
-.timvo-process .iter-body {
-  font-size: 0.82rem;
+.timvo-process-page .iter-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+.timvo-process-page .iter-body {
+  font-size: 0.8rem;
   color: var(--ink-muted);
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
-.timvo-process .ui-wrap {
-  border: 1px solid var(--line);
-  margin-top: 1.5rem;
-  overflow: hidden;
+/* ─── FOOTER ─── */
+.timvo-process-page .timvo-process-footer {
+  border-top: 1px solid var(--line);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
 }
-
-.timvo-process .anno {
-  font-size: 0.65rem;
+.timvo-process-page .footer-note {
+  font-size: 0.68rem;
   color: var(--ink-muted);
   letter-spacing: 0.06em;
-  margin-top: 0.8rem;
 }
 
-.timvo-process .mt-2 { margin-top: 1.5rem; }
-.timvo-process .mt-3 { margin-top: 2.5rem; }
+/* ─── UTILITIES ─── */
+.timvo-process-page .mt-2 {
+  margin-top: 2rem;
+}
+.timvo-process-page .mt-3 {
+  margin-top: 3rem;
+}
+.timvo-process-page .mt-1 {
+  margin-top: 1rem;
+}
+.timvo-process-page .gap-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 4rem;
+  align-items: start;
+}
 
-/* IA diagram */
-.timvo-process .ia-tree { display: flex; flex-direction: column; align-items: center; gap: 0; }
-.timvo-process .ia-line-v { width: 2px; height: 1.5rem; background: var(--line); margin: 0 auto; }
-.timvo-process .ia-branches { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
-.timvo-process .ia-branch { display: flex; flex-direction: column; align-items: center; }
-.timvo-process .ia-branch-line { width: 2px; height: 1rem; background: var(--line); }
-.timvo-process .ia-child-line { width: 2px; height: 0.8rem; background: var(--line); }
-.timvo-process .ia-children { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
-.timvo-process .ia-child { background: rgba(255,255,255,0.03); border: 1px solid var(--line); padding: 0.25rem 0.6rem; font-size: 0.6rem; color: var(--ink-muted); }
-
-/* Wireframe */
-.timvo-process .wireframe-grid { display: grid; gap: 1.5rem; margin-top: 1rem; }
-.timvo-process .wireframe-grid-2 { grid-template-columns: 1fr 1fr; }
-.timvo-process .wireframe-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
-.timvo-process .wireframe-wrap { position: relative; }
-.timvo-process .wf-screen-title { font-size: 0.65rem; color: var(--ink-muted); margin-bottom: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; }
-
-/* Flow */
-.timvo-process .flow-wrap { position: relative; overflow-x: auto; }
-.timvo-process .flow-row { display: flex; align-items: center; gap: 0; margin-top: 1rem; min-width: max-content; flex-wrap: wrap; }
-.timvo-process .flow-node { background: rgba(255,255,255,0.05); border: 2px solid var(--line); padding: 0.5rem 1rem; font-size: 0.65rem; color: var(--ink-soft); white-space: nowrap; text-align: center; min-width: 90px; }
-.timvo-process .flow-node.start { background: var(--accent); border-color: var(--accent); color: var(--bg); border-radius: 20px; }
-.timvo-process .flow-node.end { background: rgba(211,216,0,0.2); border-color: var(--accent); color: var(--accent); border-radius: 20px; }
-.timvo-process .flow-node.decision { background: rgba(211,216,0,0.1); border-color: var(--accent); color: var(--accent); }
-.timvo-process .flow-arrow { width: 24px; height: 2px; background: var(--line); flex-shrink: 0; }
-.timvo-process .flow-arrow-v { width: 2px; height: 20px; background: var(--line); position: relative; margin: 0 auto; }
-.timvo-process .flow-arrow-v::after { content: '▼'; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); color: var(--line); font-size: 0.5rem; }
-.timvo-process .flow-down { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 0 auto; }
-.timvo-process .flow-node.action { background: rgba(255,255,255,0.05); }
-
-/* Design system */
-.timvo-process .ds-section { margin-top: 2rem; }
-.timvo-process .ds-title { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); }
-.timvo-process .palette-row { display: flex; gap: 0; height: 48px; border: 1px solid var(--line); flex-wrap: wrap; }
-.timvo-process .swatch { flex: 1; min-width: 60px; position: relative; }
-.timvo-process .type-specimens { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1rem; }
-.timvo-process .type-spec { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); margin-bottom: 0.6rem; }
-.timvo-process .type-meta { font-size: 0.6rem; color: var(--ink-muted); width: 100px; flex-shrink: 0; }
-.timvo-process .component-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
-.timvo-process .comp-btn-a { background: var(--accent); color: var(--bg); padding: 0.5rem 1rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; border: none; }
-.timvo-process .comp-btn-b { background: transparent; color: var(--ink); padding: 0.5rem 1rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--line); }
-.timvo-process .ux-ba-label { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.3rem; }
-.timvo-process .ux-ba-text { font-size: 0.75rem; color: var(--ink-soft); line-height: 1.5; }
-.timvo-process .ux-before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
-
-/* UI mockup placeholder - simplified */
-.timvo-process .ui-wrap .ui-titlebar { background: #0a0a0a; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
-.timvo-process .ui-wrap .ui-dot { width: 8px; height: 8px; border-radius: 50%; }
-.timvo-process .ui-wrap .ui-dot.r { background: #ff5f57; }
-.timvo-process .ui-wrap .ui-dot.y { background: #ffbd2e; }
-.timvo-process .ui-wrap .ui-dot.g { background: #28c840; }
-.timvo-process .ui-wrap .ui-url { flex: 1; background: rgba(255,255,255,0.05); padding: 0.2rem 0.6rem; font-size: 0.6rem; color: var(--ink-muted); }
-.timvo-process .iteration-timeline { position: relative; padding-left: 1.5rem; }
-.timvo-process .iteration-timeline::before { content: ''; position: absolute; left: 4px; top: 0; bottom: 0; width: 1px; background: var(--line); }
-.timvo-process .iter-content { padding-left: 1rem; }
+/* ─── REVEAL ─── */
+.timvo-process-page .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.timvo-process-page .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 @media (max-width: 860px) {
-  .timvo-process .discovery-grid,
-  .timvo-process .ux-grid,
-  .timvo-process .persona-layout {
+  .timvo-process-page .wireframe-grid-2,
+  .timvo-process-page .wireframe-grid-3,
+  .timvo-process-page .ia-branches,
+  .timvo-process-page .gap-layout,
+  .timvo-process-page .discovery-grid,
+  .timvo-process-page .ux-grid,
+  .timvo-process-page .persona-layout {
     grid-template-columns: 1fr;
   }
-  .timvo-process .section,
-  .timvo-process .hero {
-    padding: 2.5rem 1.5rem;
+  .timvo-process-page .ui-app {
+    grid-template-columns: 1fr;
   }
-  .timvo-process .step-nav {
+  .timvo-process-page .ui-sidebar {
+    display: none;
+  }
+  .timvo-process-page .ui-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .timvo-process-page .step-nav-sticky-wrap {
+    padding: 0.6rem 1.5rem;
+  }
+  .timvo-process-page .section,
+  .timvo-process-page .hero {
+    padding: 3.5rem 1.5rem;
+  }
+  .timvo-process-page .section-wrap .section,
+  .timvo-process-page .section-dark .section {
+    padding: 0 1.5rem;
+  }
+  .timvo-process-page .section-wrap,
+  .timvo-process-page .section-dark {
+    padding: 3.5rem 0;
+  }
+  .timvo-process-page .flow-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .timvo-process-page .flow-row::-webkit-scrollbar {
+    display: none;
+  }
+  .timvo-process-page .palette-row {
     flex-wrap: wrap;
+    height: auto;
+  }
+  .timvo-process-page .swatch {
+    height: 40px;
+    min-width: 80px;
+  }
+  .timvo-process-page .ia-branches::before {
+    display: none;
+  }
+  .timvo-process-page .ia-branch {
+    min-width: 80px;
   }
 }
+
+/* ─── Scroll progress bar (fixed at top) ─── */
+.timvo-process-page .timvo-progress-bar-wrap {
+  position: fixed;
+  top: 72px; /* below header */
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--line-strong);
+  z-index: 99;
+  pointer-events: none;
+}
+.timvo-process-page .timvo-progress-bar-wrap .progress-bar {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.timvo-process-page .timvo-progress-bar-wrap .progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--ember);
+  width: 0%;
+  transition: width 0.1s;
+}
+
+/* ─── Timvo overrides: work-area text black, list padding, section spacing ─── */
+
+/* Work area (wireframe, flow, IA) — light backgrounds, text black */
+.timvo-process-page .wireframe-wrap,
+.timvo-process-page .wireframe-wrap .wf-screen-title {
+  color: #111;
+}
+.timvo-process-page .flow-wrap .flow-node.action,
+.timvo-process-page .flow-wrap .flow-node.end,
+.timvo-process-page .flow-wrap .flow-node.decision {
+  color: #111;
+}
+.timvo-process-page .ia-diagram,
+.timvo-process-page .ia-diagram .ia-node,
+.timvo-process-page .ia-diagram .ia-child {
+  color: #333;
+}
+.timvo-process-page .ia-diagram .ia-node.accent {
+  color: #333;
+}
+
+/* Persona & insight lists — reduce right padding */
+.timvo-process-page .persona-card {
+  padding-right: 1.5rem;
+}
+.timvo-process-page .persona-trait {
+  padding-right: 0;
+}
+.timvo-process-page .pt-value {
+  max-width: none;
+}
+.timvo-process-page .insight-list {
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+.timvo-process-page .insight-item {
+  padding-right: 0;
+}
+
+

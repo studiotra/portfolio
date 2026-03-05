@@ -418,6 +418,7 @@
     if ($('.rr_title_anim').length > 0) {
       let splitTitleLines = gsap.utils.toArray(".rr_title_anim");
       splitTitleLines.forEach(splitTextLine => {
+        if (!splitTextLine || !(splitTextLine instanceof Element)) return;
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: splitTextLine,
@@ -828,19 +829,30 @@
   }
 
   // Text Invert With Scroll 
-  const split = new SplitText(".text-invert", { type: "lines" });
-  split.lines.forEach((target) => {
-    gsap.to(target, {
-      backgroundPositionX: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: target,
-        scrub: 1,
-        start: 'top 85%',
-        end: "bottom center",
+  if (document.querySelectorAll(".text-invert").length > 0 && typeof SplitText !== "undefined") {
+    const textInvertEls = document.querySelectorAll(".text-invert");
+    textInvertEls.forEach((el) => {
+      try {
+        const split = new SplitText(el, { type: "lines" });
+        if (split.lines && split.lines.length > 0) {
+          split.lines.forEach((target) => {
+            gsap.to(target, {
+              backgroundPositionX: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: target,
+                scrub: 1,
+                start: 'top 85%',
+                end: "bottom center",
+              }
+            });
+          });
+        }
+      } catch (e) {
+        console.warn("Text invert animation skip:", e);
       }
     });
-  });
+  }
 
   // testimonial 4 active
   if (document.querySelectorAll(".testimonial-4-active").length > 0) {
@@ -1598,7 +1610,7 @@
       end: "bottom bottom",
       scrub: true,
       onUpdate: ({ progress }) => {
-        const step = Math.min(stepCount, Math.max(1, Math.floor(progress * (stepCount - 1)) + 1));
+        const step = Math.min(stepCount, Math.max(1, Math.ceil(progress * stepCount)));
         const width = (step / stepCount) * 100;
 
         if (fill) fill.style.width = `${width}%`;

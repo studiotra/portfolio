@@ -531,40 +531,6 @@ h6 {
   overflow: hidden;
 }
 
-.section-subtitle {
-  font-family: var(--font_bdogrotesk);
-  font-size: 16px;
-  font-weight: 500;
-  padding: 7px 8px;
-  line-height: 14px;
-  padding-left: 20px;
-  position: relative;
-  border-radius: 500px;
-  color: var(--primary);
-  display: inline-block;
-  border: 1px solid var(--primary);
-  text-transform: capitalize;
-}
-.section-subtitle::before {
-  top: 50%;
-  width: 6px;
-  left: 12px;
-  height: 6px;
-  content: "";
-  position: absolute;
-  border-radius: 500px;
-  background-color: currentColor;
-  transform: translate(-50%, -50%);
-}
-.section-subtitle.sub--white {
-  color: var(--white);
-  border-color: var(--white);
-  font-weight: 400;
-}
-.section-subtitle.sub--white::before {
-  background-color: var(--white);
-}
-
 .section-subtitle-2 {
   font-family: var(--font_bdogrotesk);
   font-weight: 400;
@@ -622,36 +588,6 @@ h6 {
   color: var(--black);
 }
 
-/* Section title styling with responsive font sizes */
-.section-title {
-  font-size: 90px;
-  /* Specific font family and weight */
-}
-@media only screen and (max-width: 1919px) {
-  .section-title {
-    font-size: 70px;
-  }
-}
-@media only screen and (max-width: 1399px) {
-  .section-title {
-    font-size: 60px;
-  }
-}
-@media only screen and (max-width: 1199px) {
-  .section-title {
-    font-size: 50px;
-  }
-}
-@media only screen and (max-width: 991px) {
-  .section-title {
-    font-size: 40px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .section-title {
-    font-size: 35px;
-  }
-}
 .section-title.font-bdogrotesk-regular {
   font-family: var(--font_bdogrotesk);
   font-weight: 400;
@@ -1339,54 +1275,6 @@ h6 {
   height: 80px;
 }
 
-/* page title style  */
-.page-title-wrapper {
-  margin-top: 30px;
-  margin-bottom: 45px;
-}
-@media only screen and (max-width: 991px) {
-  .page-title-wrapper {
-    margin-bottom: 10px;
-  }
-}
-.page-title-wrapper .page-title {
-  font-size: 140px;
-  font-weight: 400;
-  line-height: 130px;
-  letter-spacing: -7px;
-}
-@media only screen and (max-width: 1399px) {
-  .page-title-wrapper .page-title {
-    font-size: 120px;
-    letter-spacing: -5px;
-  }
-}
-@media only screen and (max-width: 1199px) {
-  .page-title-wrapper .page-title {
-    font-size: 100px;
-    line-height: 110px;
-    letter-spacing: -3px;
-  }
-}
-@media only screen and (max-width: 991px) {
-  .page-title-wrapper .page-title {
-    font-size: 75px;
-    line-height: 85px;
-    letter-spacing: 0px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .page-title-wrapper .page-title {
-    font-size: 55px;
-    line-height: 65px;
-  }
-}
-@media (max-width: 575px) {
-  .page-title-wrapper .page-title {
-    font-size: 32px;
-    line-height: 40px;
-  }
-}
 .page-title-wrapper .page-title span {
   font-family: var(--font_ppeditor);
 }
@@ -9333,7 +9221,7 @@ section {
 
 /* agency portfolio 2 page css */
 .hero-area-10 .hero-area-10__inner {
-  padding-top: 142px;
+  padding-top: 80px;
   padding-bottom: 100px;
   position: relative;
 }
@@ -9344,6 +9232,9 @@ section {
   .hero-area-10 .hero-area-10__inner {
     padding-top: 110px;
     padding-bottom: 80px;
+  }
+  .section-spacing-top {
+    padding-top: 60px;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -10030,6 +9921,135 @@ section {
   line-height: 28px;
   color: var(--primary);
   max-width: 417px;
+}
+
+/* Studiotra overrides */
+
+/* About page moving-gallery: same size, align middle */
+.about-area-details .wrapper-gallery {
+  align-items: center;
+}
+.about-area-details .moving-gallery li,
+.about-area-details .moving-gallery li:nth-child(1),
+.about-area-details .moving-gallery li:nth-child(2),
+.about-area-details .moving-gallery li:nth-child(3),
+.about-area-details .moving-gallery li:nth-child(4),
+.about-area-details .moving-gallery li:nth-child(5) {
+  width: 28vw;
+}
+@media (max-width: 575px) {
+  .about-area-details .moving-gallery li,
+  .about-area-details .moving-gallery li:nth-child(1),
+  .about-area-details .moving-gallery li:nth-child(2),
+  .about-area-details .moving-gallery li:nth-child(3),
+  .about-area-details .moving-gallery li:nth-child(4),
+  .about-area-details .moving-gallery li:nth-child(5) {
+    width: 50vw;
+  }
+}
+.about-area-details .moving-gallery li img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.header-area-7 .header__navicon,
+.header-area-7 .side-toggle {
+  margin-right: 0;
+}
+
+@media only screen and (max-width: 1199px) {
+  .section-spacing-top {
+    padding-top: 60px;
+  }
+}
+
+.info-area-page-about .title-wrapper .text:first-of-type {
+  margin-top: 42px;
+}
+
+@media only screen and (max-width: 991px) {
+  .award-area-page-about .section-header {
+    padding-top: 40px;
+  }
+}
+
+.approach-area-about-page .approach-box .title {
+  width: 100%;
+  min-width: 0;
+}
+
+.progress-wrap.active-progress {
+  background-color: rgba(255, 255, 255, 0.1);
+  mix-blend-mode: unset;
+}
+
+.progress-wrap svg.progress-circle path {
+  stroke: #e1f200;
+  stroke-width: 2;
+  fill: none;
+}
+
+.rr-btn:hover .btn-wrap .text-two,
+.rr-btn:focus .btn-wrap .text-two {
+  color: #e1f200;
+}
+
+.rr-btn:hover,
+.rr-btn:focus {
+  border-color: #e1f200;
+}
+
+.dark .rr-btn:hover .btn-wrap .text-two,
+.dark .rr-btn:focus .btn-wrap .text-two {
+  color: #e1f200;
+}
+
+/* My Stack - client-area with tools as text */
+.client-area-service-page.my-stack .section-content .text-wrapper {
+  margin-left: 0;
+}
+
+.client-area-service-page.my-stack .client-capsule-wrapper-box {
+  overflow: visible;
+  margin-top: 48px;
+}
+
+.client-area-service-page.my-stack .client-capsule-wrapper {
+  overflow: visible;
+  pointer-events: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  margin-top: 0;
+  height: auto;
+  min-height: 0;
+}
+
+.client-area-service-page.my-stack .client-capsule-wrapper > * {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+}
+
+.client-area-service-page .client-box.stack-tool {
+  background-color: var(--theme);
+  color: #000;
+  width: auto;
+  height: auto;
+  min-height: 50px;
+  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 70px;
+  font-weight: 500;
+  transform: none;
+}
+
+.client-area-service-page .client-box.stack-tool img {
+  display: none;
 }
 
 /*# sourceMappingURL=ad-style.css.map */

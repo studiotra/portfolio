@@ -14898,6 +14898,11 @@ only screen and (max-width: 1919px) {
     border-top: 0;
 }
 
+@media only screen and (max-width: 991px) {
+    .approach-area-about-page .approach-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
 @media only screen and (max-width: 767px) {
     .approach-area-about-page .approach-wrapper {
         grid-template-columns: 1fr;

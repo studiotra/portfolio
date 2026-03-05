@@ -903,6 +903,7 @@
     if ($('.rr_title_anim').length > 0) {
       let splitTitleLines = gsap.utils.toArray(".rr_title_anim");
       splitTitleLines.forEach(splitTextLine => {
+        if (!splitTextLine || !(splitTextLine instanceof Element)) return;
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: splitTextLine,
