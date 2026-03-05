@@ -10062,6 +10062,16 @@ section {
   max-width: 48ch;
 }
 
+/* Meta section: 5 columns */
+.work-details-area .meta-wrapper {
+  grid-template-columns: repeat(5, 1fr);
+}
+@media only screen and (max-width: 991px) {
+  .work-details-area .meta-wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 /* section-title-wrapper: 1/2 width instead of 1/4 */
 .work-details-area .section-title-wrapper {
   grid-template-columns: 1fr 1fr;
