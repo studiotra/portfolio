@@ -10052,6 +10052,16 @@ section {
   display: none;
 }
 
+/* Capabilities: service-desc styling */
+.service-area-service-page .services-wrapper-1 .service-box .service-desc {
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 48ch;
+}
+
 /* section-title-wrapper: 1/2 width instead of 1/4 */
 .work-details-area .section-title-wrapper {
   grid-template-columns: 1fr 1fr;
@@ -10100,6 +10110,114 @@ section {
 }
 .work-details-area .section-info.case-study-structure .case-study-block .feature-list {
   margin-top: 1rem;
+}
+
+/* PE/RE Gallery: before/after slider + full-width images */
+.work-details-area .gallery-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.work-details-area .before-after-slider {
+  width: 100%;
+  position: relative;
+}
+.work-details-area .before-after-slider .ba-slider-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: 20px;
+  cursor: col-resize;
+}
+@media (max-width: 767px) {
+  .work-details-area .before-after-slider .ba-slider-inner {
+    border-radius: 5px;
+    aspect-ratio: 4/3;
+  }
+}
+.work-details-area .before-after-slider .ba-image {
+  position: absolute;
+  inset: 0;
+}
+.work-details-area .before-after-slider .ba-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.work-details-area .before-after-slider .ba-before {
+  z-index: 1;
+}
+.work-details-area .before-after-slider .ba-after {
+  z-index: 2;
+  clip-path: inset(0 0 0 50%);
+}
+.work-details-area .before-after-slider .ba-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  z-index: 3;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: col-resize;
+  transition: left 0.05s ease-out;
+}
+.work-details-area .before-after-slider .ba-handle-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+  transform: translateX(-50%);
+}
+.work-details-area .before-after-slider .ba-handle-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  flex-shrink: 0;
+}
+.work-details-area .before-after-slider .ba-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.work-details-area .gallery-fullwidth {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.work-details-area .gallery-fullwidth-item {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+@media (max-width: 767px) {
+  .work-details-area .gallery-fullwidth-item {
+    border-radius: 5px;
+  }
+}
+.work-details-area .gallery-fullwidth-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  vertical-align: top;
 }
 
 /*# sourceMappingURL=ad-style.css.map */

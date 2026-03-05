@@ -140,18 +140,38 @@
                 </div>
               </div>
             </div>
-            <div class="container large">
-              <div class="gallery-wrapper gallery-column gallery-stack-scroll fade-anim">
-                <div class="stack-viewport">
-                  <div class="stack-slides">
-                    <div class="image"><img src="../assets/imgs/gallery/image-28.webp" alt="PE/RE Proposal System"></div>
-                    <div class="image"><img src="../assets/imgs/gallery/image-29.webp" alt="PE/RE Proposal System"></div>
-                    <div class="image"><img src="../assets/imgs/gallery/image-30.webp" alt="PE/RE Proposal System"></div>
-                    <div class="image"><img src="../assets/imgs/gallery/image-31.webp" alt="PE/RE Proposal System"></div>
-                    <div class="image"><img src="../assets/imgs/gallery/image-32.webp" alt="PE/RE Proposal System"></div>
-                    <div class="image"><img src="../assets/imgs/gallery/image-33.webp" alt="PE/RE Proposal System"></div>
+            <div class="gallery-section fade-anim">
+              <!-- Before/After slider (in container for labels) -->
+              <div class="container large">
+                <div class="before-after-slider">
+                  <div class="ba-slider-inner">
+                    <div class="ba-image ba-before">
+                      <img src="../assets/imgs/gallery/image-28.webp" alt="Before — PE/RE Proposal System">
+                    </div>
+                    <div class="ba-image ba-after">
+                      <img src="../assets/imgs/gallery/image-29.webp" alt="After — PE/RE Proposal System">
+                    </div>
+                    <div class="ba-handle" aria-hidden="true">
+                      <div class="ba-handle-line"></div>
+                      <div class="ba-handle-circle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="4" x2="8" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ba-labels">
+                    <span class="ba-label ba-label-before">Before</span>
+                    <span class="ba-label ba-label-after">After</span>
                   </div>
                 </div>
+              </div>
+              <!-- Plain full-width gallery images -->
+              <div class="container large">
+              <div class="gallery-fullwidth">
+                <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-30.webp" alt="PE/RE Proposal System"></div>
+                <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-31.webp" alt="PE/RE Proposal System"></div>
+                <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-32.webp" alt="PE/RE Proposal System"></div>
+                <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-33.webp" alt="PE/RE Proposal System"></div>
+              </div>
               </div>
             </div>
           </div>
@@ -206,37 +226,63 @@
   <script src="../assets/vendor/waypoints.min.js"></script>
   <script src="../assets/ad-js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-      gsap.registerPlugin(ScrollTrigger);
+    (function() {
+      function initBeforeAfter() {
+        var slider = document.querySelector('.before-after-slider');
+        if (!slider) return;
 
-      var gallery = document.querySelector('.gallery-stack-scroll');
-      if (!gallery) return;
+        var inner = slider.querySelector('.ba-slider-inner');
+        var after = slider.querySelector('.ba-after');
+        var handle = slider.querySelector('.ba-handle');
+        if (!inner || !after || !handle) return;
 
-      var images = gsap.utils.toArray('.gallery-stack-scroll .stack-slides .image');
-      if (images.length === 0) return;
-
-      var segment = 1 / images.length;
-
-      images.forEach(function(img, i) {
-        gsap.set(img, { position: 'absolute', top: 0, left: 0, width: '100%', zIndex: i + 1, yPercent: i === 0 ? 0 : 100 });
-      });
-
-      var tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: gallery,
-          start: 'top top',
-          end: function() { return '+=' + (images.length * window.innerHeight); },
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1
+        function setPosition(x) {
+          var rect = inner.getBoundingClientRect();
+          var w = rect.width;
+          var pct = Math.max(0, Math.min(100, ((x - rect.left) / w) * 100));
+          after.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
+          handle.style.left = pct + '%';
         }
-      });
 
-      for (var i = 1; i < images.length; i++) {
-        tl.to(images[i], { yPercent: 0, duration: segment, ease: 'none' }, i * segment);
+        function onMove(e) {
+          var x = e.touches ? e.touches[0].clientX : e.clientX;
+          setPosition(x);
+        }
+
+        function onUp() {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('touchmove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          document.removeEventListener('touchend', onUp);
+        }
+
+        handle.addEventListener('mousedown', function(e) {
+          e.preventDefault();
+          setPosition(e.clientX);
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+        handle.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          setPosition(e.touches[0].clientX);
+          document.addEventListener('touchmove', onMove);
+          document.addEventListener('touchend', onUp);
+        });
+
+        inner.addEventListener('click', function(e) {
+          if (e.target === handle || handle.contains(e.target)) return;
+          setPosition(e.clientX);
+        });
+
+        setPosition(inner.getBoundingClientRect().width * 0.5);
       }
-    });
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBeforeAfter);
+      } else {
+        initBeforeAfter();
+      }
+    })();
   </script>
 
 </body>
