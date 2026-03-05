@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 174.17 174.17">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e1f200;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="84.11" width="5.95" height="174.17"/>
+  <rect class="cls-1" x="84.11" y="0" width="5.95" height="174.17" transform="translate(-13.8 16.44) rotate(-10)"/>
+  <rect class="cls-1" x="84.11" y="0" width="5.95" height="174.17" transform="translate(-24.53 35.04) rotate(-20)"/>
+  <rect class="cls-1" x="84.11" y="0" width="5.95" height="174.17" transform="translate(-31.87 55.21) rotate(-30)"/>
+  <rect class="cls-1" x="84.11" y="0" width="5.95" height="174.17" transform="translate(-35.6 76.35) rotate(-40)"/>
+  <rect class="cls-1" x="84.11" y="0" width="5.95" height="174.17" transform="translate(-35.6 97.82) rotate(-50)"/>
+  <rect class="cls-1" x="84.11" y="0" width="5.95" height="174.17" transform="translate(-31.87 118.96) rotate(-60)"/>
+  <rect class="cls-1" x="84.11" y="0" width="5.95" height="174.17" transform="translate(-24.53 139.13) rotate(-70)"/>
+  <rect class="cls-1" x="84.11" y="0" width="5.95" height="174.17" transform="translate(-13.8 157.72) rotate(-80)"/>
+  <rect class="cls-1" y="84.11" width="174.17" height="5.95"/>
+  <rect class="cls-1" x="0" y="84.11" width="174.17" height="5.95" transform="translate(-13.8 16.45) rotate(-10)"/>
+  <rect class="cls-1" x="0" y="84.11" width="174.17" height="5.95" transform="translate(-24.53 35.04) rotate(-20)"/>
+  <rect class="cls-1" x="0" y="84.11" width="174.17" height="5.95" transform="translate(-31.87 55.21) rotate(-30)"/>
+  <rect class="cls-1" x="0" y="84.11" width="174.17" height="5.95" transform="translate(-35.6 76.35) rotate(-40)"/>
+  <rect class="cls-1" x="0" y="84.11" width="174.17" height="5.95" transform="translate(-35.6 97.82) rotate(-50)"/>
+  <rect class="cls-1" x="0" y="84.11" width="174.17" height="5.95" transform="translate(-31.87 118.96) rotate(-60)"/>
+  <rect class="cls-1" x="0" y="84.11" width="174.17" height="5.95" transform="translate(-24.53 139.13) rotate(-70)"/>
+  <rect class="cls-1" x="0" y="84.11" width="174.17" height="5.95" transform="translate(-13.8 157.72) rotate(-80)"/>
+</svg>

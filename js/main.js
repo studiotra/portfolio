@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavScroll();
   initMoveToTop();
   initProjectProgress();
+  initParallax();
 });
 
 /**
@@ -105,4 +106,27 @@ function initProjectProgress() {
   window.addEventListener('scroll', updateProgress, { passive: true });
   window.addEventListener('resize', updateProgress);
   updateProgress();
+}
+
+/**
+ * Parallax: elements with data-parallax lag behind scroll (0.3 = moves 30% as fast, creating depth)
+ */
+function initParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const elements = document.querySelectorAll('[data-parallax]');
+  if (!elements.length) return;
+
+  const update = () => {
+    const scrollY = window.scrollY;
+    elements.forEach((el) => {
+      const factor = parseFloat(el.dataset.parallax) || 0.2;
+      const offset = scrollY * factor * 0.5;
+      el.style.transform = `translate3d(0, ${offset}px, 0)`;
+    });
+  };
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 }

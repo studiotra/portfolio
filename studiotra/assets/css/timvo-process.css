@@ -1,0 +1,567 @@
+/* Timvo Design Process — Studiotra branding (dark theme) */
+
+/* Process bar (back link + progress) */
+.timvo-process-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 50;
+}
+
+.timvo-process .back-link {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.timvo-process .back-link:hover {
+  color: var(--accent);
+}
+
+.timvo-process .progress-bar {
+  width: 120px;
+  height: 2px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+
+.timvo-process .progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  transition: width 0.1s;
+}
+
+/* Reveal animation */
+.timvo-process .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.timvo-process .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timvo-process .div {
+  border: none;
+  border-top: 1px solid var(--line);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.timvo-process {
+  --ink: #fcf7f3;
+  --ink-soft: rgba(252, 247, 243, 0.7);
+  --ink-muted: rgba(252, 247, 243, 0.5);
+  --ink-faint: rgba(252, 247, 243, 0.2);
+  --accent: #d3d800;
+  --accent-deep: #b8c000;
+  --accent-light: rgba(211, 216, 0, 0.3);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.15);
+}
+
+.timvo-process {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font_sequelsansromanbody);
+}
+
+.timvo-process .hero {
+  padding: 4rem 2rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.timvo-process .hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.timvo-process .hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+}
+
+.timvo-process .hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.timvo-process .hero-subtitle {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  max-width: 58ch;
+  line-height: 1.85;
+  margin-bottom: 2.5rem;
+}
+
+.timvo-process .step-nav {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--line);
+  width: fit-content;
+  overflow-x: auto;
+}
+
+.timvo-process .step-nav-item {
+  padding: 0.5rem 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-decoration: none;
+  border-right: 1px solid var(--line);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.timvo-process .step-nav-item:last-child {
+  border-right: none;
+}
+
+.timvo-process .step-nav-item:hover,
+.timvo-process .step-nav-item.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.timvo-process .section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem;
+}
+
+.timvo-process .section-wrap {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 3.5rem 2rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.timvo-process .section-dark {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 3.5rem 2rem;
+}
+
+.timvo-process .step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.timvo-process .step-num {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.timvo-process .step-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.timvo-process .section-title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+.timvo-process .section-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.timvo-process .section-title-light {
+  color: var(--ink);
+}
+
+.timvo-process .body-text {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.8;
+  max-width: 62ch;
+}
+
+.timvo-process .body-text-light {
+  color: var(--ink-soft);
+}
+
+.timvo-process .discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 2rem;
+}
+
+.timvo-process .disc-card {
+  background: var(--bg);
+  padding: 1.8rem 1.5rem;
+  border: 1px solid var(--line);
+}
+
+.timvo-process .disc-card-icon {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.timvo-process .disc-card-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.timvo-process .disc-card-body {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.timvo-process .persona-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 3rem;
+  align-items: start;
+  margin-top: 2.5rem;
+}
+
+.timvo-process .persona-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  padding: 2rem;
+}
+
+.timvo-process .persona-avatar {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.timvo-process .persona-name {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+
+.timvo-process .persona-role {
+  font-size: 0.72rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.timvo-process .persona-trait {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.timvo-process .pt-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+  width: 55px;
+}
+
+.timvo-process .pt-value {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.timvo-process .insight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.timvo-process .insight-item {
+  border-left: 2px solid var(--accent-light);
+  padding-left: 1rem;
+}
+
+.timvo-process .insight-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.timvo-process .insight-text {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.timvo-process .wireframe-wrap,
+.timvo-process .flow-wrap {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  padding: 2rem;
+  margin-top: 1.5rem;
+}
+
+.timvo-process .wireframe-label,
+.timvo-process .flow-label {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.6rem;
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.08em;
+}
+
+.timvo-process .ia-diagram {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line);
+  padding: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.timvo-process .ia-root {
+  background: var(--accent);
+  color: var(--bg);
+  padding: 0.5rem 1.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.timvo-process .ia-node {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+}
+
+.timvo-process .ia-node.accent {
+  background: rgba(211, 216, 0, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.timvo-process .ux-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  margin-top: 2rem;
+}
+
+.timvo-process .ux-card {
+  background: var(--bg);
+  padding: 2rem;
+  border: 1px solid var(--line);
+}
+
+.timvo-process .ux-card-num {
+  font-size: 0.62rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+
+.timvo-process .ux-card-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.timvo-process .ux-card-body {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  line-height: 1.75;
+}
+
+.timvo-process .ux-ba {
+  padding: 0.6rem;
+  border: 1px dashed var(--line);
+}
+
+.timvo-process .ux-ba.after {
+  border-color: var(--accent-light);
+  background: rgba(211, 216, 0, 0.05);
+}
+
+.timvo-process .iteration-timeline {
+  margin-top: 2rem;
+}
+
+.timvo-process .iter-item {
+  display: flex;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.timvo-process .iter-dot {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.3rem;
+}
+
+.timvo-process .iter-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.timvo-process .iter-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+
+.timvo-process .iter-body {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.timvo-process .ui-wrap {
+  border: 1px solid var(--line);
+  margin-top: 1.5rem;
+  overflow: hidden;
+}
+
+.timvo-process .anno {
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.06em;
+  margin-top: 0.8rem;
+}
+
+.timvo-process .mt-2 { margin-top: 1.5rem; }
+.timvo-process .mt-3 { margin-top: 2.5rem; }
+
+/* IA diagram */
+.timvo-process .ia-tree { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.timvo-process .ia-line-v { width: 2px; height: 1.5rem; background: var(--line); margin: 0 auto; }
+.timvo-process .ia-branches { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
+.timvo-process .ia-branch { display: flex; flex-direction: column; align-items: center; }
+.timvo-process .ia-branch-line { width: 2px; height: 1rem; background: var(--line); }
+.timvo-process .ia-child-line { width: 2px; height: 0.8rem; background: var(--line); }
+.timvo-process .ia-children { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.timvo-process .ia-child { background: rgba(255,255,255,0.03); border: 1px solid var(--line); padding: 0.25rem 0.6rem; font-size: 0.6rem; color: var(--ink-muted); }
+
+/* Wireframe */
+.timvo-process .wireframe-grid { display: grid; gap: 1.5rem; margin-top: 1rem; }
+.timvo-process .wireframe-grid-2 { grid-template-columns: 1fr 1fr; }
+.timvo-process .wireframe-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+.timvo-process .wireframe-wrap { position: relative; }
+.timvo-process .wf-screen-title { font-size: 0.65rem; color: var(--ink-muted); margin-bottom: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* Flow */
+.timvo-process .flow-wrap { position: relative; overflow-x: auto; }
+.timvo-process .flow-row { display: flex; align-items: center; gap: 0; margin-top: 1rem; min-width: max-content; flex-wrap: wrap; }
+.timvo-process .flow-node { background: rgba(255,255,255,0.05); border: 2px solid var(--line); padding: 0.5rem 1rem; font-size: 0.65rem; color: var(--ink-soft); white-space: nowrap; text-align: center; min-width: 90px; }
+.timvo-process .flow-node.start { background: var(--accent); border-color: var(--accent); color: var(--bg); border-radius: 20px; }
+.timvo-process .flow-node.end { background: rgba(211,216,0,0.2); border-color: var(--accent); color: var(--accent); border-radius: 20px; }
+.timvo-process .flow-node.decision { background: rgba(211,216,0,0.1); border-color: var(--accent); color: var(--accent); }
+.timvo-process .flow-arrow { width: 24px; height: 2px; background: var(--line); flex-shrink: 0; }
+.timvo-process .flow-arrow-v { width: 2px; height: 20px; background: var(--line); position: relative; margin: 0 auto; }
+.timvo-process .flow-arrow-v::after { content: '▼'; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); color: var(--line); font-size: 0.5rem; }
+.timvo-process .flow-down { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 0 auto; }
+.timvo-process .flow-node.action { background: rgba(255,255,255,0.05); }
+
+/* Design system */
+.timvo-process .ds-section { margin-top: 2rem; }
+.timvo-process .ds-title { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); }
+.timvo-process .palette-row { display: flex; gap: 0; height: 48px; border: 1px solid var(--line); flex-wrap: wrap; }
+.timvo-process .swatch { flex: 1; min-width: 60px; position: relative; }
+.timvo-process .type-specimens { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1rem; }
+.timvo-process .type-spec { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line); margin-bottom: 0.6rem; }
+.timvo-process .type-meta { font-size: 0.6rem; color: var(--ink-muted); width: 100px; flex-shrink: 0; }
+.timvo-process .component-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+.timvo-process .comp-btn-a { background: var(--accent); color: var(--bg); padding: 0.5rem 1rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; border: none; }
+.timvo-process .comp-btn-b { background: transparent; color: var(--ink); padding: 0.5rem 1rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--line); }
+.timvo-process .ux-ba-label { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.3rem; }
+.timvo-process .ux-ba-text { font-size: 0.75rem; color: var(--ink-soft); line-height: 1.5; }
+.timvo-process .ux-before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+
+/* UI mockup placeholder - simplified */
+.timvo-process .ui-wrap .ui-titlebar { background: #0a0a0a; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.timvo-process .ui-wrap .ui-dot { width: 8px; height: 8px; border-radius: 50%; }
+.timvo-process .ui-wrap .ui-dot.r { background: #ff5f57; }
+.timvo-process .ui-wrap .ui-dot.y { background: #ffbd2e; }
+.timvo-process .ui-wrap .ui-dot.g { background: #28c840; }
+.timvo-process .ui-wrap .ui-url { flex: 1; background: rgba(255,255,255,0.05); padding: 0.2rem 0.6rem; font-size: 0.6rem; color: var(--ink-muted); }
+.timvo-process .iteration-timeline { position: relative; padding-left: 1.5rem; }
+.timvo-process .iteration-timeline::before { content: ''; position: absolute; left: 4px; top: 0; bottom: 0; width: 1px; background: var(--line); }
+.timvo-process .iter-content { padding-left: 1rem; }
+
+@media (max-width: 860px) {
+  .timvo-process .discovery-grid,
+  .timvo-process .ux-grid,
+  .timvo-process .persona-layout {
+    grid-template-columns: 1fr;
+  }
+  .timvo-process .section,
+  .timvo-process .hero {
+    padding: 2.5rem 1.5rem;
+  }
+  .timvo-process .step-nav {
+    flex-wrap: wrap;
+  }
+}
