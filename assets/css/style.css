@@ -20159,7 +20159,7 @@ only screen and (max-width: 1919px) {
 .header-area-7 .side-toggle {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0;
     font-size: 14px;
     font-weight: 600;
     line-height: 16px;
