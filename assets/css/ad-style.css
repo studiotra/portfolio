@@ -10089,6 +10089,20 @@ section {
     grid-template-columns: 1fr;
   }
 }
+/* Header: center nav, side toggle at edge with logo-matching padding */
+.header-area-7 .header-main .container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.header-area-7 .header__nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-right: 0 !important;
+}
+.header-area-7 .header__navicon {
+  margin-left: auto;
+}
 
 /* Case study structure (Overview, Challenge, Approach, etc.) */
 .work-details-area .section-info.case-study-structure {
@@ -10120,6 +10134,10 @@ section {
 }
 .work-details-area .section-info.case-study-structure .case-study-block .feature-list {
   margin-top: 1rem;
+}
+.work-details-area .case-study-cta {
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 /* PE/RE Gallery: before/after slider + full-width images */
