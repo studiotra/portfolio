@@ -10220,7 +10220,8 @@ section {
 .work-details-area .before-after-slider .ba-labels {
   display: flex;
   justify-content: space-between;
-  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0;
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -10246,6 +10247,31 @@ section {
   height: auto;
   display: block;
   vertical-align: top;
+}
+
+/* PE/RE three-image carousel */
+.work-details-area .pe-re-carousel {
+  overflow: hidden;
+  border-radius: 20px;
+}
+@media (max-width: 767px) {
+  .work-details-area .pe-re-carousel {
+    border-radius: 5px;
+  }
+}
+.work-details-area .pe-re-carousel .swiper-slide {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.work-details-area .pe-re-carousel .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.work-details-area .pe-re-carousel .swiper-pagination {
+  margin-top: 1rem;
+  position: relative;
 }
 
 /*# sourceMappingURL=ad-style.css.map */
