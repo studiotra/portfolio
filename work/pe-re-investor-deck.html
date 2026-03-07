@@ -165,12 +165,38 @@
                   </div>
                 </div>
               </div>
+              <div class="container large">
+                <div class="gallery-fullwidth">
+                  <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-32.webp" alt="PE/RE Proposal System"></div>
+                </div>
+              </div>
+                            <!-- Second Before/After slider -->
+              <div class="container large" style="margin-top: 3rem;">
+                <div class="before-after-slider">
+                  <div class="ba-slider-inner">
+                    <div class="ba-image ba-before">
+                      <img src="../assets/imgs/gallery/image-30.webp" alt="Before — PE/RE Proposal System">
+                    </div>
+                    <div class="ba-image ba-after">
+                      <img src="../assets/imgs/gallery/image-31.webp" alt="After — PE/RE Proposal System">
+                    </div>
+                    <div class="ba-handle" aria-hidden="true">
+                      <div class="ba-handle-line"></div>
+                      <div class="ba-handle-circle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="4" x2="8" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ba-labels">
+                    <span class="ba-label ba-label-before">Before</span>
+                    <span class="ba-label ba-label-after">After</span>
+                  </div>
+                </div>
+              </div>
+
               <!-- Plain full-width gallery images -->
               <div class="container large">
               <div class="gallery-fullwidth">
-                <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-30.webp" alt="PE/RE Proposal System"></div>
-                <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-31.webp" alt="PE/RE Proposal System"></div>
-                <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-32.webp" alt="PE/RE Proposal System"></div>
                 <div class="gallery-fullwidth-item"><img src="../assets/imgs/gallery/image-33.webp" alt="PE/RE Proposal System"></div>
               </div>
               </div>
@@ -229,53 +255,53 @@
   <script>
     (function() {
       function initBeforeAfter() {
-        var slider = document.querySelector('.before-after-slider');
-        if (!slider) return;
+        var sliders = document.querySelectorAll('.before-after-slider');
+        sliders.forEach(function(slider) {
+          var inner = slider.querySelector('.ba-slider-inner');
+          var after = slider.querySelector('.ba-after');
+          var handle = slider.querySelector('.ba-handle');
+          if (!inner || !after || !handle) return;
 
-        var inner = slider.querySelector('.ba-slider-inner');
-        var after = slider.querySelector('.ba-after');
-        var handle = slider.querySelector('.ba-handle');
-        if (!inner || !after || !handle) return;
-
-        function setPosition(x) {
+          function setPosition(x) {
           var rect = inner.getBoundingClientRect();
           var w = rect.width;
           var pct = Math.max(0, Math.min(100, ((x - rect.left) / w) * 100));
-          after.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
-          handle.style.left = pct + '%';
-        }
+            after.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
+            handle.style.left = pct + '%';
+          }
 
-        function onMove(e) {
-          var x = e.touches ? e.touches[0].clientX : e.clientX;
-          setPosition(x);
-        }
+          function onMove(e) {
+            var x = e.touches ? e.touches[0].clientX : e.clientX;
+            setPosition(x);
+          }
 
-        function onUp() {
-          document.removeEventListener('mousemove', onMove);
-          document.removeEventListener('touchmove', onMove);
-          document.removeEventListener('mouseup', onUp);
-          document.removeEventListener('touchend', onUp);
-        }
+          function onUp() {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('mouseup', onUp);
+            document.removeEventListener('touchend', onUp);
+          }
 
-        handle.addEventListener('mousedown', function(e) {
-          e.preventDefault();
-          setPosition(e.clientX);
-          document.addEventListener('mousemove', onMove);
-          document.addEventListener('mouseup', onUp);
+          handle.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            setPosition(e.clientX);
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+          });
+          handle.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            setPosition(e.touches[0].clientX);
+            document.addEventListener('touchmove', onMove);
+            document.addEventListener('touchend', onUp);
+          });
+
+          inner.addEventListener('click', function(e) {
+            if (e.target === handle || handle.contains(e.target)) return;
+            setPosition(e.clientX);
+          });
+
+          setPosition(inner.getBoundingClientRect().width * 0.5);
         });
-        handle.addEventListener('touchstart', function(e) {
-          e.preventDefault();
-          setPosition(e.touches[0].clientX);
-          document.addEventListener('touchmove', onMove);
-          document.addEventListener('touchend', onUp);
-        });
-
-        inner.addEventListener('click', function(e) {
-          if (e.target === handle || handle.contains(e.target)) return;
-          setPosition(e.clientX);
-        });
-
-        setPosition(inner.getBoundingClientRect().width * 0.5);
       }
 
       if (document.readyState === 'loading') {
@@ -285,6 +311,12 @@
       }
     })();
   </script>
+
+  <!-- Vercel Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 
 </body>
 </html>
