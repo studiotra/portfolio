@@ -10062,6 +10062,13 @@ section {
   max-width: 48ch;
 }
 
+/* Design Practice list: titles 3rem, no links */
+.service-area-service-page .design-practice-list .service-box .design-practice-title {
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
 /* Meta section: 5 columns */
 .work-details-area .meta-wrapper {
   grid-template-columns: repeat(5, 1fr);
@@ -10138,6 +10145,9 @@ section {
 .work-details-area .case-study-cta {
   margin-top: 2.5rem;
   margin-bottom: 2rem;
+}
+.work-details-area .pagination {
+  padding-top: 2.5rem;
 }
 
 /* PE/RE Gallery: before/after slider + full-width images */
@@ -10293,6 +10303,216 @@ section {
   width: 100%;
   height: auto;
   display: block;
+}
+.work-details-area .td-fl-video-protected {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+}
+.work-details-area .td-fl-video-protected .video-embed-native {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  display: block;
+}
+.work-details-area .td-fl-video-protected .video-embed-native video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.work-details-area .video-embed-responsive {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.work-details-area .video-embed-responsive iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+@media (max-width: 767px) {
+  .work-details-area .video-embed-responsive {
+    border-radius: 5px;
+  }
+}
+
+/* TD Financial Literacy — hero, deck embed */
+.work-details-area .td-fl-gallery {
+  margin-bottom: 2rem;
+}
+.work-details-area .td-fl-deck-wrap {
+  margin-top: 2rem;
+}
+.work-details-area .td-fl-deck-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.work-details-area .td-fl-deck-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+@media (max-width: 767px) {
+  .work-details-area .td-fl-deck-embed {
+    border-radius: 5px;
+    aspect-ratio: 4/3;
+  }
+}
+
+/* Alphi — shared deck + nav (from docs/reference/alphi-slides.html) */
+.work-details-area .alphi-deck-wrap {
+  position: relative;
+  margin-bottom: 1rem;
+}
+.work-details-area .alphi-pdf-section,
+.work-details-area .alphi-images-section {
+  margin-top: 3rem;
+}
+
+/* Alphi nav pill bar: Prev | dots | count | Next */
+.work-details-area .alphi-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 1.5rem;
+  padding: 10px 24px;
+  background: rgba(14, 13, 11, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 40px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  backdrop-filter: blur(12px);
+}
+.work-details-area .alphi-nav-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 4px 0;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.work-details-area .alphi-nav-btn:hover {
+  opacity: 1;
+}
+.work-details-area .alphi-nav-count {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 48px;
+  text-align: center;
+}
+.work-details-area .alphi-nav-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 220px;
+  justify-content: center;
+}
+.work-details-area .alphi-nav-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.work-details-area .alphi-nav-dot:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.work-details-area .alphi-nav-dot.active {
+  background: #fff;
+  transform: scale(1.4);
+}
+@media (max-width: 767px) {
+  .work-details-area .alphi-nav {
+    padding: 8px 16px;
+    gap: 12px;
+  }
+  .work-details-area .alphi-nav-dots {
+    max-width: 160px;
+  }
+}
+
+/* Alphi — PDF carousel */
+.work-details-area .alphi-pdf-carousel {
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.work-details-area .alphi-pdf-carousel .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+.work-details-area .alphi-pdf-carousel .alphi-pdf-slide-inner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.work-details-area .alphi-pdf-carousel .alphi-pdf-slide-inner canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.work-details-area .alphi-pdf-carousel .alphi-loading,
+.work-details-area .alphi-pdf-carousel .alphi-loading-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: rgba(255, 255, 255, 0.5);
+}
+@media (max-width: 767px) {
+  .work-details-area .alphi-pdf-carousel {
+    border-radius: 5px;
+  }
+}
+
+/* Alphi — image carousel */
+.work-details-area .alphi-images-carousel {
+  overflow: hidden;
+  border-radius: 20px;
+  position: relative;
+}
+.work-details-area .alphi-images-carousel .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+.work-details-area .alphi-images-carousel .swiper-slide img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+}
+@media (max-width: 767px) {
+  .work-details-area .alphi-images-carousel {
+    border-radius: 5px;
+  }
 }
 
 /*# sourceMappingURL=ad-style.css.map */

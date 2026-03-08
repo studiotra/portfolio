@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alphi Capital — Presentation System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0e0d0b;
+    --off-black: #161411;
+    --charcoal: #1e1c18;
+    --gold: #9a7f4e;
+    --gold-light: #b89460;
+    --gold-pale: #d4b98a;
+    --cream: #f5f2ec;
+    --warm-white: #faf8f4;
+    --mid-grey: #8a8580;
+    --light-grey: #c8c4bc;
+    --rule: rgba(154,127,78,0.3);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--cream);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ── SLIDESHOW WRAPPER ── */
+  .deck {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.55s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 100;
+    background: rgba(14,13,11,0.85);
+    border: 1px solid var(--rule);
+    border-radius: 40px;
+    padding: 10px 24px;
+    backdrop-filter: blur(12px);
+  }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 4px 0;
+    opacity: 0.7;
+    transition: opacity .2s;
+  }
+  .nav-btn:hover { opacity: 1; }
+  .slide-count {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--mid-grey);
+    min-width: 48px;
+    text-align: center;
+  }
+  .dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--mid-grey);
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+  .dot.active { background: var(--gold); transform: scale(1.4); }
+
+  /* ── SHARED ELEMENTS ── */
+  .slide-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Fibonacci arc motif */
+  .fib-arc {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  /* Gold sidebar */
+  .sidebar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 44px;
+    background: var(--gold);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 24px;
+    z-index: 2;
+  }
+  .sidebar-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--black);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    opacity: 0.8;
+  }
+
+  /* Logo small */
+  .logo-sm {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+  }
+  .logo-sm .word-al { font-family: 'DM Sans',sans-serif; font-weight: 300; font-size: 22px; color: var(--cream); letter-spacing:-.02em; }
+  .logo-sm .word-phi { font-family: 'DM Sans',sans-serif; font-weight: 300; font-size: 22px; color: var(--gold); letter-spacing:-.02em; }
+  .logo-sm .logo-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; margin-left: 1px; margin-bottom: 17px; }
+  .logo-sm .word-cap { font-family: 'Cormorant Garamond',serif; font-size: 11px; color: var(--gold); letter-spacing: .1em; margin-left: 4px; margin-bottom: 3px; }
+
+  /* Section label */
+  .section-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  /* Rule */
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    margin: 12px 0;
+  }
+
+  /* ========= SLIDE 1: COVER ========= */
+  #s1 {
+    background: var(--off-black);
+  }
+  #s1 .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(154,127,78,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(154,127,78,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  #s1 .fib-arc {
+    right: 80px; top: -80px;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.15);
+  }
+  #s1 .fib-inner {
+    position: absolute;
+    right: 80px; top: -80px;
+    width: 520px; height: 520px;
+    overflow: hidden;
+  }
+  #s1 .fib-inner::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.12);
+  }
+  #s1 .cover-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 60px 80px 60px 64px;
+  }
+  #s1 .cover-logo {
+    margin-bottom: 48px;
+  }
+  .logo-large {
+    display: inline-flex;
+    align-items: flex-end;
+    line-height: 1;
+  }
+  .logo-large .al {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 82px);
+    color: var(--cream);
+    letter-spacing: -.03em;
+  }
+  .logo-large .phi {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 82px);
+    color: var(--gold);
+    letter-spacing: -.03em;
+  }
+  .logo-large .dot {
+    width: clamp(6px, .8vw, 10px);
+    height: clamp(6px, .8vw, 10px);
+    background: var(--gold);
+    border-radius: 50%;
+    margin-left: 2px;
+    margin-bottom: clamp(38px, 5.5vw, 68px);
+    flex-shrink: 0;
+  }
+  .logo-large .capital {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 1.8vw, 22px);
+    color: var(--gold);
+    letter-spacing: .12em;
+    margin-left: 8px;
+    margin-bottom: 10px;
+  }
+  #s1 .cover-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    max-width: 480px;
+  }
+  #s1 .cover-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: .02em;
+    line-height: 1.25;
+  }
+  #s1 .cover-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: .1em;
+    color: var(--mid-grey);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  #s1 .cover-tag {
+    position: absolute;
+    top: 60px;
+    right: 80px;
+    text-align: right;
+  }
+  #s1 .cover-tag .tag-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+  #s1 .cover-tag .tag-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold-pale);
+    letter-spacing: .08em;
+    margin-top: 4px;
+  }
+
+  /* ========= SLIDE 2: OVERVIEW ========= */
+  #s2 { background: var(--warm-white); }
+  #s2 .slide-inner { flex-direction: row; }
+  #s2 .left-panel {
+    width: 38%;
+    background: var(--off-black);
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  #s2 .left-panel .fib-bg {
+    position: absolute;
+    right: -80px;
+    top: -60px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.1);
+  }
+  #s2 .left-panel .fib-bg2 {
+    position: absolute;
+    right: -80px;
+    top: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.1);
+  }
+  #s2 .left-panel .fib-box {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(154,127,78,.12);
+  }
+  #s2 .left-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 3.5vw, 42px);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.15;
+    letter-spacing: .01em;
+    position: relative;
+    z-index: 1;
+  }
+  #s2 .left-h1 em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+  #s2 .left-bottom {
+    position: relative;
+    z-index: 1;
+  }
+  #s2 .left-bottom .lbl {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    margin-bottom: 10px;
+  }
+  #s2 .left-bottom .stat {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--gold-pale);
+    letter-spacing: .06em;
+    line-height: 1.8;
+  }
+  #s2 .right-panel {
+    flex: 1;
+    padding: 56px 60px 56px 52px;
+    background: var(--warm-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+  .overview-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(30,28,24,.1);
+    align-items: start;
+  }
+  .overview-row:first-child { border-top: 1px solid rgba(30,28,24,.1); }
+  .overview-cat {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.8vw, 32px);
+    font-weight: 400;
+    color: var(--black);
+    padding-top: 2px;
+  }
+  .overview-pts {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 4px;
+  }
+  .overview-pt {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #3a3830;
+  }
+  .overview-pt::before {
+    content: '–';
+    color: var(--gold);
+    font-size: 14px;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  /* ========= SLIDE 3: TEAM BIOS ========= */
+  #s3 { background: var(--warm-white); }
+  #s3 .slide-inner { flex-direction: row; }
+  #s3 .left-panel {
+    width: 36%;
+    background: var(--warm-white);
+    padding: 52px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(30,28,24,.1);
+  }
+  #s3 .left-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 36px);
+    font-weight: 400;
+    color: var(--black);
+    line-height: 1.2;
+  }
+  #s3 .left-h1 em { font-style: italic; color: var(--gold); }
+  #s3 .tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--mid-grey);
+    line-height: 1.6;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(30,28,24,.1);
+  }
+  #s3 .right-panel {
+    flex: 1;
+    padding: 40px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow-y: auto;
+  }
+  .bio-block {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(30,28,24,.08);
+  }
+  .bio-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, #6b5533 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--cream);
+    flex-shrink: 0;
+  }
+  .bio-right {}
+  .bio-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--black);
+    letter-spacing: .02em;
+  }
+  .bio-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .bio-pts {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .bio-pt {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #3a3830;
+    display: flex;
+    gap: 8px;
+  }
+  .bio-pt::before {
+    content: '–';
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ========= SLIDE 4: MARKET OPPORTUNITY ========= */
+  #s4 { background: var(--warm-white); }
+  #s4 .top-bar {
+    background: var(--off-black);
+    padding: 36px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    min-height: 180px;
+  }
+  #s4 .top-bar h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 2.8vw, 34px);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.2;
+    max-width: 360px;
+  }
+  #s4 .top-bar h2 em { font-style: italic; color: var(--gold-pale); }
+  #s4 .top-bar .fib-top {
+    position: absolute;
+    right: 120px;
+    top: -40px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.15);
+  }
+  #s4 .top-bar .fib-top2 {
+    position: absolute;
+    right: 200px;
+    top: 20px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(154,127,78,.15);
+  }
+  #s4 .chart-area {
+    flex: 1;
+    padding: 40px 64px;
+    display: flex;
+    flex-direction: column;
+  }
+  #s4 .chart-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: var(--mid-grey);
+    letter-spacing: .1em;
+    margin-bottom: 20px;
+  }
+  .bar-chart {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(30,28,24,.15);
+    position: relative;
+  }
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+  .bar-group .yr {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    color: var(--mid-grey);
+    letter-spacing: .05em;
+    order: 2;
+    margin-top: 6px;
+  }
+  .bar-group .bar-wrap {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    order: 1;
+  }
+  .bar {
+    border-radius: 2px 2px 0 0;
+    position: relative;
+  }
+  .bar-val {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 7px;
+    color: var(--mid-grey);
+    white-space: nowrap;
+  }
+  .bar-b1 { background: var(--black); width: 22px; }
+  .bar-b2 { background: var(--gold); width: 22px; }
+  .bar-b3 { background: var(--gold-pale); width: 22px; }
+  .bar-b4 { background: #d4b98a88; width: 22px; }
+  .chart-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: var(--mid-grey);
+  }
+  .leg-dot { width: 10px; height: 10px; border-radius: 1px; flex-shrink: 0; }
+  .source-note {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    color: var(--light-grey);
+    letter-spacing: .06em;
+    margin-top: 12px;
+    text-align: right;
+    padding-right: 52px;
+  }
+
+  /* ========= SLIDE 5: INVESTMENT FRAMEWORK ========= */
+  #s5 { background: var(--warm-white); }
+  #s5 .top-bar {
+    background: var(--off-black);
+    padding: 36px 64px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  #s5 .top-bar h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3.5vw, 42px);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.1;
+  }
+  #s5 .top-bar .sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: var(--mid-grey);
+    line-height: 1.6;
+    max-width: 340px;
+    margin-top: 10px;
+  }
+  #s5 .top-bar .fib-top {
+    position: absolute;
+    right: 120px; top: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.12);
+  }
+  #s5 .top-bar .fib-top2 {
+    position: absolute;
+    right: 195px; top: 15px;
+    width: 110px; height: 110px;
+    border: 1px solid rgba(154,127,78,.12);
+  }
+  #s5 .framework-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0;
+    padding: 32px 64px;
+    gap: 16px;
+  }
+  .fw-card {
+    border: 1px solid rgba(30,28,24,.12);
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--warm-white);
+    transition: border-color .2s;
+  }
+  .fw-card:hover { border-color: var(--gold); }
+  .fw-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: .1em;
+  }
+  .fw-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--black);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .fw-pts {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .fw-pt {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: #3a3830;
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+  }
+  .fw-pt::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+  .fw-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--mid-grey);
+    line-height: 1.6;
+    margin-top: 4px;
+    border-left: 2px solid var(--rule);
+    padding-left: 10px;
+  }
+
+  /* ========= SLIDE 6: TRACK RECORD STATS ========= */
+  #s6 { background: var(--off-black); }
+  #s6 .top-bar {
+    padding: 40px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+  #s6 .top-bar h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 4vw, 48px);
+    font-weight: 400;
+    color: var(--cream);
+  }
+  #s6 .fib-rt {
+    position: absolute;
+    right: 80px; top: -40px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.1);
+  }
+  #s6 .fib-rt2 {
+    position: absolute;
+    right: 160px; top: 20px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.1);
+  }
+  #s6 .stats-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 48px 64px;
+    gap: 0;
+  }
+  .stat-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 32px 0 0;
+    border-right: 1px solid var(--rule);
+  }
+  .stat-block:last-child { border-right: none; padding-left: 32px; padding-right: 0; }
+  .stat-block:nth-child(2) { padding: 0 32px; }
+  .stat-block:nth-child(3) { padding: 0 32px; }
+  .stat-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -.02em;
+  }
+  .stat-sup {
+    font-size: 0.55em;
+    vertical-align: super;
+    color: var(--gold-pale);
+  }
+  .stat-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: var(--mid-grey);
+    line-height: 1.55;
+    margin-top: 12px;
+    max-width: 160px;
+  }
+  #s6 .bar-section {
+    padding: 0 64px 40px;
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+  }
+  #s6 .simple-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  #s6 .simple-bar .sb-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--gold);
+  }
+  #s6 .simple-bar .sb-bar {
+    border-radius: 2px 2px 0 0;
+    background: var(--gold);
+  }
+  #s6 .simple-bar.alt .sb-bar { background: var(--gold-pale); opacity: .6; }
+  #s6 .simple-bar .sb-lbl {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    color: var(--mid-grey);
+    letter-spacing: .1em;
+  }
+  #s6 .note {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    color: rgba(138,133,128,.5);
+    padding: 0 64px 24px;
+    letter-spacing: .05em;
+  }
+
+  /* ========= SLIDE 7: ESG ========= */
+  #s7 { background: var(--warm-white); }
+  #s7 .top-bar {
+    background: var(--off-black);
+    padding: 36px 64px;
+    min-height: 180px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  #s7 .top-bar h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.25;
+    max-width: 420px;
+    padding-top: 8px;
+  }
+  #s7 .top-bar .fib-top {
+    position: absolute;
+    right: 100px; top: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.12);
+  }
+  #s7 .top-bar .fib-top2 {
+    position: absolute;
+    right: 180px; top: 10px;
+    width: 110px; height: 110px;
+    border: 1px solid rgba(154,127,78,.12);
+  }
+  #s7 .esg-timeline {
+    flex: 1;
+    padding: 40px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .esg-stages {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .esg-stages::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 52px;
+    top: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-pale));
+    z-index: 0;
+  }
+  .esg-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 16px 0 0;
+    position: relative;
+    z-index: 1;
+  }
+  .esg-node {
+    width: 40px; height: 40px;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .esg-node.pale { background: var(--gold-pale); }
+  .esg-node.dark { background: #6b5533; }
+  .esg-node-icon {
+    width: 16px; height: 16px;
+    background: var(--cream);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+  .esg-stage-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+  .esg-pts {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .esg-pt {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: #3a3830;
+    line-height: 1.5;
+    display: flex;
+    gap: 6px;
+  }
+  .esg-pt::before { content: '·'; color: var(--gold); }
+  .esg-axis {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  .esg-axis-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+  }
+  .esg-axis-arrow {
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, var(--rule) 0%, transparent 100%);
+    margin: 0 16px;
+  }
+
+  /* ========= SLIDE 8: DESIGN SYSTEM ========= */
+  #s8 { background: var(--warm-white); }
+  #s8 .slide-inner { flex-direction: column; }
+  #s8 .sys-header {
+    padding: 40px 64px 32px;
+    border-bottom: 1px solid rgba(30,28,24,.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  #s8 .sys-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 36px);
+    color: var(--black);
+    font-weight: 400;
+  }
+  #s8 .sys-header .sys-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+  }
+  #s8 .sys-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  .sys-col {
+    padding: 32px 40px;
+    border-right: 1px solid rgba(30,28,24,.08);
+  }
+  .sys-col:last-child { border-right: none; }
+  .sys-col-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  /* Color swatches */
+  .swatches { display: flex; flex-direction: column; gap: 10px; }
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .swatch-block {
+    width: 36px; height: 36px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .swatch-info {}
+  .swatch-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: var(--black);
+    font-weight: 500;
+  }
+  .swatch-hex {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: var(--mid-grey);
+    letter-spacing: .08em;
+  }
+  /* Type specimens */
+  .type-specimens { display: flex; flex-direction: column; gap: 16px; }
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 1px solid rgba(30,28,24,.06);
+    padding-bottom: 12px;
+  }
+  .type-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .1em;
+    color: var(--mid-grey);
+    text-transform: uppercase;
+    min-width: 28px;
+  }
+  .t-h1 { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--black); line-height: 1.1; }
+  .t-h1 em { font-style: italic; color: var(--gold); }
+  .t-h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--black); }
+  .t-h3 { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--black); }
+  .t-body { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #3a3830; }
+  .t-cap { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--mid-grey); }
+  /* Layout patterns */
+  .layout-demos { display: flex; flex-direction: column; gap: 14px; }
+  .layout-demo {
+    border: 1px solid rgba(30,28,24,.1);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .ld-inner { display: flex; height: 48px; }
+  .ld-left { background: var(--off-black); }
+  .ld-right { flex: 1; background: var(--warm-white); }
+  .ld-gold { width: 10px; background: var(--gold); }
+  .ld-full { height: 48px; background: var(--off-black); position: relative; overflow: hidden; }
+  .ld-full::after {
+    content: '';
+    position: absolute;
+    right: -10px; top: -10px;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 1px solid rgba(154,127,78,.2);
+  }
+  .ld-grid { display: grid; grid-template-columns: 1fr 1fr; height: 48px; }
+  .ld-grid > div:first-child { background: var(--off-black); }
+  .ld-grid > div:last-child { background: var(--warm-white); }
+  .layout-lbl {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: .1em;
+    color: var(--mid-grey);
+    margin-top: 6px;
+  }
+
+  /* ========= TRANSITIONS ========= */
+  .slide { transform: translateY(8px); transition: opacity .5s, transform .5s; }
+  .slide.active { transform: translateY(0); }
+
+  /* Mobile responsiveness */
+  @media (max-width: 700px) {
+    #s2 .slide-inner, #s3 .slide-inner { flex-direction: column; }
+    #s2 .left-panel, #s3 .left-panel { width: 100%; min-height: 140px; flex: none; }
+    #s5 .framework-grid { grid-template-columns: 1fr; }
+    #s6 .stats-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    #s8 .sys-body { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .nav { bottom: 16px; padding: 8px 16px; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide active" id="s1">
+    <div class="slide-inner">
+      <div class="bg-grid"></div>
+
+      <!-- Fibonacci geometry -->
+      <div style="position:absolute;right:80px;top:-80px;width:520px;height:520px;border-radius:50%;border:1px solid rgba(154,127,78,.15);pointer-events:none;"></div>
+      <div style="position:absolute;right:160px;top:0px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(154,127,78,.1);pointer-events:none;"></div>
+      <div style="position:absolute;right:240px;top:60px;width:140px;height:140px;border:1px solid rgba(154,127,78,.12);pointer-events:none;"></div>
+      <div style="position:absolute;right:240px;top:60px;width:80px;height:80px;border:1px solid rgba(154,127,78,.1);pointer-events:none;margin-left:60px;margin-top:60px;"></div>
+
+      <div class="sidebar"><span class="sidebar-text">Alphi Capital Partners · Investor Presentation</span></div>
+
+      <div class="cover-body">
+        <div class="cover-logo">
+          <div class="logo-large">
+            <span class="al">al</span><span class="phi">phi</span><span class="dot"></span><span class="capital">Capital</span>
+          </div>
+        </div>
+        <div class="cover-meta">
+          <div class="section-label" style="margin-bottom:12px;">Presentation System</div>
+          <div class="cover-title">Investor Presentation<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-pale);">Design System & Templates</em></div>
+          <div class="cover-sub">Private Equity · Fund I · Canadian Lower Mid-Market</div>
+        </div>
+      </div>
+
+      <div class="cover-tag" style="position:absolute;top:60px;right:80px;">
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);opacity:.6;">Role</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--gold-pale);letter-spacing:.06em;margin-top:4px;line-height:1.8;">Lead Designer<br>Presentation System</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: OVERVIEW -->
+  <div class="slide" id="s2">
+    <div class="slide-inner">
+      <div class="left-panel">
+        <div class="fib-bg"></div>
+        <div class="fib-bg2"></div>
+        <div class="fib-box"></div>
+        <div class="logo-sm" style="position:relative;z-index:1;margin-bottom:8px;">
+          <span class="word-al">al</span><span class="word-phi">phi</span><span class="logo-dot"></span><span class="word-cap">Capital</span>
+        </div>
+        <div class="left-h1">Raising<br>Fund I to<br>serve the<br><em>Canadian<br>lower mid<br>market</em></div>
+        <div class="left-bottom">
+          <div class="lbl">At a Glance</div>
+          <div class="stat">35+ years combined PE<br>experience across<br>the founding team</div>
+        </div>
+      </div>
+      <div class="right-panel">
+        <div class="overview-row">
+          <div class="overview-cat">Team</div>
+          <div class="overview-pts">
+            <div class="overview-pt">Experienced team with over 35+ years combined in private equity</div>
+            <div class="overview-pt">11+ years of working together at a top-tier Canadian PE fund</div>
+            <div class="overview-pt">Diverse partner team bringing a unique approach to the market</div>
+          </div>
+        </div>
+        <div class="overview-row">
+          <div class="overview-cat">Strategy</div>
+          <div class="overview-pts">
+            <div class="overview-pt">Raising first fund focused on Canadian underserved, lower mid-market</div>
+            <div class="overview-pt">Targeting business services, telecom and consumer service industries</div>
+            <div class="overview-pt">Platform and growth investing with sophisticated diligence toolkit</div>
+          </div>
+        </div>
+        <div class="overview-row">
+          <div class="overview-cat">Returns</div>
+          <div class="overview-pts">
+            <div class="overview-pt">Strong track record — 11 portfolio companies, 110+ add-on acquisitions</div>
+            <div class="overview-pt">Generating a Gross MOIC of 2.9x over the last 10 years</div>
+            <div class="overview-pt">Deep industry relationships supporting robust proprietary pipeline</div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar"><span class="sidebar-text">Alphi Capital Partners · Overview</span></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: TEAM BIOS -->
+  <div class="slide" id="s3">
+    <div class="slide-inner">
+      <div class="left-panel">
+        <div>
+          <div class="section-label" style="margin-bottom:16px;">Leadership</div>
+          <div class="left-h1">Experienced team<br>with a <em>strong track<br>record</em> in the<br>Canadian market</div>
+        </div>
+        <div class="tagline">
+          Co-founders have spent 11+ years working together at Birch Hill Equity Partners, one of Canada's leading private equity firms.
+        </div>
+      </div>
+      <div class="right-panel">
+        <div class="bio-block">
+          <div class="bio-avatar">TS</div>
+          <div class="bio-right">
+            <div class="bio-name">Thecla Sweeney</div>
+            <div class="bio-role">Founding Partner</div>
+            <div class="bio-pts">
+              <div class="bio-pt">Joined Birch Hill in 2004; Chair of Boards at Mastermind Toys and Motion LP</div>
+              <div class="bio-pt">Prior experience at Porter Airlines, Bain & Company, and George Weston Limited</div>
+              <div class="bio-pt">MBA, Richard Ivey School of Business (Ivey Scholar); BA (Hons) Western University</div>
+            </div>
+          </div>
+        </div>
+        <div class="bio-block">
+          <div class="bio-avatar">AF</div>
+          <div class="bio-right">
+            <div class="bio-name">Andrew Fortier</div>
+            <div class="bio-role">Founding Partner</div>
+            <div class="bio-pts">
+              <div class="bio-pt">Partner at Birch Hill 2011–2022; focused on business services and distribution</div>
+              <div class="bio-pt">Previously at Audax Group (Boston) and Morgan Stanley M&A</div>
+              <div class="bio-pt">MBA, Harvard Business School; HBA, Richard Ivey School of Business</div>
+            </div>
+          </div>
+        </div>
+        <div class="bio-block">
+          <div class="bio-avatar">ES</div>
+          <div class="bio-right">
+            <div class="bio-name">Elaine Shiu</div>
+            <div class="bio-role">COO, Partner</div>
+            <div class="bio-pts">
+              <div class="bio-pt">Joined Northleaf Capital Partners (TD Capital) in 2004; led investment and IR activities</div>
+              <div class="bio-pt">Prior roles at AOL Time Warner and Bain & Company</div>
+              <div class="bio-pt">MBA and HBA with distinction, Richard Ivey School of Business</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar"><span class="sidebar-text">Alphi Capital Partners · Team</span></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: MARKET OPPORTUNITY -->
+  <div class="slide" id="s4">
+    <div class="slide-inner">
+      <div class="top-bar">
+        <div>
+          <div class="section-label" style="margin-bottom:12px;">Market Context</div>
+          <h2>Opportunity in the Canadian <em>lower mid-market</em> as firms have moved up-market</h2>
+        </div>
+        <div class="fib-top"></div>
+        <div class="fib-top2"></div>
+      </div>
+      <div class="chart-area">
+        <div class="chart-label">FUND SIZE (C$MM) — SELECTED CANADIAN PE FUNDS 2005–2022 &nbsp;·&nbsp; Source: Pitchbook, Company Websites</div>
+        <div class="bar-chart">
+          <!-- 2005 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b1" style="height:44px;"><span class="bar-val">800</span></div>
+              <div class="bar bar-b2" style="height:34px;"></div>
+              <div class="bar bar-b3" style="height:30px;"></div>
+            </div>
+            <div class="yr">2005</div>
+          </div>
+          <!-- 2007 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b1" style="height:52px;"></div>
+              <div class="bar bar-b2" style="height:30px;"></div>
+            </div>
+            <div class="yr">2007</div>
+          </div>
+          <!-- 2010 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b1" style="height:64px;"></div>
+              <div class="bar bar-b3" style="height:44px;"></div>
+            </div>
+            <div class="yr">2010</div>
+          </div>
+          <!-- 2011 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b1" style="height:72px;"></div>
+            </div>
+            <div class="yr">2011</div>
+          </div>
+          <!-- 2013 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b2" style="height:42px;"></div>
+            </div>
+            <div class="yr">2013</div>
+          </div>
+          <!-- 2015 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b1" style="height:84px;"></div>
+              <div class="bar bar-b2" style="height:68px;"></div>
+              <div class="bar bar-b3" style="height:50px;"></div>
+              <div class="bar bar-b4" style="height:38px;"></div>
+            </div>
+            <div class="yr">2015</div>
+          </div>
+          <!-- 2016 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b1" style="height:76px;"></div>
+              <div class="bar bar-b2" style="height:56px;"></div>
+            </div>
+            <div class="yr">2016</div>
+          </div>
+          <!-- 2018 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b2" style="height:64px;"></div>
+              <div class="bar bar-b3" style="height:54px;"></div>
+            </div>
+            <div class="yr">2018</div>
+          </div>
+          <!-- 2019 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b2" style="height:80px;"></div>
+              <div class="bar bar-b3" style="height:60px;"></div>
+            </div>
+            <div class="yr">2019</div>
+          </div>
+          <!-- 2020 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b1" style="height:92px;"></div>
+              <div class="bar bar-b2" style="height:68px;"></div>
+            </div>
+            <div class="yr">2020</div>
+          </div>
+          <!-- 2021 -->
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar bar-b1" style="height:112px;"></div>
+              <div class="bar bar-b2" style="height:82px;"></div>
+            </div>
+            <div class="yr">2021</div>
+          </div>
+          <!-- 2022 — OPPORTUNITY ZONE -->
+          <div class="bar-group" style="position:relative;">
+            <div style="position:absolute;bottom:24px;left:-8px;right:-8px;background:rgba(154,127,78,.1);border:1px dashed rgba(154,127,78,.4);top:-8px;border-radius:2px;"></div>
+            <div class="bar-wrap" style="position:relative;z-index:1;">
+              <div class="bar bar-b1" style="height:136px;"></div>
+            </div>
+            <div class="yr" style="position:relative;z-index:1;">2022</div>
+            <div style="position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:'DM Sans',sans-serif;font-size:8px;color:var(--gold);letter-spacing:.06em;text-align:center;">Alphi<br>Opportunity</div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:var(--black);"></div>Birch Hill</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--gold);"></div>Oncap</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--gold-pale);"></div>TQ / Torquest</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#d4b98a88;border:1px solid #d4b98a;"></div>Novacap</div>
+        </div>
+      </div>
+      <div class="sidebar"><span class="sidebar-text">Alphi Capital Partners · Market</span></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: INVESTMENT FRAMEWORK -->
+  <div class="slide" id="s5">
+    <div class="slide-inner">
+      <div class="top-bar">
+        <div>
+          <div class="section-label" style="margin-bottom:10px;">Strategy</div>
+          <h2>Investment<br>Framework</h2>
+          <p class="sub">A 4-pronged approach honed over 10+ years, bringing best-in-breed diligence to the Canadian lower mid-market.</p>
+        </div>
+        <div style="text-align:right;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--mid-grey);line-height:1.8;">
+          Business Services · Healthcare Services<br>
+          Sector Experience · Canada Focus
+        </div>
+        <div class="fib-top"></div>
+        <div class="fib-top2"></div>
+      </div>
+      <div class="framework-grid">
+        <div class="fw-card">
+          <div class="fw-num">01</div>
+          <div class="fw-title">Industry Structure First</div>
+          <div class="fw-pts">
+            <div class="fw-pt">Focus on businesses with recurring revenue, megatrends, and fragmentation</div>
+          </div>
+          <div class="fw-quote">"When a management with a reputation for brilliance tackles a business with a reputation for bad economics, it is the reputation of the business that remains intact." — Warren Buffett</div>
+        </div>
+        <div class="fw-card">
+          <div class="fw-num">02</div>
+          <div class="fw-title">Multiple Value Creation Levers</div>
+          <div class="fw-pts">
+            <div class="fw-pt">Organic growth and buy-and-build strategies</div>
+            <div class="fw-pt">Cost optimization and operational improvement</div>
+            <div class="fw-pt">Business intelligence and data analytics to drive value</div>
+          </div>
+        </div>
+        <div class="fw-card">
+          <div class="fw-num">03</div>
+          <div class="fw-title">Diversity as a Competitive Advantage</div>
+          <div class="fw-pts">
+            <div class="fw-pt">Diversity at Alphi and portfolio companies driving higher returns</div>
+            <div class="fw-pt">HBR and McKinsey note more diverse firms make better decisions</div>
+            <div class="fw-pt">Best-in-class ESG standards embedded across investments</div>
+          </div>
+        </div>
+        <div class="fw-card">
+          <div class="fw-num">04</div>
+          <div class="fw-title">Path to Outsized Returns</div>
+          <div class="fw-pts">
+            <div class="fw-pt">World-class leadership through principals' network or current management</div>
+            <div class="fw-pt">Value creation plan targeting 4x+ MOIC</div>
+            <div class="fw-pt">Scarce asset positioned attractively for strategic buyer or public markets</div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar"><span class="sidebar-text">Alphi Capital Partners · Framework</span></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: TRACK RECORD -->
+  <div class="slide" id="s6">
+    <div class="slide-inner">
+      <div class="top-bar">
+        <div>
+          <div class="section-label" style="margin-bottom:10px;color:var(--gold);opacity:.7;">Performance</div>
+          <h2>Track Record</h2>
+        </div>
+        <div class="logo-sm">
+          <span class="word-al">al</span><span class="word-phi">phi</span><span class="logo-dot"></span><span class="word-cap">Capital</span>
+        </div>
+        <div class="fib-rt"></div>
+        <div class="fib-rt2"></div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-block">
+          <div class="stat-big">&gt;C$1B</div>
+          <div class="stat-desc">equity capital deployed across 12 platform deals</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-big">12<span class="stat-sup">(1)</span></div>
+          <div class="stat-desc">platform investments executed over the last 11 years</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-big">100<span style="font-size:.6em;vertical-align:super;">+</span></div>
+          <div class="stat-desc">add-on acquisitions completed at portfolio companies</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-big">2.9<span style="font-size:.5em;letter-spacing:-.02em;">x</span></div>
+          <div class="stat-desc">gross MOIC over the last 10 years from 12 platform investments</div>
+        </div>
+      </div>
+      <div class="bar-section">
+        <div class="simple-bar">
+          <div class="sb-val">12</div>
+          <div class="sb-bar" style="width:80px;height:48px;"></div>
+          <div class="sb-lbl">Platform</div>
+        </div>
+        <div class="simple-bar alt">
+          <div class="sb-val">108</div>
+          <div class="sb-bar" style="width:80px;height:160px;"></div>
+          <div class="sb-lbl">Add-on</div>
+        </div>
+        <div style="padding-left:24px;border-left:1px solid var(--rule);max-width:280px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold-pale);line-height:1.5;font-style:italic;">"Strong track record. Deep industry relationships. Generate a robust pipeline of opportunities for Alphi Fund."</div>
+        </div>
+      </div>
+      <div class="note">1. Platform investments include Cozzini and GDI which were bought 2x. 2. Gross MOIC as of March 2022 valuation.</div>
+      <div class="sidebar"><span class="sidebar-text">Alphi Capital Partners · Track Record</span></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: ESG FRAMEWORK -->
+  <div class="slide" id="s7">
+    <div class="slide-inner">
+      <div class="top-bar">
+        <div>
+          <div class="section-label" style="margin-bottom:10px;">Responsible Investing</div>
+          <h2>Alphi Capital promotes responsible principles in its investment policy, portfolio companies and corporate culture</h2>
+        </div>
+        <div class="fib-top"></div>
+        <div class="fib-top2"></div>
+      </div>
+      <div class="esg-timeline">
+        <div class="esg-axis">
+          <span class="esg-axis-label">Pre-Investment</span>
+          <div class="esg-axis-arrow"></div>
+          <span class="esg-axis-label">Post-Investment</span>
+        </div>
+        <div class="esg-stages">
+          <div class="esg-stage">
+            <div class="esg-node" style="background:#3a3830;">
+              <div class="esg-node-icon"></div>
+            </div>
+            <div class="esg-stage-title">ESG Due Diligence</div>
+            <div class="esg-pts">
+              <div class="esg-pt">Evaluation of potential investments against restricted / prohibited criteria</div>
+              <div class="esg-pt">Pre or post-closing risk and opportunity assessment</div>
+              <div class="esg-pt">Recommendations for post-close actions</div>
+            </div>
+          </div>
+          <div class="esg-stage">
+            <div class="esg-node pale">
+              <div class="esg-node-icon"></div>
+            </div>
+            <div class="esg-stage-title">Closing</div>
+            <div class="esg-pts">
+              <div class="esg-pt">Inclusion of ESG DD and plan with closing documents and investment memo</div>
+            </div>
+          </div>
+          <div class="esg-stage">
+            <div class="esg-node">
+              <div class="esg-node-icon"></div>
+            </div>
+            <div class="esg-stage-title">Engagement with Management</div>
+            <div class="esg-pts">
+              <div class="esg-pt">Engage with management to align on plan going forward</div>
+              <div class="esg-pt">Prepare action plan and KPI tracking</div>
+            </div>
+          </div>
+          <div class="esg-stage">
+            <div class="esg-node pale">
+              <div class="esg-node-icon"></div>
+            </div>
+            <div class="esg-stage-title">ESG Reporting</div>
+            <div class="esg-pts">
+              <div class="esg-pt">Annual reporting vs. initial plan</div>
+            </div>
+          </div>
+          <div class="esg-stage">
+            <div class="esg-node dark">
+              <div class="esg-node-icon"></div>
+            </div>
+            <div class="esg-stage-title">Ultimate Sale</div>
+            <div class="esg-pts">
+              <div class="esg-pt">Highlight ESG contribution and value-add during sale process</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar"><span class="sidebar-text">Alphi Capital Partners · ESG</span></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: DESIGN SYSTEM -->
+  <div class="slide" id="s8">
+    <div class="slide-inner">
+      <div class="sys-header">
+        <h2>Design System<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:.7em;">Colour · Typography · Layout</em></h2>
+        <div class="sys-label">Presentation System — Alphi Capital</div>
+      </div>
+      <div class="sys-body">
+        <!-- COLOURS -->
+        <div class="sys-col">
+          <div class="sys-col-title">Colour Palette</div>
+          <div class="swatches">
+            <div class="swatch">
+              <div class="swatch-block" style="background:#0e0d0b;border:1px solid rgba(0,0,0,.1);"></div>
+              <div class="swatch-info"><div class="swatch-name">Off Black</div><div class="swatch-hex">#0E0D0B</div></div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#9a7f4e;"></div>
+              <div class="swatch-info"><div class="swatch-name">Alphi Gold</div><div class="swatch-hex">#9A7F4E</div></div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#d4b98a;"></div>
+              <div class="swatch-info"><div class="swatch-name">Gold Pale</div><div class="swatch-hex">#D4B98A</div></div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#faf8f4;border:1px solid rgba(0,0,0,.1);"></div>
+              <div class="swatch-info"><div class="swatch-name">Warm White</div><div class="swatch-hex">#FAF8F4</div></div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-block" style="background:#8a8580;"></div>
+              <div class="swatch-info"><div class="swatch-name">Mid Grey</div><div class="swatch-hex">#8A8580</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- TYPOGRAPHY -->
+        <div class="sys-col">
+          <div class="sys-col-title">Typography System</div>
+          <div class="type-specimens">
+            <div class="type-row">
+              <div class="type-label">H1</div>
+              <div class="t-h1">Display <em>Italic</em></div>
+            </div>
+            <div class="type-row">
+              <div class="type-label">H2</div>
+              <div class="t-h2">Cormorant Garamond</div>
+            </div>
+            <div class="type-row">
+              <div class="type-label">H3</div>
+              <div class="t-h3">Section Heading Light</div>
+            </div>
+            <div class="type-row">
+              <div class="type-label">Body</div>
+              <div class="t-body">DM Sans Regular — body copy and data labels set at 11–13px</div>
+            </div>
+            <div class="type-row">
+              <div class="type-label">Cap</div>
+              <div class="t-cap">DM Sans Uppercase Label · 9px</div>
+            </div>
+          </div>
+        </div>
+        <!-- LAYOUTS -->
+        <div class="sys-col">
+          <div class="sys-col-title">Layout Patterns</div>
+          <div class="layout-demos">
+            <div>
+              <div class="layout-demo">
+                <div class="ld-inner">
+                  <div class="ld-left" style="width:38%;"></div>
+                  <div class="ld-right"></div>
+                  <div class="ld-gold"></div>
+                </div>
+              </div>
+              <div class="layout-lbl">Split layout — dark left, light right + gold sidebar</div>
+            </div>
+            <div>
+              <div class="layout-demo">
+                <div class="ld-full">
+                  <div style="position:absolute;right:-10px;top:-10px;width:60px;height:60px;border-radius:50%;border:1px solid rgba(154,127,78,.25);"></div>
+                </div>
+              </div>
+              <div class="layout-lbl">Full-bleed dark hero with Fibonacci geometry</div>
+            </div>
+            <div>
+              <div class="layout-demo">
+                <div class="ld-inner">
+                  <div class="ld-left" style="width:100%;background:var(--off-black);"></div>
+                </div>
+              </div>
+              <div class="layout-lbl">Section header bar — dark band with title + source</div>
+            </div>
+            <div>
+              <div class="layout-demo" style="height:auto;padding:8px 12px;">
+                <div style="display:flex;gap:8px;">
+                  <div style="width:30px;height:30px;background:var(--gold);border-radius:2px;"></div>
+                  <div style="width:30px;height:30px;background:var(--gold-pale);border-radius:2px;opacity:.7;"></div>
+                  <div style="width:30px;height:30px;background:#d4b98a44;border:1px solid var(--gold-pale);border-radius:2px;"></div>
+                  <div style="width:30px;height:30px;background:#161411;border-radius:2px;"></div>
+                </div>
+              </div>
+              <div class="layout-lbl">Data viz palette — 4 tonal gold variants + black</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar"><span class="sidebar-text">Alphi Capital Partners · Design System</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav">
+  <button class="nav-btn" onclick="changeSlide(-1)">← Prev</button>
+  <div class="dots" id="dotContainer"></div>
+  <div class="slide-count" id="slideCount">1 / 8</div>
+  <button class="nav-btn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotContainer = document.getElementById('dotContainer');
+  const slideCount = document.getElementById('slideCount');
+  let current = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotContainer.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotContainer.children[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dotContainer.children[current].classList.add('active');
+    slideCount.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  function changeSlide(dir) { goTo(current + dir); }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+
+  // Touch swipe
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const dx = tx - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 50) changeSlide(dx > 0 ? 1 : -1);
+  });
+</script>
+
+</body>
+</html>

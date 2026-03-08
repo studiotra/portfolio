@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TD Motion System — Process Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>@font-face{font-family:"Sequel Sans Roman Body";src:url("../assets/fonts/Sequel Sans Roman Body.otf");font-weight:310;}@font-face{font-family:"Sequel Sans Medium Body";src:url("../assets/fonts/Sequel Sans Medium Body.otf");font-weight:315;}</style>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --td-green:      #00835A;
+  --td-deep:       #00573C;
+  --td-mid:        #3BAD82;
+  --td-pale:       #E8F5F0;
+  --td-accent:     #F0B429;
+  --td-blue:       #1B4F9B;
+  --off-white:     #F9F8F5;
+  --dark:          #181A1B;
+  --dark-mid:      #252729;
+  --grey:          #6B7280;
+  --light-rule:    rgba(0,131,90,.13);
+  --dark-rule:     rgba(255,255,255,.1);
+  --mono:          'Instrument Sans', sans-serif;
+}
+
+body {
+  font-family: 'Sequel Sans Roman Body', sans-serif;
+  background: var(--dark);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ── DECK SHELL ── */
+.deck { width: 100%; height: 100vh; position: relative; }
+
+.slide {
+  position: absolute; inset: 0;
+  opacity: 0; pointer-events: none;
+  transition: opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+  transform: translateY(10px);
+  overflow: hidden;
+}
+.slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 20px;
+  z-index: 200;
+  background: rgba(24,26,27,.88);
+  border: 1px solid rgba(0,131,90,.25);
+  border-radius: 40px; padding: 9px 22px;
+  backdrop-filter: blur(16px);
+}
+.nav-btn {
+  background: none; border: none;
+  color: var(--td-mid);
+  font-family: 'Sequel Sans Roman Body', sans-serif;
+  font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; cursor: pointer;
+  opacity: .7; transition: opacity .2s;
+}
+.nav-btn:hover { opacity: 1; }
+.sc { font-family: var(--mono); font-size: 10px; color: var(--grey); min-width: 40px; text-align: center; }
+.dots { display: flex; gap: 5px; align-items: center; }
+.dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--grey); cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.dot.active { background: var(--td-mid); transform: scale(1.5); }
+
+/* Nav: hide when mouse outside, show on hover (desktop only) */
+@media (hover: hover) {
+  .nav { opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+  body.nav-visible .nav { opacity: 1; pointer-events: auto; }
+}
+
+/* ── SHARED ── */
+.tag {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 9px;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--td-mid);
+}
+.rule { height: 1px; background: var(--dark-rule); }
+.rule-green { height: 1px; background: linear-gradient(90deg, var(--td-mid) 0%, transparent 100%); }
+.code {
+  font-family: var(--mono); font-size: 10px; color: var(--td-mid);
+  background: rgba(0,131,90,.08); border: 1px solid rgba(0,131,90,.15);
+  border-radius: 3px; padding: 2px 7px;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 1 — COVER
+══════════════════════════════════════ */
+#s1 { background: var(--dark); }
+#s1 .bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 75% 50%, rgba(0,131,90,.12) 0%, transparent 70%);
+}
+#s1 .scan-lines {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(255,255,255,.015) 3px, rgba(255,255,255,.015) 4px
+  );
+}
+#s1 .green-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--td-green); }
+#s1 .header { position: absolute; top: 36px; left: 52px; right: 52px; display: flex; justify-content: space-between; align-items: center; }
+#s1 .body { position: absolute; bottom: 0; left: 0; right: 0; padding: 0 52px 52px; display: flex; justify-content: space-between; align-items: flex-end; }
+#s1 .title {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: clamp(38px, 6vw, 72px);
+  color: var(--off-white); line-height: 1.0; letter-spacing: -.02em; font-weight: 400;
+}
+#s1 .title em { font-style: italic; color: var(--td-mid); }
+#s1 .subtitle {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 12px;
+  color: rgba(255,255,255,.4); margin-top: 16px; line-height: 1.7;
+  max-width: 360px; letter-spacing: .02em;
+}
+#s1 .meta { text-align: right; display: flex; flex-direction: column; gap: 12px; }
+.meta-item { display: flex; flex-direction: column; gap: 3px; }
+.mi-label { font-family: 'Instrument Sans', sans-serif; font-size: 8px; color: rgba(255,255,255,.25); letter-spacing: .12em; text-transform: uppercase; }
+.mi-val { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 11px; color: rgba(255,255,255,.6); }
+
+/* Animated waveform suggestion */
+#s1 .wave { position: absolute; right: 52px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 3px; opacity: .2; }
+.wave-bar { width: 3px; border-radius: 2px; background: var(--td-mid); animation: wavePulse 1.4s ease-in-out infinite; }
+@keyframes wavePulse {
+  0%, 100% { transform: scaleY(.4); }
+  50% { transform: scaleY(1); }
+}
+
+/* ══════════════════════════════════════
+   SLIDE 2 — THE PROBLEM
+══════════════════════════════════════ */
+#s2 { background: var(--off-white); }
+#s2 .left {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 42%;
+  background: var(--dark); padding: 48px 44px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  overflow: hidden;
+}
+#s2 .left::after {
+  content: ''; position: absolute;
+  right: -80px; top: -60px; width: 260px; height: 260px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(0,131,90,.15), transparent 70%);
+}
+#s2 .right {
+  position: absolute; left: 42%; top: 0; right: 0; bottom: 0;
+  padding: 48px 44px; display: flex; flex-direction: column; justify-content: center; gap: 20px;
+}
+.problem-row {
+  display: grid; grid-template-columns: 28px 1fr;
+  gap: 14px; align-items: start;
+  padding: 18px 0; border-bottom: 1px solid var(--light-rule);
+}
+.problem-row:first-child { border-top: 1px solid var(--light-rule); }
+.pr-num {
+  font-family: 'Instrument Sans', sans-serif; font-size: 11px;
+  color: var(--td-green); letter-spacing: .06em; margin-top: 2px;
+}
+.pr-content {}
+.pr-head {
+  font-family: 'Instrument Sans', sans-serif; font-size: 18px;
+  color: var(--dark); font-weight: 400; margin-bottom: 4px;
+}
+.pr-body {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 11px;
+  color: var(--grey); line-height: 1.6;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 3 — EASING SYSTEM
+══════════════════════════════════════ */
+#s3 { background: var(--dark); }
+#s3 .top { position: absolute; top: 0; left: 0; right: 0; padding: 36px 52px 0; display: flex; justify-content: space-between; align-items: center; }
+#s3 .grid { position: absolute; top: 90px; left: 52px; right: 52px; bottom: 32px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+.easing-card {
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 4px; padding: 22px 20px;
+  display: flex; flex-direction: column; gap: 14px;
+  background: rgba(255,255,255,.02);
+  position: relative; overflow: hidden;
+}
+.easing-card.primary { border-color: rgba(0,131,90,.35); background: rgba(0,131,90,.05); }
+.easing-card:hover { border-color: rgba(0,131,90,.3); }
+
+.ec-label { font-family: 'Instrument Sans', sans-serif; font-size: 8px; color: var(--td-mid); letter-spacing: .14em; text-transform: uppercase; }
+.ec-name { font-family: 'Instrument Sans', sans-serif; font-size: 22px; color: var(--off-white); font-weight: 400; }
+.ec-name em { font-style: italic; color: var(--td-mid); }
+.ec-curve {
+  width: 100%; height: 60px; position: relative;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  border-left: 1px solid rgba(255,255,255,.08);
+}
+.ec-curve svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ec-bezier { font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,.3); letter-spacing: .04em; }
+.ec-use {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 10px;
+  color: rgba(255,255,255,.5); line-height: 1.6;
+}
+.ec-pill {
+  display: inline-flex; align-items: center;
+  background: rgba(0,131,90,.12); border: 1px solid rgba(0,131,90,.2);
+  border-radius: 20px; padding: 3px 10px;
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 9px;
+  color: var(--td-mid); letter-spacing: .04em;
+  width: fit-content;
+}
+.ec-demo {
+  position: relative; height: 8px;
+  background: rgba(255,255,255,.05); border-radius: 4px; overflow: visible;
+}
+.ec-dot {
+  position: absolute; top: -3px; left: 0;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--td-mid);
+}
+.ec-dot.ease-out { animation: demoEaseOut 2s cubic-bezier(0.33,1,0.68,1) infinite; }
+.ec-dot.ease-in-out { animation: demoEaseInOut 2s cubic-bezier(0.65,0,0.35,1) infinite; }
+.ec-dot.spring { animation: demoSpring 2s cubic-bezier(0.34,1.56,0.64,1) infinite; }
+@keyframes demoEaseOut  { 0%,5% { left:0; } 55%,100% { left: calc(100% - 14px); } }
+@keyframes demoEaseInOut{ 0%,5% { left:0; } 55%,100% { left: calc(100% - 14px); } }
+@keyframes demoSpring   { 0%,5% { left:0; } 55%,100% { left: calc(100% - 14px); } }
+
+/* ══════════════════════════════════════
+   SLIDE 4 — TIMING SYSTEM
+══════════════════════════════════════ */
+#s4 { background: var(--dark-mid); }
+#s4 .top { position: absolute; top: 0; left: 0; right: 0; padding: 36px 52px 0; display: flex; justify-content: space-between; align-items: center; }
+#s4 .timeline-area {
+  position: absolute; top: 90px; left: 52px; right: 52px; bottom: 32px;
+  display: flex; flex-direction: column; gap: 14px; justify-content: center;
+}
+.timing-row {
+  display: grid; grid-template-columns: 140px 1fr 90px;
+  gap: 14px; align-items: center;
+}
+.tr-label {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 11px;
+  color: rgba(255,255,255,.55); text-align: right;
+}
+.tr-bar-track {
+  height: 28px; background: rgba(255,255,255,.03);
+  border-radius: 3px; position: relative; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.05);
+}
+.tr-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  border-radius: 3px; display: flex; align-items: center;
+  padding: 0 10px;
+  font-family: 'Instrument Sans', sans-serif; font-size: 9px;
+  color: rgba(255,255,255,.7); letter-spacing: .04em;
+}
+.tr-unit {
+  font-family: 'Instrument Sans', sans-serif; font-size: 10px;
+  color: var(--grey); text-align: right;
+}
+.tr-divider {
+  height: 1px; background: rgba(255,255,255,.04);
+  margin: 4px 0 4px 154px;
+}
+.tier-label {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 9px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.2); margin-bottom: 4px;
+  padding-left: 154px;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 5 — TRANSITION TYPES
+══════════════════════════════════════ */
+#s5 { background: var(--off-white); }
+#s5 .top-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  background: var(--dark); padding: 28px 52px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+#s5 .top-bar h2 {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 26px; font-weight: 400; color: var(--off-white);
+}
+#s5 .top-bar h2 em { font-style: italic; color: var(--td-mid); }
+#s5 .transitions-grid {
+  position: absolute; top: 86px; left: 52px; right: 52px; bottom: 32px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr 1fr; gap: 14px;
+}
+.tx-card {
+  border: 1px solid rgba(0,131,90,.12);
+  border-radius: 3px; overflow: hidden;
+  display: flex; flex-direction: column;
+  background: var(--off-white);
+}
+.tx-preview {
+  flex: 1; background: var(--dark);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.tx-label-bar {
+  padding: 8px 12px;
+  background: white;
+  border-top: 1px solid rgba(0,131,90,.08);
+}
+.tx-name {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 10px;
+  font-weight: 500; color: var(--dark);
+}
+.tx-desc {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 9px;
+  color: var(--grey); margin-top: 1px;
+}
+/* Transition animation previews */
+.tx-el {
+  position: absolute; font-family: 'Instrument Sans', sans-serif;
+  font-size: 18px; color: var(--off-white); font-weight: 400;
+}
+/* Fade up */
+.fade-up { animation: fadeUp 2.5s ease-out infinite; }
+@keyframes fadeUp {
+  0%,10% { opacity: 0; transform: translateY(12px); }
+  40%,70% { opacity: 1; transform: translateY(0); }
+  85%,100% { opacity: 0; transform: translateY(-6px); }
+}
+/* Slide in left */
+.slide-left { animation: slideInLeft 2.5s cubic-bezier(0.33,1,.68,1) infinite; }
+@keyframes slideInLeft {
+  0%,10% { opacity: 0; transform: translateX(-24px); }
+  40%,70% { opacity: 1; transform: translateX(0); }
+  85%,100% { opacity: 0; transform: translateX(16px); }
+}
+/* Scale up */
+.scale-up { animation: scaleUp 2.5s cubic-bezier(0.34,1.56,.64,1) infinite; }
+@keyframes scaleUp {
+  0%,10% { opacity: 0; transform: scale(.85); }
+  40%,70% { opacity: 1; transform: scale(1); }
+  85%,100% { opacity: 0; transform: scale(1.05); }
+}
+/* Wipe bar */
+.wipe-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0; background: var(--td-green);
+  animation: wipeIn 2.5s cubic-bezier(0.33,1,.68,1) infinite;
+}
+@keyframes wipeIn {
+  0%,5% { width: 0; }
+  35% { width: 100%; }
+  70%,100% { width: 100%; left: 100%; }
+}
+/* Counter */
+.counter-num {
+  font-family: 'Instrument Sans', sans-serif; font-size: 40px;
+  color: var(--td-mid); animation: countUp 3s ease-out infinite;
+}
+@keyframes countUp {
+  0%,5%  { content: ''; }
+  20% { opacity: .4; }
+  60%,80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+/* Draw line */
+.draw-svg path { stroke-dasharray: 120; stroke-dashoffset: 120; animation: drawLine 2.5s ease-in-out infinite; }
+@keyframes drawLine {
+  0%,10% { stroke-dashoffset: 120; }
+  50%,75% { stroke-dashoffset: 0; }
+  95%,100% { stroke-dashoffset: -120; }
+}
+/* Icon pop */
+.icon-pop { animation: iconPop 2.5s cubic-bezier(0.34,1.56,.64,1) infinite; }
+@keyframes iconPop {
+  0%,10% { opacity: 0; transform: scale(0.5) rotate(-15deg); }
+  40%,70% { opacity: 1; transform: scale(1) rotate(0deg); }
+  88%,100% { opacity: 0; transform: scale(0.8); }
+}
+/* Stagger */
+.stagger-row { display: flex; flex-direction: column; gap: 6px; width: 70%; }
+.stagger-line {
+  height: 6px; border-radius: 3px; background: rgba(255,255,255,.15);
+  transform-origin: left;
+}
+.stagger-line:nth-child(1) { animation: staggerIn 2.5s ease-out infinite; width: 90%; }
+.stagger-line:nth-child(2) { animation: staggerIn 2.5s .15s ease-out infinite; width: 70%; }
+.stagger-line:nth-child(3) { animation: staggerIn 2.5s .3s ease-out infinite; width: 55%; }
+.stagger-line:nth-child(4) { animation: staggerIn 2.5s .45s ease-out infinite; width: 40%; background: rgba(0,131,90,.4); }
+@keyframes staggerIn {
+  0%,5% { opacity: 0; transform: scaleX(0); }
+  40%,70% { opacity: 1; transform: scaleX(1); }
+  88%,100% { opacity: 0; }
+}
+
+/* ══════════════════════════════════════
+   SLIDE 6 — COLOR IN MOTION
+══════════════════════════════════════ */
+#s6 { background: var(--dark); }
+#s6 .top { position: absolute; top: 0; left: 0; right: 0; padding: 36px 52px 0; display: flex; justify-content: space-between; align-items: center; }
+#s6 .body { position: absolute; top: 86px; left: 52px; right: 52px; bottom: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+.color-col { display: flex; flex-direction: column; gap: 14px; }
+.color-col-title { font-family: 'Instrument Sans', sans-serif; font-size: 20px; color: var(--off-white); font-weight: 400; }
+.color-col-title em { font-style: italic; color: var(--td-mid); }
+
+.color-swatch-row { display: flex; gap: 8px; align-items: stretch; }
+.csw {
+  display: flex; flex-direction: column; gap: 6px; align-items: flex-start; flex: 1;
+}
+.csw-block {
+  width: 100%; border-radius: 3px; position: relative; overflow: hidden;
+}
+.csw-label { font-family: 'Instrument Sans', sans-serif; font-size: 8px; color: var(--grey); letter-spacing: .08em; }
+.csw-hex { font-family: 'Instrument Sans', sans-serif; font-size: 9px; color: rgba(255,255,255,.3); }
+
+.motion-sequence {
+  border: 1px solid rgba(255,255,255,.06); border-radius: 3px;
+  padding: 16px; display: flex; flex-direction: column; gap: 10px;
+}
+.ms-label { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); }
+.ms-track {
+  height: 6px; border-radius: 3px; position: relative; overflow: hidden;
+  background: rgba(255,255,255,.05);
+}
+.ms-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; }
+/* Animated opacity gradient to suggest motion timing */
+.ms-fill.anim { animation: trackFill 3s ease-in-out infinite; }
+@keyframes trackFill {
+  0%,5% { width: 0; }
+  50%,80% { width: 100%; }
+  98%,100% { width: 0; }
+}
+
+.rule-v { width: 1px; background: rgba(255,255,255,.06); align-self: stretch; }
+
+.frame-strip {
+  display: flex; gap: 4px; align-items: stretch;
+}
+.frame-thumb {
+  flex: 1; background: var(--td-deep); border-radius: 2px;
+  height: 52px; position: relative; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.06);
+}
+.ft-line { position: absolute; background: rgba(255,255,255,.12); border-radius: 1px; }
+.ft-tc {
+  position: absolute; bottom: 4px; right: 5px;
+  font-family: 'Instrument Sans', sans-serif; font-size: 6px;
+  color: rgba(255,255,255,.25); letter-spacing: .04em;
+}
+.ft-accent {
+  position: absolute; left: 0; bottom: 0; right: 0; height: 2px;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 7 — TYPOGRAPHY ANIMATION
+══════════════════════════════════════ */
+#s7 { background: var(--dark-mid); }
+#s7 .left-panel {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 40%;
+  padding: 44px 44px; display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid rgba(255,255,255,.05);
+}
+#s7 .right-panel {
+  position: absolute; left: 40%; top: 0; right: 0; bottom: 0;
+  padding: 44px 44px; display: flex; flex-direction: column; gap: 18px; justify-content: center;
+}
+.typo-rule-row {
+  border: 1px solid rgba(255,255,255,.07); border-radius: 3px;
+  padding: 16px 18px; display: grid; grid-template-columns: 100px 1fr 80px;
+  gap: 14px; align-items: center;
+  background: rgba(255,255,255,.02);
+}
+.trr-role { font-family: 'Instrument Sans', sans-serif; font-size: 8px; color: var(--grey); letter-spacing: .1em; text-transform: uppercase; }
+.trr-specimen {}
+.trr-anim { font-family: 'Instrument Sans', sans-serif; font-size: 8px; color: rgba(0,131,90,.6); text-align: right; }
+
+.typo-h1 { font-family: 'Instrument Sans', sans-serif; font-size: 28px; color: var(--off-white); font-weight: 400; }
+.typo-h1 em { font-style: italic; color: var(--td-mid); }
+.typo-h2 { font-family: 'Instrument Sans', sans-serif; font-size: 20px; color: var(--off-white); font-weight: 400; }
+.typo-stat { font-family: 'Instrument Sans', sans-serif; font-size: 32px; color: var(--td-mid); font-weight: 400; }
+.typo-body { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 11px; color: rgba(255,255,255,.5); line-height: 1.5; }
+.typo-cap { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 8px; letter-spacing: .18em; text-transform: uppercase; color: var(--td-mid); }
+
+/* ══════════════════════════════════════
+   SLIDE 8 — REUSABLE COMPONENTS
+══════════════════════════════════════ */
+#s8 { background: var(--off-white); }
+#s8 .top-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  background: var(--td-deep); padding: 28px 52px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+#s8 .top-bar h2 {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 26px; font-weight: 400; color: var(--off-white);
+}
+#s8 .top-bar h2 em { font-style: italic; color: var(--td-mid); }
+#s8 .components-grid {
+  position: absolute; top: 86px; left: 52px; right: 52px; bottom: 36px;
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 14px;
+}
+.comp-card {
+  border: 1px solid var(--light-rule); border-radius: 3px; overflow: hidden;
+  display: flex; flex-direction: column; background: white;
+}
+.comp-preview {
+  flex: 1; position: relative; overflow: hidden;
+  background: var(--dark);
+}
+.comp-footer {
+  padding: 8px 12px; border-top: 1px solid var(--light-rule);
+  background: white;
+}
+.comp-name { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 10px; font-weight: 500; color: var(--dark); }
+.comp-note { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 9px; color: var(--grey); margin-top: 1px; }
+.comp-reuse {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--td-pale); border-radius: 10px;
+  padding: 2px 8px; margin-top: 3px;
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 8px; color: var(--td-green);
+}
+
+/* ══════════════════════════════════════
+   SLIDE 9 — SCALE TO FUTURE PROJECTS
+══════════════════════════════════════ */
+#s9 { background: var(--dark); }
+#s9 .top { position: absolute; top: 0; left: 0; right: 0; padding: 36px 52px 0; display: flex; justify-content: space-between; align-items: center; }
+#s9 .body { position: absolute; top: 88px; left: 52px; right: 52px; bottom: 36px; display: flex; gap: 20px; }
+.scale-left { width: 38%; display: flex; flex-direction: column; justify-content: space-between; }
+.scale-right { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+.project-row {
+  border: 1px solid rgba(255,255,255,.07); border-radius: 3px;
+  padding: 14px 16px; display: grid; grid-template-columns: auto 1fr auto;
+  gap: 14px; align-items: center; background: rgba(255,255,255,.02);
+  position: relative; overflow: hidden;
+}
+.project-row.origin { border-color: rgba(0,131,90,.4); background: rgba(0,131,90,.06); }
+.pr-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px;
+}
+.pr-info {}
+.pr-title { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 11px; color: rgba(255,255,255,.8); font-weight: 500; }
+.pr-date { font-family: 'Instrument Sans', sans-serif; font-size: 8px; color: var(--grey); letter-spacing: .06em; margin-top: 2px; }
+.pr-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+.pr-tag {
+  font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 8px;
+  background: rgba(0,131,90,.1); border: 1px solid rgba(0,131,90,.2);
+  color: var(--td-mid); border-radius: 10px; padding: 1px 7px;
+}
+.pr-tag.blue { background: rgba(27,79,155,.12); border-color: rgba(27,79,155,.25); color: #7BA7E0; }
+.pr-reuse {
+  font-family: 'Instrument Sans', sans-serif; font-size: 8px;
+  color: var(--td-mid); background: rgba(0,131,90,.08);
+  border: 1px solid rgba(0,131,90,.15); border-radius: 3px;
+  padding: 3px 8px; white-space: nowrap;
+}
+
+.scale-summary {
+  border: 1px solid rgba(255,255,255,.06); border-radius: 3px;
+  padding: 20px; display: flex; flex-direction: column; gap: 14px;
+  background: rgba(255,255,255,.02);
+}
+.ss-stat { display: flex; flex-direction: column; gap: 2px; }
+.ss-num {
+  font-family: 'Instrument Sans', sans-serif; font-size: 36px;
+  color: var(--td-mid); line-height: 1; font-weight: 400;
+}
+.ss-label { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 10px; color: var(--grey); line-height: 1.4; }
+.ss-rule { height: 1px; background: rgba(255,255,255,.05); }
+
+/* ══════════════════════════════════════
+   SLIDE 10 — OUTCOME
+══════════════════════════════════════ */
+#s10 { background: var(--td-deep); }
+#s10 .bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 60% 60%, rgba(0,131,90,.2), transparent 70%);
+}
+#s10 .green-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--td-mid); }
+#s10 .scan-lines {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(255,255,255,.012) 3px, rgba(255,255,255,.012) 4px
+  );
+}
+#s10 .header { position: absolute; top: 36px; left: 52px; right: 52px; display: flex; justify-content: space-between; }
+#s10 .outcomes-grid {
+  position: absolute; top: 100px; left: 52px; right: 52px; bottom: 0;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+  padding-bottom: 52px;
+}
+.outcome-block {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 28px 24px; border: 1px solid rgba(255,255,255,.08);
+  border-radius: 3px; background: rgba(255,255,255,.03);
+}
+.ob-num {
+  font-family: 'Instrument Sans', sans-serif; font-size: 48px;
+  color: var(--td-mid); line-height: 1; font-weight: 400;
+}
+.ob-title {
+  font-family: 'Instrument Sans', sans-serif; font-size: 18px;
+  color: var(--off-white); font-weight: 400; line-height: 1.2;
+}
+.ob-title em { font-style: italic; color: var(--td-mid); }
+.ob-body { font-family: 'Sequel Sans Roman Body', sans-serif; font-size: 10px; color: rgba(255,255,255,.45); line-height: 1.65; }
+.ob-rule { height: 2px; background: linear-gradient(90deg, var(--td-mid) 0%, transparent 100%); border-radius: 1px; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+/* Tablet */
+@media (max-width: 768px) {
+  #s1 .header, #s1 .body { padding-left: 24px; padding-right: 24px; }
+  #s1 .body { padding-bottom: 24px; }
+  #s1 .wave { right: 24px; }
+  #s1 .title { font-size: clamp(28px, 5vw, 48px); }
+  #s1 .subtitle { font-size: 11px; max-width: 280px; }
+  #s1 .meta { display: none; }
+  #s2 .left, #s2 .right { width: 100%; position: relative; padding: 24px 20px; }
+  #s2 .left { min-height: auto; }
+  #s2 .right { padding-top: 16px; }
+  #s2 .left::after { display: none; }
+  #s3 .top { padding: 24px 24px 0; }
+  #s3 .grid { top: 72px; left: 24px; right: 24px; bottom: 24px; grid-template-columns: 1fr 1fr; gap: 12px; }
+  #s3 .ec-name { font-size: 18px; }
+  #s3 .ec-use { font-size: 9px; }
+  #s4 .top { padding: 24px 24px 0; }
+  #s4 .timeline-area { top: 72px; left: 24px; right: 24px; bottom: 24px; gap: 10px; }
+  .timing-row { grid-template-columns: 80px 1fr 50px; gap: 10px; }
+  .tr-divider, .tier-label { margin-left: 0; padding-left: 90px; }
+  #s5 .top-bar { padding: 20px 24px; }
+  #s5 .top-bar h2 { font-size: 20px; }
+  #s5 .transitions-grid { top: 64px; left: 24px; right: 24px; bottom: 24px; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  #s6 .top { padding: 24px 24px 0; }
+  #s6 .body { top: 72px; left: 24px; right: 24px; bottom: 24px; grid-template-columns: 1fr; gap: 16px; }
+  .color-swatch-row { flex-wrap: wrap; }
+  .frame-strip { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+  .frame-thumb { min-width: 60px; flex: 0 0 60px; height: 44px; }
+  .rule-v { display: none; }
+  #s7 .left-panel, #s7 .right-panel { width: 100%; position: relative; padding: 24px 20px; }
+  #s7 .left-panel { border-right: none; border-bottom: 1px solid rgba(255,255,255,.05); }
+  #s7 .right-panel { padding-top: 16px; }
+  .typo-rule-row { grid-template-columns: 70px 1fr 60px; padding: 12px 14px; gap: 10px; }
+  .typo-h1 { font-size: 22px; }
+  .typo-h2 { font-size: 16px; }
+  .typo-stat { font-size: 24px; }
+  #s8 .top-bar { padding: 20px 24px; }
+  #s8 .top-bar h2 { font-size: 20px; }
+  #s8 .components-grid { top: 64px; left: 24px; right: 24px; bottom: 24px; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  #s9 .top { padding: 24px 24px 0; }
+  #s9 .body { top: 72px; left: 24px; right: 24px; bottom: 24px; flex-direction: column; gap: 16px; }
+  .scale-left { width: 100%; }
+  .project-row { grid-template-columns: 1fr; gap: 10px; padding: 12px 14px; }
+  .pr-reuse { align-self: flex-start; }
+  #s10 .outcomes-grid { top: 72px; left: 24px; right: 24px; bottom: 24px; padding-bottom: 24px; grid-template-columns: 1fr; gap: 16px; }
+  .outcome-block { padding: 20px 18px; }
+  .ob-num { font-size: 36px; }
+  .ob-title { font-size: 16px; }
+  .nav { bottom: 16px; padding: 6px 16px; gap: 14px; }
+  .nav-btn { font-size: 10px; }
+  .sc { font-size: 9px; min-width: 36px; }
+}
+/* Mobile */
+@media (max-width: 480px) {
+  #s1 .header, #s1 .body { padding-left: 16px; padding-right: 16px; }
+  #s1 .body { padding-bottom: 20px; flex-direction: column; align-items: flex-start; gap: 20px; }
+  #s1 .wave { display: none; }
+  #s1 .title { font-size: clamp(24px, 8vw, 36px); }
+  #s1 .subtitle { font-size: 10px; max-width: none; margin-top: 12px; }
+  #s2 .left, #s2 .right { padding: 20px 16px; }
+  #s2 .pr-head { font-size: 16px; }
+  #s2 .pr-body { font-size: 10px; }
+  #s3 .top { padding: 20px 16px 0; flex-wrap: wrap; gap: 8px; }
+  #s3 .grid { top: 56px; left: 16px; right: 16px; bottom: 20px; grid-template-columns: 1fr; gap: 10px; }
+  #s3 .ec-name { font-size: 16px; }
+  #s3 .ec-curve { height: 48px; }
+  #s4 .top { padding: 20px 16px 0; flex-wrap: wrap; }
+  #s4 .timeline-area { top: 56px; left: 16px; right: 16px; bottom: 20px; }
+  .timing-row { grid-template-columns: 1fr; gap: 6px; }
+  .tr-label { text-align: left; }
+  .tr-unit { text-align: left; }
+  .tr-divider, .tier-label { padding-left: 0; margin-left: 0; }
+  #s5 .top-bar { padding: 16px 16px; flex-wrap: wrap; gap: 8px; }
+  #s5 .top-bar h2 { font-size: 18px; }
+  #s5 .transitions-grid { top: 56px; left: 16px; right: 16px; bottom: 20px; grid-template-columns: 1fr; gap: 8px; }
+  #s6 .top { padding: 20px 16px 0; flex-wrap: wrap; }
+  #s6 .body { top: 56px; left: 16px; right: 16px; bottom: 20px; gap: 12px; }
+  .color-col-title { font-size: 16px; }
+  .motion-sequence { padding: 12px; }
+  #s7 .left-panel, #s7 .right-panel { padding: 20px 16px; }
+  .typo-rule-row { grid-template-columns: 1fr; gap: 8px; padding: 10px 12px; }
+  .trr-anim { text-align: left; }
+  #s8 .top-bar { padding: 16px 16px; flex-wrap: wrap; }
+  #s8 .top-bar h2 { font-size: 18px; }
+  #s8 .components-grid { top: 56px; left: 16px; right: 16px; bottom: 20px; grid-template-columns: 1fr; gap: 8px; }
+  #s9 .top { padding: 20px 16px 0; flex-wrap: wrap; }
+  #s9 .body { top: 56px; left: 16px; right: 16px; bottom: 20px; gap: 12px; }
+  .scale-summary { padding: 16px; }
+  .ss-num { font-size: 28px; }
+  #s10 .outcomes-grid { top: 56px; left: 16px; right: 16px; bottom: 20px; padding-bottom: 20px; gap: 12px; }
+  .outcome-block { padding: 16px 14px; }
+  .ob-num { font-size: 28px; }
+  .ob-title { font-size: 14px; }
+  .ob-body { font-size: 9px; }
+  .nav { bottom: 12px; padding: 6px 12px; gap: 10px; }
+  .nav-btn { font-size: 9px; }
+  .sc { font-size: 8px; min-width: 32px; }
+  .dots { gap: 3px; }
+  .dot { width: 4px; height: 4px; }
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ══ SLIDE 1: COVER ══ -->
+<div class="slide active" id="s1">
+  <div class="bg"></div>
+  <div class="scan-lines"></div>
+  <div class="green-bar"></div>
+
+  <!-- Waveform decoration -->
+  <div class="wave" style="right:52px;top:50%;transform:translateY(-50%);">
+    <div class="wave-bar" style="height:14px;animation-delay:0s;"></div>
+    <div class="wave-bar" style="height:28px;animation-delay:.1s;"></div>
+    <div class="wave-bar" style="height:44px;animation-delay:.2s;"></div>
+    <div class="wave-bar" style="height:60px;animation-delay:.3s;"></div>
+    <div class="wave-bar" style="height:80px;animation-delay:.4s;"></div>
+    <div class="wave-bar" style="height:60px;animation-delay:.5s;"></div>
+    <div class="wave-bar" style="height:44px;animation-delay:.6s;"></div>
+    <div class="wave-bar" style="height:28px;animation-delay:.7s;"></div>
+    <div class="wave-bar" style="height:14px;animation-delay:.8s;"></div>
+  </div>
+
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div>
+        <div class="tag">TD Bank · Financial Literacy</div>
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.3);margin-top:2px;">Jan 2023 · Toronto, ON</div>
+      </div>
+    </div>
+    <div class="code">motion-system v1.0</div>
+  </div>
+
+  <div class="body">
+    <div>
+      <div class="tag" style="margin-bottom:14px;">Process Deck</div>
+      <div class="title">Building a<br><em>consistent</em><br>motion system</div>
+      <div class="subtitle">How a single video project became a reusable animation framework for TD's ongoing financial literacy campaign — across platforms, languages, and future productions.</div>
+    </div>
+    <div class="meta">
+      <div class="meta-item"><div class="mi-label">Deliverable</div><div class="mi-val">Motion Infographic System</div></div>
+      <div class="meta-item"><div class="mi-label">Scope</div><div class="mi-val">EN + FR · 3 video sets</div></div>
+      <div class="meta-item"><div class="mi-label">Role</div><div class="mi-val">Art Direction · Animation · Edit</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 2: THE PROBLEM ══ -->
+<div class="slide" id="s2">
+  <div class="left">
+    <div style="position:relative;z-index:1;">
+      <div class="tag" style="margin-bottom:12px;">The Challenge</div>
+      <div style="font-family:'Instrument Sans',sans-serif;font-size:clamp(24px,3.5vw,40px);color:var(--off-white);font-weight:400;line-height:1.15;">Dense content, diverse audiences, <em style='font-style:italic;color:var(--td-mid);'>no shared visual language.</em></div>
+    </div>
+    <div style="position:relative;z-index:1;font-family:'Sequel Sans Roman Body',sans-serif;font-size:11px;color:rgba(255,255,255,.4);line-height:1.7;">Financial literacy videos had to teach budgeting, savings, and credit to a broad public audience — in two languages — without a defined motion system to build from.</div>
+  </div>
+  <div class="right">
+    <div class="tag" style="color:var(--td-green);margin-bottom:4px;">Four core constraints</div>
+    <div class="problem-row">
+      <div class="pr-num">01</div>
+      <div class="pr-content">
+        <div class="pr-head">Complex concepts, accessible delivery</div>
+        <div class="pr-body">Financial topics like compound interest or debt-to-income ratios needed to land clearly for viewers with no finance background — in under 3 minutes per video.</div>
+      </div>
+    </div>
+    <div class="problem-row">
+      <div class="pr-num">02</div>
+      <div class="pr-content">
+        <div class="pr-head">Bilingual production at scale</div>
+        <div class="pr-body">Every video had to ship in English and French. That meant every layout, animation, and text element needed to flex for both — without two separate production pipelines.</div>
+      </div>
+    </div>
+    <div class="problem-row">
+      <div class="pr-num">03</div>
+      <div class="pr-content">
+        <div class="pr-head">Multiple teams, one brand voice</div>
+        <div class="pr-body">Copywriters, videographers, and creative directors were contributing in parallel. Motion decisions made in isolation risked fragmenting the final look and feel.</div>
+      </div>
+    </div>
+    <div class="problem-row">
+      <div class="pr-num">04</div>
+      <div class="pr-content">
+        <div class="pr-head">Built to outlast this project</div>
+        <div class="pr-body">TD's financial literacy programme was ongoing. Any system built had to be documented and reusable, so future productions could build on top — not start over.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 3: EASING SYSTEM ══ -->
+<div class="slide" id="s3">
+  <div class="top">
+    <div>
+      <div class="tag" style="margin-bottom:6px;">Motion Principles · 01</div>
+      <div style="font-family:'Instrument Sans',sans-serif;font-size:28px;color:var(--off-white);font-weight:400;">The <em style="font-style:italic;color:var(--td-mid);">easing</em> system</div>
+    </div>
+    <div class="code">cubic-bezier( x1, y1, x2, y2 )</div>
+  </div>
+  <div class="grid">
+    <!-- Ease Out -->
+    <div class="easing-card primary">
+      <div class="ec-label">Tier 1 · Primary</div>
+      <div class="ec-name">Ease <em>Out</em></div>
+      <div class="ec-curve">
+        <svg viewBox="0 0 100 60" preserveAspectRatio="none">
+          <path d="M 0 60 C 20 60 40 0 100 0" stroke="rgba(0,131,90,.6)" stroke-width="1.5" fill="none"/>
+          <circle cx="20" cy="60" r="2.5" fill="#3BAD82" opacity=".4"/>
+          <circle cx="40" cy="0" r="2.5" fill="#3BAD82" opacity=".4"/>
+          <line x1="0" y1="60" x2="20" y2="60" stroke="rgba(0,131,90,.25)" stroke-width="1" stroke-dasharray="3,2"/>
+          <line x1="100" y1="0" x2="40" y2="0" stroke="rgba(0,131,90,.25)" stroke-width="1" stroke-dasharray="3,2"/>
+        </svg>
+      </div>
+      <div class="ec-bezier">cubic-bezier(0.33, 1, 0.68, 1)</div>
+      <div class="ec-demo"><div class="ec-dot ease-out"></div></div>
+      <div class="ec-use">Elements entering the frame — text reveals, icon appearances, data callouts. Fast start, soft landing. The default for all inbound motion.</div>
+      <div class="ec-pill">↓ Enter · Appear · Reveal</div>
+    </div>
+    <!-- Ease In-Out -->
+    <div class="easing-card">
+      <div class="ec-label">Tier 2 · Transitions</div>
+      <div class="ec-name">Ease <em>In-Out</em></div>
+      <div class="ec-curve">
+        <svg viewBox="0 0 100 60" preserveAspectRatio="none">
+          <path d="M 0 60 C 30 60 70 0 100 0" stroke="rgba(255,255,255,.2)" stroke-width="1.5" fill="none"/>
+          <circle cx="30" cy="60" r="2.5" fill="rgba(255,255,255,.3)" opacity=".5"/>
+          <circle cx="70" cy="0" r="2.5" fill="rgba(255,255,255,.3)" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="ec-bezier">cubic-bezier(0.65, 0, 0.35, 1)</div>
+      <div class="ec-demo"><div class="ec-dot ease-in-out" style="background:rgba(255,255,255,.4);"></div></div>
+      <div class="ec-use">Scene-to-scene transitions. Wipes, cross-fades, section changes. Symmetrical — no implied direction. Used for state changes rather than entrances or exits.</div>
+      <div class="ec-pill">↔ Transition · Scene change</div>
+    </div>
+    <!-- Spring -->
+    <div class="easing-card">
+      <div class="ec-label">Tier 3 · Emphasis</div>
+      <div class="ec-name">Spring <em>Bounce</em></div>
+      <div class="ec-curve">
+        <svg viewBox="0 0 100 60" preserveAspectRatio="none">
+          <path d="M 0 60 C 25 60 40 -12 70 -8 Q 90 -4 100 0" stroke="rgba(240,180,41,.4)" stroke-width="1.5" fill="none"/>
+          <circle cx="25" cy="60" r="2.5" fill="#F0B429" opacity=".4"/>
+          <circle cx="40" cy="-12" r="2.5" fill="#F0B429" opacity=".4"/>
+        </svg>
+      </div>
+      <div class="ec-bezier">cubic-bezier(0.34, 1.56, 0.64, 1)</div>
+      <div class="ec-demo"><div class="ec-dot spring" style="background:var(--td-accent);"></div></div>
+      <div class="ec-use">Stat callouts, key numbers, icon pops. Slight overshoot signals importance without being distracting. Reserved — maximum one usage per scene.</div>
+      <div class="ec-pill" style="background:rgba(240,180,41,.1);border-color:rgba(240,180,41,.25);color:#F0B429;">★ Emphasis only · Use sparingly</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 4: TIMING SYSTEM ══ -->
+<div class="slide" id="s4">
+  <div class="top">
+    <div>
+      <div class="tag" style="color:var(--td-mid);margin-bottom:6px;">Motion Principles · 02</div>
+      <div style="font-family:'Instrument Sans',sans-serif;font-size:28px;color:var(--off-white);font-weight:400;">Duration &amp; <em style="font-style:italic;color:var(--td-mid);">timing</em> scale</div>
+    </div>
+    <div style="font-family:'Instrument Sans',sans-serif;font-size:10px;color:var(--grey);">Base unit: 100ms</div>
+  </div>
+  <div class="timeline-area">
+    <div class="tier-label">Micro — feedback &amp; emphasis</div>
+    <div class="timing-row">
+      <div class="tr-label">Icon pop / tap</div>
+      <div class="tr-bar-track">
+        <div class="tr-bar" style="width:8%;background:rgba(240,180,41,.25);"><span>80ms</span></div>
+      </div>
+      <div class="tr-unit">80ms</div>
+    </div>
+    <div class="timing-row">
+      <div class="tr-label">Stat emphasis</div>
+      <div class="tr-bar-track">
+        <div class="tr-bar" style="width:12%;background:rgba(240,180,41,.2);"><span>120ms</span></div>
+      </div>
+      <div class="tr-unit">120ms</div>
+    </div>
+    <div class="tr-divider"></div>
+    <div class="tier-label">Standard — element entrance / exit</div>
+    <div class="timing-row">
+      <div class="tr-label">Text reveal</div>
+      <div class="tr-bar-track">
+        <div class="tr-bar" style="width:22%;background:rgba(0,131,90,.3);">200ms</div>
+      </div>
+      <div class="tr-unit">200ms</div>
+    </div>
+    <div class="timing-row">
+      <div class="tr-label">Icon entrance</div>
+      <div class="tr-bar-track">
+        <div class="tr-bar" style="width:28%;background:rgba(0,131,90,.35);">280ms</div>
+      </div>
+      <div class="tr-unit">280ms</div>
+    </div>
+    <div class="timing-row">
+      <div class="tr-label">Bar / chart fill</div>
+      <div class="tr-bar-track">
+        <div class="tr-bar" style="width:36%;background:rgba(0,131,90,.4);">360ms</div>
+      </div>
+      <div class="tr-unit">360ms</div>
+    </div>
+    <div class="tr-divider"></div>
+    <div class="tier-label">Scene-level — section transitions</div>
+    <div class="timing-row">
+      <div class="tr-label">Scene fade / wipe</div>
+      <div class="tr-bar-track">
+        <div class="tr-bar" style="width:48%;background:rgba(59,173,130,.25);">480ms</div>
+      </div>
+      <div class="tr-unit">480ms</div>
+    </div>
+    <div class="timing-row">
+      <div class="tr-label">Full screen dissolve</div>
+      <div class="tr-bar-track">
+        <div class="tr-bar" style="width:60%;background:rgba(59,173,130,.2);">600ms</div>
+      </div>
+      <div class="tr-unit">600ms</div>
+    </div>
+    <div class="tr-divider"></div>
+    <div style="padding-left:154px;font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.3);line-height:1.7;max-width:620px;">
+      Stagger delay between sequential elements: <span class="code" style="font-size:9px;">+80ms per item</span>. No element exits before the next enters — overlap window of <span class="code" style="font-size:9px;">40ms</span> ensures continuity.
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 5: TRANSITION TYPES ══ -->
+<div class="slide" id="s5">
+  <div class="top-bar">
+    <div>
+      <div class="tag" style="margin-bottom:6px;color:rgba(255,255,255,.4);">Motion Principles · 03</div>
+      <h2>Transition <em>grammar</em></h2>
+    </div>
+    <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.4);">8 named types · consistent across all scenes</div>
+  </div>
+  <div class="transitions-grid">
+    <!-- Fade Up -->
+    <div class="tx-card">
+      <div class="tx-preview">
+        <div class="tx-el fade-up">Savings tips</div>
+      </div>
+      <div class="tx-label-bar">
+        <div class="tx-name">Fade Up</div>
+        <div class="tx-desc">Text intro · body copy · headers</div>
+      </div>
+    </div>
+    <!-- Slide In -->
+    <div class="tx-card">
+      <div class="tx-preview">
+        <div class="tx-el slide-left">3 steps</div>
+      </div>
+      <div class="tx-label-bar">
+        <div class="tx-name">Slide In</div>
+        <div class="tx-desc">Secondary info · supporting copy</div>
+      </div>
+    </div>
+    <!-- Scale Up -->
+    <div class="tx-card">
+      <div class="tx-preview">
+        <div class="tx-el scale-up" style="font-size:36px;color:var(--td-mid);">20%</div>
+      </div>
+      <div class="tx-label-bar">
+        <div class="tx-name">Scale Up</div>
+        <div class="tx-desc">Stat callouts · key figures</div>
+      </div>
+    </div>
+    <!-- Wipe -->
+    <div class="tx-card">
+      <div class="tx-preview" style="background:var(--dark-mid);">
+        <div class="wipe-bar"></div>
+        <div class="tx-el" style="position:relative;z-index:1;color:rgba(255,255,255,.6);font-size:14px;">Scene change</div>
+      </div>
+      <div class="tx-label-bar">
+        <div class="tx-name">Green Wipe</div>
+        <div class="tx-desc">Section transitions · brand moment</div>
+      </div>
+    </div>
+    <!-- Stagger -->
+    <div class="tx-card">
+      <div class="tx-preview" style="display:flex;align-items:center;justify-content:center;">
+        <div class="stagger-row">
+          <div class="stagger-line"></div>
+          <div class="stagger-line"></div>
+          <div class="stagger-line"></div>
+          <div class="stagger-line"></div>
+        </div>
+      </div>
+      <div class="tx-label-bar">
+        <div class="tx-name">Stagger List</div>
+        <div class="tx-desc">Bullet points · +80ms per item</div>
+      </div>
+    </div>
+    <!-- Counter -->
+    <div class="tx-card">
+      <div class="tx-preview" style="display:flex;align-items:center;justify-content:center;">
+        <div class="counter-num">$4,200</div>
+      </div>
+      <div class="tx-label-bar">
+        <div class="tx-name">Count Up</div>
+        <div class="tx-desc">Monetary values · percentages</div>
+      </div>
+    </div>
+    <!-- Draw Line -->
+    <div class="tx-card">
+      <div class="tx-preview" style="display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 120 60" width="120" height="60">
+          <polyline class="draw-svg" points="10,50 30,35 50,40 75,20 100,25 115,10" fill="none" stroke="var(--td-mid)" stroke-width="2"/>
+          <circle cx="115" cy="10" r="4" fill="var(--td-accent)" opacity=".8"/>
+        </svg>
+      </div>
+      <div class="tx-label-bar">
+        <div class="tx-name">Draw Path</div>
+        <div class="tx-desc">Chart lines · trend diagrams</div>
+      </div>
+    </div>
+    <!-- Icon Pop -->
+    <div class="tx-card">
+      <div class="tx-preview" style="display:flex;align-items:center;justify-content:center;">
+        <svg class="icon-pop" viewBox="0 0 40 40" width="40" height="40" stroke="var(--td-mid)" fill="none" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="20" cy="20" r="14"/>
+          <path d="M20 13v7l4 3"/>
+        </svg>
+      </div>
+      <div class="tx-label-bar">
+        <div class="tx-name">Icon Pop</div>
+        <div class="tx-desc">Category icons · spring bounce</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 6: COLOR IN MOTION ══ -->
+<div class="slide" id="s6">
+  <div class="top">
+    <div>
+      <div class="tag" style="color:var(--td-mid);margin-bottom:6px;">Motion Principles · 04</div>
+      <div style="font-family:'Instrument Sans',sans-serif;font-size:28px;color:var(--off-white);font-weight:400;">Colour as <em style="font-style:italic;color:var(--td-mid);">motion signal</em></div>
+    </div>
+    <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:var(--grey);">Every colour change has a defined animation role</div>
+  </div>
+  <div class="body">
+    <!-- LEFT: Palette -->
+    <div class="color-col">
+      <div class="color-col-title">The palette<br><em>in sequence</em></div>
+      <div class="color-swatch-row">
+        <div class="csw">
+          <div class="csw-block" style="height:64px;background:var(--td-deep);border:1px solid rgba(255,255,255,.05);">
+            <div style="position:absolute;bottom:6px;left:8px;font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(255,255,255,.35);">Background</div>
+          </div>
+          <div class="csw-label">TD Deep Green</div>
+          <div class="csw-hex">#00573C</div>
+        </div>
+        <div class="csw">
+          <div class="csw-block" style="height:64px;background:var(--td-green);">
+            <div style="position:absolute;bottom:6px;left:8px;font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(255,255,255,.5);">Wipe / bar</div>
+          </div>
+          <div class="csw-label">TD Green</div>
+          <div class="csw-hex">#00835A</div>
+        </div>
+        <div class="csw">
+          <div class="csw-block" style="height:64px;background:var(--td-mid);">
+            <div style="position:absolute;bottom:6px;left:8px;font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(255,255,255,.6);">Highlight</div>
+          </div>
+          <div class="csw-label">Sage Mid</div>
+          <div class="csw-hex">#3BAD82</div>
+        </div>
+        <div class="csw">
+          <div class="csw-block" style="height:64px;background:var(--td-accent);">
+            <div style="position:absolute;bottom:6px;left:8px;font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(0,0,0,.5);">Emphasis</div>
+          </div>
+          <div class="csw-label">Accent Gold</div>
+          <div class="csw-hex">#F0B429</div>
+        </div>
+        <div class="csw">
+          <div class="csw-block" style="height:64px;background:var(--off-white);border:1px solid rgba(0,0,0,.08);">
+            <div style="position:absolute;bottom:6px;left:8px;font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(0,0,0,.3);">Type</div>
+          </div>
+          <div class="csw-label">Off White</div>
+          <div class="csw-hex">#F9F8F5</div>
+        </div>
+      </div>
+
+      <!-- Frame filmstrip -->
+      <div>
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);margin-bottom:8px;">Scene colour sequence</div>
+        <div class="frame-strip">
+          <div class="frame-thumb" style="background:var(--td-deep);">
+            <div class="ft-line" style="width:60%;height:3px;top:30%;left:10%;"></div>
+            <div class="ft-line" style="width:40%;height:2px;top:48%;left:10%;opacity:.5;"></div>
+            <div class="ft-accent" style="background:var(--td-mid);"></div>
+            <div class="ft-tc">00:00</div>
+          </div>
+          <div class="frame-thumb" style="background:var(--td-green);">
+            <div class="ft-line" style="width:70%;height:3px;top:35%;left:10%;"></div>
+            <div class="ft-accent" style="background:var(--off-white);opacity:.2;"></div>
+            <div class="ft-tc">00:08</div>
+          </div>
+          <div class="frame-thumb" style="background:var(--td-deep);">
+            <div class="ft-line" style="width:55%;height:3px;top:28%;left:10%;"></div>
+            <div class="ft-line" style="width:35%;height:2px;top:45%;left:10%;opacity:.4;"></div>
+            <div class="ft-line" style="width:24%;height:6px;top:62%;left:10%;background:rgba(59,173,130,.4);border-radius:1px;"></div>
+            <div class="ft-accent" style="background:var(--td-mid);"></div>
+            <div class="ft-tc">00:20</div>
+          </div>
+          <div class="frame-thumb" style="background:#111314;">
+            <div style="position:absolute;left:10%;top:25%;right:10%;display:flex;align-items:flex-end;gap:3px;bottom:30%;">
+              <div style="flex:1;background:rgba(59,173,130,.5);border-radius:1px 1px 0 0;"></div>
+              <div style="flex:1;height:70%;background:rgba(59,173,130,.7);border-radius:1px 1px 0 0;"></div>
+              <div style="flex:1;height:90%;background:rgba(59,173,130,.6);border-radius:1px 1px 0 0;"></div>
+            </div>
+            <div class="ft-accent" style="background:var(--td-mid);"></div>
+            <div class="ft-tc">00:42</div>
+          </div>
+          <div class="frame-thumb" style="background:var(--td-deep);">
+            <div class="ft-line" style="width:60%;height:3px;top:30%;left:10%;"></div>
+            <div style="position:absolute;right:10%;top:30%;width:20px;height:20px;border-radius:50%;border:2px solid rgba(59,173,130,.5);"></div>
+            <div class="ft-accent" style="background:var(--td-green);"></div>
+            <div class="ft-tc">01:15</div>
+          </div>
+          <div class="frame-thumb" style="background:var(--td-green);">
+            <div class="ft-line" style="width:70%;height:3px;top:40%;left:10%;"></div>
+            <div class="ft-accent" style="background:var(--td-accent);"></div>
+            <div class="ft-tc">02:30</div>
+          </div>
+          <div class="frame-thumb" style="background:var(--td-deep);">
+            <div style="position:absolute;left:10%;right:10%;top:25%;bottom:25%;border:1px solid rgba(59,173,130,.2);border-radius:2px;display:flex;align-items:center;justify-content:center;">
+              <div style="font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(255,255,255,.2);">TD LOGO</div>
+            </div>
+            <div class="ft-accent" style="background:var(--td-mid);"></div>
+            <div class="ft-tc">03:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-v"></div>
+
+    <!-- RIGHT: Role rules -->
+    <div class="color-col">
+      <div class="color-col-title">Colour motion<br><em>rules</em></div>
+      <div class="motion-sequence">
+        <div class="ms-label">01 · Green wipe = section break</div>
+        <div class="ms-track"><div class="ms-fill anim" style="background:var(--td-green);animation-delay:0s;"></div></div>
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.4);line-height:1.6;">A full-screen green wipe always signals a topic change. Never used mid-scene. Duration: 480ms ease-in-out.</div>
+      </div>
+      <div class="motion-sequence">
+        <div class="ms-label">02 · Accent gold = key stat only</div>
+        <div class="ms-track"><div class="ms-fill anim" style="background:var(--td-accent);animation-delay:.8s;"></div></div>
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.4);line-height:1.6;">Gold is reserved for the single most important number per scene. Spring entrance (0.34, 1.56, 0.64, 1) — one use per module.</div>
+      </div>
+      <div class="motion-sequence">
+        <div class="ms-label">03 · White text = always fade up</div>
+        <div class="ms-track"><div class="ms-fill anim" style="background:rgba(249,248,245,.3);animation-delay:1.6s;"></div></div>
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.4);line-height:1.6;">All white type enters via fade-up (translateY 10px → 0, opacity 0 → 1). 200ms ease-out. No exceptions — creates the reading rhythm.</div>
+      </div>
+      <div class="motion-sequence">
+        <div class="ms-label">04 · Sage green = data + progress</div>
+        <div class="ms-track"><div class="ms-fill anim" style="background:var(--td-mid);animation-delay:2.4s;"></div></div>
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.4);line-height:1.6;">Bar fills, chart lines, and progress indicators use sage mid. Animates left-to-right, 360ms ease-out. Signals positive direction and measurability.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 7: TYPOGRAPHY IN MOTION ══ -->
+<div class="slide" id="s7">
+  <div class="left-panel">
+    <div>
+      <div class="tag" style="color:var(--td-mid);margin-bottom:10px;">Motion Principles · 05</div>
+      <div style="font-family:'Instrument Sans',sans-serif;font-size:clamp(22px,3vw,36px);color:var(--off-white);font-weight:400;line-height:1.15;">Typography animation <em style='font-style:italic;color:var(--td-mid);'>rules</em></div>
+      <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:11px;color:rgba(255,255,255,.4);line-height:1.7;margin-top:16px;max-width:280px;">Every text role has a fixed animation behaviour. Predictability = legibility. Audiences don't notice the motion — only the clarity it creates.</div>
+    </div>
+    <div style="font-family:'Instrument Sans',sans-serif;font-size:9px;color:var(--grey);line-height:2;">
+      font-family: Instrument Sans (display)<br>
+      font-family: Sequel Sans Roman Body (body, UI)
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="tag" style="color:rgba(255,255,255,.25);margin-bottom:-6px;">Role → Specimen → Animation</div>
+    <div class="typo-rule-row">
+      <div class="trr-role">H1 / Title</div>
+      <div class="trr-specimen"><div class="typo-h1">Build a <em>budget</em></div></div>
+      <div class="trr-anim">fade-up 280ms<br>ease-out</div>
+    </div>
+    <div class="typo-rule-row">
+      <div class="trr-role">H2 / Section</div>
+      <div class="trr-specimen"><div class="typo-h2">Step 1: Track your income</div></div>
+      <div class="trr-anim">fade-up 220ms<br>+100ms delay</div>
+    </div>
+    <div class="typo-rule-row">
+      <div class="trr-role">Stat / Number</div>
+      <div class="trr-specimen"><div class="typo-stat">$4,200</div></div>
+      <div class="trr-anim">count-up<br>spring 400ms</div>
+    </div>
+    <div class="typo-rule-row">
+      <div class="trr-role">Body copy</div>
+      <div class="trr-specimen"><div class="typo-body">Simple steps to help you understand<br>where your money goes each month.</div></div>
+      <div class="trr-anim">fade-up 200ms<br>+180ms delay</div>
+    </div>
+    <div class="typo-rule-row">
+      <div class="trr-role">Caption / Label</div>
+      <div class="trr-specimen"><div class="typo-cap">Source: TD Financial Literacy, 2023</div></div>
+      <div class="trr-anim">fade 160ms<br>last in queue</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 8: REUSABLE COMPONENTS ══ -->
+<div class="slide" id="s8">
+  <div class="top-bar">
+    <div>
+      <div class="tag" style="color:rgba(255,255,255,.4);margin-bottom:6px;">System Architecture</div>
+      <h2>Reusable <em>components</em></h2>
+    </div>
+    <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.4);">6 composable building blocks · built once, used everywhere</div>
+  </div>
+  <div class="components-grid">
+
+    <!-- Lower Third -->
+    <div class="comp-card">
+      <div class="comp-preview">
+        <div style="position:absolute;bottom:0;left:0;right:0;height:44%;background:linear-gradient(90deg,rgba(0,131,90,.9),rgba(0,87,60,.7));display:flex;flex-direction:column;justify-content:center;padding:0 14px;gap:2px;">
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:15px;color:var(--off-white);font-weight:400;">Smart Saving</div>
+          <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.04em;">Module 02 · Financial Literacy</div>
+        </div>
+      </div>
+      <div class="comp-footer">
+        <div class="comp-name">Lower Third</div>
+        <div class="comp-note">Slides up from bottom · 280ms ease-out</div>
+        <div class="comp-reuse">✓ Reused in 6 future videos</div>
+      </div>
+    </div>
+
+    <!-- Stat Callout -->
+    <div class="comp-card">
+      <div class="comp-preview" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--td-mid);">Emergency Fund</div>
+        <div style="font-family:'Instrument Sans',sans-serif;font-size:44px;color:var(--td-accent);line-height:1;">3×</div>
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:9px;color:rgba(255,255,255,.4);">Monthly expenses</div>
+        <div style="width:40px;height:2px;background:var(--td-mid);border-radius:1px;margin-top:4px;"></div>
+      </div>
+      <div class="comp-footer">
+        <div class="comp-name">Stat Callout</div>
+        <div class="comp-note">Scale-up spring · gold accent</div>
+        <div class="comp-reuse">✓ Reused in 9 future videos</div>
+      </div>
+    </div>
+
+    <!-- Section Wipe -->
+    <div class="comp-card">
+      <div class="comp-preview" style="background:var(--dark-mid);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:55%;background:var(--td-green);animation:wipeDemo 3s ease-in-out infinite;"></div>
+        <div style="font-family:'Instrument Sans',sans-serif;font-size:16px;color:rgba(255,255,255,.5);position:relative;z-index:1;">Section break</div>
+      </div>
+      <div class="comp-footer">
+        <div class="comp-name">Green Section Wipe</div>
+        <div class="comp-note">480ms ease-in-out · always full-screen</div>
+        <div class="comp-reuse">✓ Core to all TD videos</div>
+      </div>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="comp-card">
+      <div class="comp-preview" style="display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:12px 16px 20px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(255,255,255,.4);">35%</div>
+          <div style="width:28px;height:44px;background:var(--td-mid);border-radius:2px 2px 0 0;opacity:.7;"></div>
+          <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:7px;color:rgba(255,255,255,.35);">Housing</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(255,255,255,.4);">20%</div>
+          <div style="width:28px;height:26px;background:var(--td-accent);border-radius:2px 2px 0 0;"></div>
+          <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:7px;color:rgba(255,255,255,.35);">Savings</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(255,255,255,.4);">15%</div>
+          <div style="width:28px;height:20px;background:var(--td-mid);border-radius:2px 2px 0 0;opacity:.5;"></div>
+          <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:7px;color:rgba(255,255,255,.35);">Food</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <div style="font-family:'Instrument Sans',sans-serif;font-size:7px;color:rgba(255,255,255,.4);">12%</div>
+          <div style="width:28px;height:16px;background:rgba(59,173,130,.35);border-radius:2px 2px 0 0;"></div>
+          <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:7px;color:rgba(255,255,255,.35);">Transport</div>
+        </div>
+        <div style="height:1px;position:absolute;bottom:20px;left:16px;right:16px;background:rgba(255,255,255,.08);"></div>
+      </div>
+      <div class="comp-footer">
+        <div class="comp-name">Data Bar Chart</div>
+        <div class="comp-note">Stagger fill left-to-right · 360ms each</div>
+        <div class="comp-reuse">✓ Reused in 7 future videos</div>
+      </div>
+    </div>
+
+    <!-- List Reveal -->
+    <div class="comp-card">
+      <div class="comp-preview" style="padding:14px 18px;display:flex;flex-direction:column;gap:8px;justify-content:center;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:16px;height:16px;border-radius:50%;background:var(--td-green);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><div style="width:4px;height:4px;border-radius:50%;background:white;"></div></div>
+          <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.7);">Track income and expenses</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;opacity:.7;">
+          <div style="width:16px;height:16px;border-radius:50%;background:rgba(59,173,130,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.6);"></div></div>
+          <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.5);">Set a monthly savings goal</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;opacity:.4;">
+          <div style="width:16px;height:16px;border-radius:50%;background:rgba(59,173,130,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4);"></div></div>
+          <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.35);">Review every 30 days</div>
+        </div>
+      </div>
+      <div class="comp-footer">
+        <div class="comp-name">Numbered List Reveal</div>
+        <div class="comp-note">Fade-up stagger · +80ms per item</div>
+        <div class="comp-reuse">✓ Reused in all video sets</div>
+      </div>
+    </div>
+
+    <!-- CTA Outro -->
+    <div class="comp-card">
+      <div class="comp-preview" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+        <div style="width:32px;height:32px;background:white;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Sequel Sans Roman Body',sans-serif;font-weight:700;font-size:14px;color:var(--td-deep);">TD</div>
+        <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.06em;">td.com/financialliteracy</div>
+        <div style="background:var(--td-green);padding:6px 16px;border-radius:2px;font-family:'Sequel Sans Roman Body',sans-serif;font-size:9px;color:white;font-weight:500;letter-spacing:.06em;margin-top:4px;">Learn More</div>
+      </div>
+      <div class="comp-footer">
+        <div class="comp-name">CTA Outro Card</div>
+        <div class="comp-note">Scale-up + fade · holds 3 seconds</div>
+        <div class="comp-reuse">✓ Standard across all videos</div>
+      </div>
+    </div>
+
+  </div>
+  <style>
+    @keyframes wipeDemo {
+      0%,5% { width: 0; }
+      40% { width: 100%; }
+      65%,100% { width: 100%; left: 100%; }
+    }
+  </style>
+</div>
+
+<!-- ══ SLIDE 9: SCALE TO FUTURE PROJECTS ══ -->
+<div class="slide" id="s9">
+  <div class="top">
+    <div>
+      <div class="tag" style="color:var(--td-mid);margin-bottom:6px;">System Impact</div>
+      <div style="font-family:'Instrument Sans',sans-serif;font-size:28px;color:var(--off-white);font-weight:400;">How the system <em style="font-style:italic;color:var(--td-mid);">scaled forward</em></div>
+    </div>
+    <div class="code">v1 → inherited by all future TD video productions</div>
+  </div>
+  <div class="body">
+    <div class="scale-left">
+      <div>
+        <div class="tag" style="color:rgba(255,255,255,.25);margin-bottom:12px;">System summary</div>
+        <div class="scale-summary">
+          <div class="ss-stat"><div class="ss-num">3</div><div class="ss-label">easing curves<br>in the system</div></div>
+          <div class="ss-rule"></div>
+          <div class="ss-stat"><div class="ss-num">8</div><div class="ss-label">named transition types</div></div>
+          <div class="ss-rule"></div>
+          <div class="ss-stat"><div class="ss-num">6</div><div class="ss-label">reusable components<br>built in After Effects</div></div>
+          <div class="ss-rule"></div>
+          <div class="ss-stat"><div class="ss-num">2</div><div class="ss-label">languages — identical<br>layout, adapted copy</div></div>
+        </div>
+      </div>
+      <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.3);line-height:1.7;border-top:1px solid rgba(255,255,255,.05);padding-top:14px;">Each future video inherited the easing library and component set — new productions required only copy + asset swaps, not re-animation from scratch.</div>
+    </div>
+    <div class="scale-right">
+      <div class="tag" style="color:rgba(255,255,255,.25);">Project inheritance chain</div>
+      <!-- Origin -->
+      <div class="project-row origin">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--td-mid);flex-shrink:0;"></div>
+        <div class="pr-info">
+          <div class="pr-title">TD Money Management — Series 1</div>
+          <div class="pr-date">Jan 2023 · Origin project</div>
+          <div class="pr-tags">
+            <div class="pr-tag">Motion system built</div>
+            <div class="pr-tag">6 components</div>
+            <div class="pr-tag">EN + FR</div>
+          </div>
+        </div>
+        <div class="pr-reuse">v1.0 origin</div>
+      </div>
+      <!-- Children -->
+      <div class="project-row">
+        <div style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
+        <div class="pr-info">
+          <div class="pr-title">TD Building Wealth — Series 2</div>
+          <div class="pr-date">Apr 2023</div>
+          <div class="pr-tags">
+            <div class="pr-tag">Inherited easing library</div>
+            <div class="pr-tag">Inherited components</div>
+            <div class="pr-tag blue">+1 new transition</div>
+          </div>
+        </div>
+        <div class="pr-reuse">85% reuse</div>
+      </div>
+      <div class="project-row">
+        <div style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
+        <div class="pr-info">
+          <div class="pr-title">TD Homebuyers — Series 3</div>
+          <div class="pr-date">Sep 2023</div>
+          <div class="pr-tags">
+            <div class="pr-tag">Full system inheritance</div>
+            <div class="pr-tag">New topic modules</div>
+            <div class="pr-tag blue">Draw-path added</div>
+          </div>
+        </div>
+        <div class="pr-reuse">90% reuse</div>
+      </div>
+      <div class="project-row">
+        <div style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15);flex-shrink:0;"></div>
+        <div class="pr-info">
+          <div class="pr-title">Additional TD Video Projects</div>
+          <div class="pr-date">2023 – ongoing</div>
+          <div class="pr-tags">
+            <div class="pr-tag">System as base template</div>
+            <div class="pr-tag">New team members onboard faster</div>
+          </div>
+        </div>
+        <div class="pr-reuse">System baseline</div>
+      </div>
+      <div style="font-family:'Sequel Sans Roman Body',sans-serif;font-size:10px;color:rgba(255,255,255,.25);line-height:1.7;border-top:1px solid rgba(255,255,255,.05);padding-top:12px;">The system was adopted by the broader TD creative team because it was documented — not just built. Component notes, timing rules, and easing values were captured in a motion spec handoff.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 10: OUTCOME ══ -->
+<div class="slide" id="s10">
+  <div class="bg"></div>
+  <div class="scan-lines"></div>
+  <div class="green-bar"></div>
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="tag" style="color:rgba(255,255,255,.4);">Outcome</div>
+    </div>
+    <div style="font-family:'Instrument Sans',sans-serif;font-size:18px;color:rgba(255,255,255,.4);font-weight:400;font-style:italic;">What a motion system actually buys you</div>
+  </div>
+  <div class="outcomes-grid">
+    <div class="outcome-block">
+      <div class="ob-rule"></div>
+      <div class="ob-num">01</div>
+      <div class="ob-title">Audience reads the <em>content</em>, not the motion</div>
+      <div class="ob-body">Consistent animation behaviour disappears into the background. Viewers focused on the financial concepts — not wondering why elements moved the way they did. That's the goal of a good system.</div>
+    </div>
+    <div class="outcome-block">
+      <div class="ob-rule"></div>
+      <div class="ob-num">02</div>
+      <div class="ob-title"><em>Bilingual</em> production without double the work</div>
+      <div class="ob-body">Because the system separated motion logic from content, swapping copy from English to French required zero re-animation. The template held. Production time on Series 2 dropped significantly.</div>
+    </div>
+    <div class="outcome-block">
+      <div class="ob-rule"></div>
+      <div class="ob-num">03</div>
+      <div class="ob-title">Future team inherits a <em>motion language</em></div>
+      <div class="ob-body">New producers joining the campaign didn't need to figure out transition logic from scratch. The documented easing and timing spec acted as a creative brief — the system answered questions before they were asked.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn" onclick="go(-1)">← Prev</button>
+  <div class="dots" id="dots"></div>
+  <div class="sc" id="sc">01 / 10</div>
+  <button class="nav-btn" onclick="go(1)">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const scEl   = document.getElementById('sc');
+  let cur = 0;
+
+  slides.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('active');
+    scEl.textContent = String(cur+1).padStart(2,'0') + ' / ' + slides.length;
+  }
+
+  function go(d) { goTo(cur+d); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+    if (e.key==='ArrowLeft' ||e.key==='ArrowUp')   go(-1);
+  });
+
+  let tx=0;
+  document.addEventListener('touchstart', e => tx=e.touches[0].clientX);
+  document.addEventListener('touchend',   e => { const dx=tx-e.changedTouches[0].clientX; if(Math.abs(dx)>50) go(dx>0?1:-1); });
+
+  /* Nav: show on hover, hide when mouse leaves deck (desktop only). pointerleave hides immediately; mousemove+timeout hides when idle (works when embedded in iframe). */
+  if (window.matchMedia('(hover: hover)').matches) {
+    let hideT = null;
+    const showNav = () => {
+      if (hideT) clearTimeout(hideT);
+      document.body.classList.add('nav-visible');
+    };
+    const scheduleHide = (ms) => {
+      if (hideT) clearTimeout(hideT);
+      hideT = setTimeout(() => document.body.classList.remove('nav-visible'), ms);
+    };
+    document.addEventListener('pointerenter', showNav);
+    document.addEventListener('mousemove', () => { showNav(); scheduleHide(2500); });
+    document.body.addEventListener('pointerleave', () => scheduleHide(150));
+  } else {
+    document.body.classList.add('nav-visible');
+  }
+</script>
+</body>
+</html>
