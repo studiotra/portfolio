@@ -137,36 +137,47 @@
                 <div class="section-title-wrapper">
                   <div class="subtitle-wrapper"><span class="section-subtitle">Contact</span></div>
                   <div class="title-wrapper">
-                    <h2 class="section-title font-sequelsans-romanbody">Let's get the project started.</h2>
+                    <h2 class="section-title font-sequelsans-romanbody">Let's work together.</h2>
                   </div>
                 </div>
               </div>
               <div class="section-content-wrapper fade-anim">
                 <div class="section-content">
                   <div class="contact-mail">
-                    <p class="title">Get in touch</p>
-                    <p class="text">Excited to hear from you and start something special together.<br>
-                      <a href="mailTo:petra.h@studiotra.com">petra.h@studiotra.com</a>
-                    </p>
+                    <p class="title">Direct contact</p>
+                    <p class="text">Excited to hear from you and start something special together.</p>
+                    <ul class="contact-info-list">
+                      <li><a href="mailto:petra.h@studiotra.com">petra.h@studiotra.com</a></li>
+                      <li><a href="tel:+14374358730">437.435.8730</a></li>
+                      <li><a href="https://www.linkedin.com/in/petra-hwang/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    </ul>
+                    <p class="contact-note">Based in Toronto, CA. Available for remote worldwide.</p>
                   </div>
                 </div>
                 <div class="contact-wrap">
-                  <form id="contact__form" method="POST" action="./mail.php">
+                  <!-- Formspree: replace YOUR_FORM_ID with your form ID from formspree.io -->
+                  <form id="contact__form" method="POST" action="https://formspree.io/f/mgonownq">
                     <div class="contact-formwrap">
                       <div class="contact-formfield">
-                        <input type="text" name="name" id="name" placeholder="Name*">
+                        <input type="text" name="name" id="name" placeholder="Name*" required>
                       </div>
                       <div class="contact-formfield">
-                        <input type="text" name="email" id="email" placeholder="Email*">
+                        <input type="email" name="email" id="email" placeholder="Email*" required>
                       </div>
                       <div class="contact-formfield">
-                        <input type="text" name="phone" id="phone" placeholder="Phone">
+                        <select name="project_type" id="project_type">
+                          <option value="" disabled selected>Project type</option>
+                          <option value="Branding">Branding</option>
+                          <option value="Product Design">Product Design</option>
+                          <option value="Web">Web</option>
+                          <option value="Other">Other</option>
+                        </select>
                       </div>
                       <div class="contact-formfield">
                         <input type="text" name="company" id="company" placeholder="Company">
                       </div>
                       <div class="contact-formfield message">
-                        <input type="text" name="message" id="message" placeholder="Message*">
+                        <textarea name="message" id="message" rows="4" placeholder="Tell me about your project...*" required></textarea>
                       </div>
                     </div>
                     <div class="submit-btn">
