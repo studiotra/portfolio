@@ -10274,4 +10274,25 @@ section {
   position: relative;
 }
 
+/* AmazonAds Fizz — video section (gallery uses shared gallery-fullwidth) */
+.work-details-area .amazonads-fizz-video-section {
+  margin-top: 3rem;
+}
+.work-details-area .amazonads-fizz-video-section .video-embed-wrap {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+@media (max-width: 767px) {
+  .work-details-area .amazonads-fizz-video-section .video-embed-wrap {
+    border-radius: 5px;
+  }
+}
+.work-details-area .amazonads-fizz-video-section .video-embed-wrap iframe,
+.work-details-area .amazonads-fizz-video-section .video-embed-wrap video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /*# sourceMappingURL=ad-style.css.map */
