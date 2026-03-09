@@ -1585,8 +1585,6 @@
           scrub: 1,
           start: 'top top',
           end: "bottom 100%",
-          pin: '.Projects__content',
-          pinSpacing: false,
           toggleActions: 'play reverse play reverse',
         }
       });
@@ -1595,7 +1593,7 @@
 
   if (document.querySelector(".Projects-area-10") && window.innerWidth > 768) {
     const projectArea = document.querySelector(".Projects-area-10");
-    const steps = document.querySelectorAll(".Projects__content ul li");
+    const steps = document.querySelectorAll(".Projects-area-10 .project-step");
     const stepCount = steps.length;
 
     const fill = document.querySelector(".Projects-area-10__fill");
