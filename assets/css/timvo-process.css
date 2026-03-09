@@ -45,12 +45,28 @@
   max-width: 1100px;
   margin: 0 auto;
 }
+@media only screen and (max-width: 991px) {
+  .timvo-process-page .hero {
+    padding-top: 8rem;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .timvo-process-page .hero {
+    padding: 9.5rem 20px 2.5rem;
+  }
+}
+@media (max-width: 575px) {
+  .timvo-process-page .hero {
+    padding: 9rem 16px 2rem;
+  }
+}
 .timvo-process-page .hero-eyebrow {
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-muted);
   font-weight: 400;
+  line-height: 1.2;
   margin-bottom: 1.2rem;
 }
 .timvo-process-page .hero-title {
@@ -87,6 +103,20 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+@media only screen and (max-width: 767px) {
+  .timvo-process-page .hero-eyebrow {
+    padding-top: 1rem;
+  }
+  .timvo-process-page .step-nav-sticky-wrap {
+    padding: 0.5rem 20px;
+    top: 68px;
+  }
+}
+@media (max-width: 575px) {
+  .timvo-process-page .step-nav-sticky-wrap {
+    padding: 0.5rem 16px;
+  }
 }
 .timvo-process-page .step-nav-sticky-wrap::-webkit-scrollbar {
   display: none;
@@ -224,7 +254,7 @@ body.timvo-process-page .footer-studiotra {
   font-family: var(--font-m);
   line-height: 1rem;
   font-size: 0.65rem;
-  color: color: #333;
+  color: #333;
   letter-spacing: 0.06em;
   display: flex;
   align-items: center;
@@ -943,6 +973,31 @@ body.timvo-process-page .footer-studiotra {
   }
   .timvo-process-page .ia-branch {
     min-width: 80px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .timvo-process-page .section,
+  .timvo-process-page .hero {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .timvo-process-page .section-wrap .section,
+  .timvo-process-page .section-dark .section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media (max-width: 575px) {
+  .timvo-process-page .section,
+  .timvo-process-page .hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .timvo-process-page .section-wrap .section,
+  .timvo-process-page .section-dark .section {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 

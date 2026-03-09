@@ -615,6 +615,29 @@ body {
 /* ══════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════ */
+/* Tablet landscape — reduce padding, prep for stack */
+@media (max-width: 992px) {
+  .slide { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  #s1 .header, #s1 .body { padding-left: 36px; padding-right: 36px; }
+  #s1 .body { padding-bottom: 36px; }
+  #s1 .title { font-size: clamp(32px, 5vw, 56px); }
+  #s2 .left { width: 45%; padding: 36px 32px; }
+  #s2 .right { padding: 36px 32px; }
+  #s3 .top, #s4 .top, #s6 .top { padding: 28px 36px 0; }
+  #s3 .grid { left: 36px; right: 36px; top: 80px; bottom: 28px; gap: 14px; }
+  #s4 .timeline-area { left: 36px; right: 36px; top: 80px; bottom: 28px; }
+  #s5 .top-bar { padding: 24px 36px; }
+  #s5 .transitions-grid { left: 36px; right: 36px; top: 78px; bottom: 28px; gap: 12px; }
+  #s6 .body { left: 36px; right: 36px; top: 80px; bottom: 28px; gap: 20px; }
+  #s7 .left-panel, #s7 .right-panel { padding: 36px 32px; }
+  #s8 .top-bar { padding: 24px 36px; }
+  #s8 .components-grid { left: 36px; right: 36px; top: 78px; bottom: 28px; gap: 12px; }
+  #s9 .top { padding: 28px 36px 0; }
+  #s9 .body { left: 36px; right: 36px; top: 82px; bottom: 28px; }
+  #s10 .header { padding-left: 36px; padding-right: 36px; }
+  #s10 .outcomes-grid { left: 36px; right: 36px; top: 88px; bottom: 0; padding-bottom: 36px; gap: 16px; }
+  .nav { bottom: 22px; padding: 8px 20px; }
+}
 /* Tablet */
 @media (max-width: 768px) {
   #s1 .header, #s1 .body { padding-left: 24px; padding-right: 24px; }
@@ -623,10 +646,11 @@ body {
   #s1 .title { font-size: clamp(28px, 5vw, 48px); }
   #s1 .subtitle { font-size: 11px; max-width: 280px; }
   #s1 .meta { display: none; }
-  #s2 .left, #s2 .right { width: 100%; position: relative; padding: 24px 20px; }
+  #s2 .left, #s2 .right { width: 100%; position: relative; left: auto; right: auto; top: auto; bottom: auto; padding: 24px 20px; }
   #s2 .left { min-height: auto; }
   #s2 .right { padding-top: 16px; }
   #s2 .left::after { display: none; }
+  #s2 { display: flex; flex-direction: column; }
   #s3 .top { padding: 24px 24px 0; }
   #s3 .grid { top: 72px; left: 24px; right: 24px; bottom: 24px; grid-template-columns: 1fr 1fr; gap: 12px; }
   #s3 .ec-name { font-size: 18px; }
@@ -644,7 +668,8 @@ body {
   .frame-strip { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
   .frame-thumb { min-width: 60px; flex: 0 0 60px; height: 44px; }
   .rule-v { display: none; }
-  #s7 .left-panel, #s7 .right-panel { width: 100%; position: relative; padding: 24px 20px; }
+  #s7 .left-panel, #s7 .right-panel { width: 100%; position: relative; left: auto; right: auto; top: auto; bottom: auto; padding: 24px 20px; }
+  #s7 { display: flex; flex-direction: column; }
   #s7 .left-panel { border-right: none; border-bottom: 1px solid rgba(255,255,255,.05); }
   #s7 .right-panel { padding-top: 16px; }
   .typo-rule-row { grid-template-columns: 70px 1fr 60px; padding: 12px 14px; gap: 10px; }
